@@ -2940,6 +2940,8 @@ const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
         return STR_MO_SESSION;
     case 24:
         return STR_MO_UTILITY;
+    case 33:
+        return STR_MO_EQLOCKDROP;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0:
         return STR_MO_SYSTEM;
@@ -3072,6 +3074,8 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_BATCH;
     case 6146: /* module 24 call 2 */
         return STR_ME_BATCH_ALL;
+    case 8448: /* module 33 call 0 */
+        return STR_ME_LOCK;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return STR_ME_FILL_BLOCK;
@@ -3625,6 +3629,8 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 6144: /* module 24 call 0 */
         return 1;
     case 6146: /* module 24 call 2 */
+        return 1;
+    case 8448: /* module 33 call 0 */
         return 1;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
@@ -4265,6 +4271,14 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         switch (itemIdx) {
         case 0:
             return STR_IT_calls;
+        default:
+            return NULL;
+        }
+    case 8448: /* module 33 call 0 */
+        switch (itemIdx)
+        {
+        case 0:
+            return STR_IT_amount;
         default:
             return NULL;
         }
@@ -10173,6 +10187,7 @@ bool _getMethod_IsNestingSupported_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 7687: // Proxy:Remove announcement
     case 7688: // Proxy:Reject announcement
     case 7689: // Proxy:Proxy announced
+    case 8448: // EQLockdrop:Lock
     case 8960: // Bounties:Propose bounty
     case 8961: // Bounties:Approve bounty
     case 8962: // Bounties:Propose curator

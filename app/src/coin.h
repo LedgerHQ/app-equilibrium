@@ -25,7 +25,7 @@ extern "C" {
 #define HDPATH_0_DEFAULT     (0x80000000 | 0x2c)
 // #define HDPATH_1_DEFAULT     (0x80000000 | 0x162)       // 354 - Polkadot
 // #define HDPATH_1_RECOVERY    (0x80000000 | 0x1b2)       // 434 - Kusama
-#define HDPATH_1_DEFAULT     (0x80000000 | 0x5f5e0fd)   // 99999997 - Equilibrium
+#define HDPATH_1_DEFAULT     (0x80000000 | 0x5f5e0fd)   // 99999997 - Equilibrium (https://github.com/satoshilabs/slips/blob/master/slip-0044.md)
 #define HDPATH_1_RECOVERY    (0x80000000 | 0x162)       // 354 - Polkadot
 
 #define SK_LEN_25519         64u
@@ -50,7 +50,7 @@ typedef enum {
 #define SUPPORTED_TX_VERSION_CURRENT        LEDGER_MAJOR_VERSION
 #define SUPPORTED_TX_VERSION_PREVIOUS       (LEDGER_MAJOR_VERSION - 1)
 #define SUPPORTED_SPEC_VERSION              (LEDGER_MINOR_VERSION + 0)
-#define SUPPORTED_MINIMUM_SPEC_VERSION      9000
+#define SUPPORTED_MINIMUM_SPEC_VERSION      262
 
 #define COIN_AMOUNT_DECIMAL_PLACES          9
 

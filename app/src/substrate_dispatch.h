@@ -31,6 +31,8 @@ extern "C" {
     uint32_t _getpdCall_##CALL(uint32_t txVersion) \
     {                                              \
         switch (txVersion) {                       \
+        case 1:                                    \
+            return PD_CALL_##CALL##_V5;            \
                                                    \
         case 5:                                    \
             return PD_CALL_##CALL##_V5;            \
