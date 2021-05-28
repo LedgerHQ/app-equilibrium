@@ -113,7 +113,7 @@ parser_error_t _readCompactBlockNumber(parser_context_t* c, pd_CompactBlockNumbe
 }
 
 parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v) {
-    GEN_DEF_READARRAY(16)
+    GEN_DEF_READARRAY(8)
 }
 
 parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
@@ -420,9 +420,9 @@ parser_error_t _toStringBalance(
     uint8_t bcdOut[100];
     const uint16_t bcdOutLen = sizeof(bcdOut);
 
-    bignumLittleEndian_to_bcd(bcdOut, bcdOutLen, v->_ptr, 16);
+    bignumLittleEndian_to_bcd(bcdOut, bcdOutLen, v->_ptr, 8);
     if (!bignumLittleEndian_bcdprint(bufferUI, sizeof(bufferUI), bcdOut, bcdOutLen)) {
-        return parser_unexpected_buffer_end;
+        return parser_unexpected_value;
     }
 
     // Format number
