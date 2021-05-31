@@ -14,470 +14,477 @@
 *  limitations under the License.
 ********************************************************************************/
 
-#include "substrate_dispatch_V5.h"
+#include "substrate_dispatch_V1.h"
 #include "substrate_strings.h"
 #include "zxmacros.h"
 #include <stdint.h>
 
-__Z_INLINE parser_error_t _readMethod_balances_transfer_V5(
-    parser_context_t* c, pd_balances_transfer_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_balances_transfer_V1(
+    parser_context_t* c, pd_balances_transfer_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V5(
-    parser_context_t* c, pd_balances_transfer_keep_alive_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V1(
+    parser_context_t* c, pd_balances_transfer_keep_alive_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_bond_V5(
-    parser_context_t* c, pd_staking_bond_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_bond_V1(
+    parser_context_t* c, pd_staking_bond_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->controller))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->controller))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
-    CHECK_ERROR(_readRewardDestination_V5(c, &m->payee))
+    CHECK_ERROR(_readRewardDestination_V1(c, &m->payee))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_bond_extra_V5(
-    parser_context_t* c, pd_staking_bond_extra_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_bond_extra_V1(
+    parser_context_t* c, pd_staking_bond_extra_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->max_additional))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_unbond_V5(
-    parser_context_t* c, pd_staking_unbond_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_unbond_V1(
+    parser_context_t* c, pd_staking_unbond_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_withdraw_unbonded_V5(
-    parser_context_t* c, pd_staking_withdraw_unbonded_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_withdraw_unbonded_V1(
+    parser_context_t* c, pd_staking_withdraw_unbonded_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_validate_V5(
-    parser_context_t* c, pd_staking_validate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_validate_V1(
+    parser_context_t* c, pd_staking_validate_V1_t* m)
 {
-    CHECK_ERROR(_readValidatorPrefs_V5(c, &m->prefs))
+    CHECK_ERROR(_readValidatorPrefs_V1(c, &m->prefs))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_nominate_V5(
-    parser_context_t* c, pd_staking_nominate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_nominate_V1(
+    parser_context_t* c, pd_staking_nominate_V1_t* m)
 {
-    CHECK_ERROR(_readVecLookupSource_V5(c, &m->targets))
+    CHECK_ERROR(_readVecLookupSource_V1(c, &m->targets))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_chill_V5(
-    parser_context_t* c, pd_staking_chill_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_chill_V1(
+    parser_context_t* c, pd_staking_chill_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_set_payee_V5(
-    parser_context_t* c, pd_staking_set_payee_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_set_payee_V1(
+    parser_context_t* c, pd_staking_set_payee_V1_t* m)
 {
-    CHECK_ERROR(_readRewardDestination_V5(c, &m->payee))
+    CHECK_ERROR(_readRewardDestination_V1(c, &m->payee))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_payout_stakers_V5(
-    parser_context_t* c, pd_staking_payout_stakers_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_payout_stakers_V1(
+    parser_context_t* c, pd_staking_payout_stakers_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->validator_stash))
-    CHECK_ERROR(_readEraIndex_V5(c, &m->era))
+    CHECK_ERROR(_readAccountId_V1(c, &m->validator_stash))
+    CHECK_ERROR(_readEraIndex_V1(c, &m->era))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_rebond_V5(
-    parser_context_t* c, pd_staking_rebond_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_rebond_V1(
+    parser_context_t* c, pd_staking_rebond_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_session_set_keys_V5(
-    parser_context_t* c, pd_session_set_keys_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_session_set_keys_V1(
+    parser_context_t* c, pd_session_set_keys_V1_t* m)
 {
-    CHECK_ERROR(_readKeys_V5(c, &m->keys))
+    CHECK_ERROR(_readKeys_V1(c, &m->keys))
     CHECK_ERROR(_readBytes(c, &m->proof))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_session_purge_keys_V5(
-    parser_context_t* c, pd_session_purge_keys_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_session_purge_keys_V1(
+    parser_context_t* c, pd_session_purge_keys_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_utility_batch_V5(
-    parser_context_t* c, pd_utility_batch_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_utility_batch_V1(
+    parser_context_t* c, pd_utility_batch_V1_t* m)
 {
     CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_utility_batch_all_V5(
-    parser_context_t* c, pd_utility_batch_all_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_utility_batch_all_V1(
+    parser_context_t* c, pd_utility_batch_all_V1_t* m)
 {
     CHECK_ERROR(_readVecCall(c, &m->calls))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_eqlockdrop_lock_V1(
+    parser_context_t* c, pd_eqlockdrop_lock_V1_t* m)
+{
+    CHECK_ERROR(_readBalance(c, &m->amount))
     return parser_ok;
 }
 
 #ifdef SUBSTRATE_PARSER_FULL
-__Z_INLINE parser_error_t _readMethod_system_fill_block_V5(
-    parser_context_t* c, pd_system_fill_block_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_fill_block_V1(
+    parser_context_t* c, pd_system_fill_block_V1_t* m)
 {
-    CHECK_ERROR(_readPerbill_V5(c, &m->_ratio))
+    CHECK_ERROR(_readPerbill_V1(c, &m->_ratio))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_remark_V5(
-    parser_context_t* c, pd_system_remark_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_remark_V1(
+    parser_context_t* c, pd_system_remark_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->_remark))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_set_heap_pages_V5(
-    parser_context_t* c, pd_system_set_heap_pages_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_set_heap_pages_V1(
+    parser_context_t* c, pd_system_set_heap_pages_V1_t* m)
 {
     CHECK_ERROR(_readu64(c, &m->pages))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_set_code_V5(
-    parser_context_t* c, pd_system_set_code_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_set_code_V1(
+    parser_context_t* c, pd_system_set_code_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->code))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_set_code_without_checks_V5(
-    parser_context_t* c, pd_system_set_code_without_checks_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_set_code_without_checks_V1(
+    parser_context_t* c, pd_system_set_code_without_checks_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->code))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_set_changes_trie_config_V5(
-    parser_context_t* c, pd_system_set_changes_trie_config_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_set_changes_trie_config_V1(
+    parser_context_t* c, pd_system_set_changes_trie_config_V1_t* m)
 {
-    CHECK_ERROR(_readOptionChangesTrieConfiguration_V5(c, &m->changes_trie_config))
+    CHECK_ERROR(_readOptionChangesTrieConfiguration_V1(c, &m->changes_trie_config))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_set_storage_V5(
-    parser_context_t* c, pd_system_set_storage_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_set_storage_V1(
+    parser_context_t* c, pd_system_set_storage_V1_t* m)
 {
-    CHECK_ERROR(_readVecKeyValue_V5(c, &m->items))
+    CHECK_ERROR(_readVecKeyValue_V1(c, &m->items))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_kill_storage_V5(
-    parser_context_t* c, pd_system_kill_storage_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_kill_storage_V1(
+    parser_context_t* c, pd_system_kill_storage_V1_t* m)
 {
-    CHECK_ERROR(_readVecKey_V5(c, &m->keys))
+    CHECK_ERROR(_readVecKey_V1(c, &m->keys))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_kill_prefix_V5(
-    parser_context_t* c, pd_system_kill_prefix_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_kill_prefix_V1(
+    parser_context_t* c, pd_system_kill_prefix_V1_t* m)
 {
-    CHECK_ERROR(_readKey_V5(c, &m->prefix))
+    CHECK_ERROR(_readKey_V1(c, &m->prefix))
     CHECK_ERROR(_readu32(c, &m->_subkeys))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_system_remark_with_event_V5(
-    parser_context_t* c, pd_system_remark_with_event_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_system_remark_with_event_V1(
+    parser_context_t* c, pd_system_remark_with_event_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->remark))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_babe_report_equivocation_V5(
-    parser_context_t* c, pd_babe_report_equivocation_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_babe_report_equivocation_V1(
+    parser_context_t* c, pd_babe_report_equivocation_V1_t* m)
 {
-    CHECK_ERROR(_readBabeEquivocationProof_V5(c, &m->equivocation_proof))
-    CHECK_ERROR(_readKeyOwnerProof_V5(c, &m->key_owner_proof))
+    CHECK_ERROR(_readBabeEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_babe_report_equivocation_unsigned_V5(
-    parser_context_t* c, pd_babe_report_equivocation_unsigned_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_babe_report_equivocation_unsigned_V1(
+    parser_context_t* c, pd_babe_report_equivocation_unsigned_V1_t* m)
 {
-    CHECK_ERROR(_readBabeEquivocationProof_V5(c, &m->equivocation_proof))
-    CHECK_ERROR(_readKeyOwnerProof_V5(c, &m->key_owner_proof))
+    CHECK_ERROR(_readBabeEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_babe_plan_config_change_V5(
-    parser_context_t* c, pd_babe_plan_config_change_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_babe_plan_config_change_V1(
+    parser_context_t* c, pd_babe_plan_config_change_V1_t* m)
 {
-    CHECK_ERROR(_readNextConfigDescriptor_V5(c, &m->config))
+    CHECK_ERROR(_readNextConfigDescriptor_V1(c, &m->config))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_timestamp_set_V5(
-    parser_context_t* c, pd_timestamp_set_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_timestamp_set_V1(
+    parser_context_t* c, pd_timestamp_set_V1_t* m)
 {
-    CHECK_ERROR(_readCompactMoment_V5(c, &m->now))
+    CHECK_ERROR(_readCompactMoment_V1(c, &m->now))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_indices_claim_V5(
-    parser_context_t* c, pd_indices_claim_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_indices_claim_V1(
+    parser_context_t* c, pd_indices_claim_V1_t* m)
 {
-    CHECK_ERROR(_readAccountIndex_V5(c, &m->index))
+    CHECK_ERROR(_readAccountIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_indices_transfer_V5(
-    parser_context_t* c, pd_indices_transfer_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_indices_transfer_V1(
+    parser_context_t* c, pd_indices_transfer_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->new_))
-    CHECK_ERROR(_readAccountIndex_V5(c, &m->index))
+    CHECK_ERROR(_readAccountId_V1(c, &m->new_))
+    CHECK_ERROR(_readAccountIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_indices_free_V5(
-    parser_context_t* c, pd_indices_free_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_indices_free_V1(
+    parser_context_t* c, pd_indices_free_V1_t* m)
 {
-    CHECK_ERROR(_readAccountIndex_V5(c, &m->index))
+    CHECK_ERROR(_readAccountIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_indices_force_transfer_V5(
-    parser_context_t* c, pd_indices_force_transfer_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_indices_force_transfer_V1(
+    parser_context_t* c, pd_indices_force_transfer_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->new_))
-    CHECK_ERROR(_readAccountIndex_V5(c, &m->index))
+    CHECK_ERROR(_readAccountId_V1(c, &m->new_))
+    CHECK_ERROR(_readAccountIndex_V1(c, &m->index))
     CHECK_ERROR(_readbool(c, &m->freeze))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_indices_freeze_V5(
-    parser_context_t* c, pd_indices_freeze_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_indices_freeze_V1(
+    parser_context_t* c, pd_indices_freeze_V1_t* m)
 {
-    CHECK_ERROR(_readAccountIndex_V5(c, &m->index))
+    CHECK_ERROR(_readAccountIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_balances_set_balance_V5(
-    parser_context_t* c, pd_balances_set_balance_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_balances_set_balance_V1(
+    parser_context_t* c, pd_balances_set_balance_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->who))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->who))
     CHECK_ERROR(_readCompactBalance(c, &m->new_free))
     CHECK_ERROR(_readCompactBalance(c, &m->new_reserved))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_balances_force_transfer_V5(
-    parser_context_t* c, pd_balances_force_transfer_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_balances_force_transfer_V1(
+    parser_context_t* c, pd_balances_force_transfer_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->source))
-    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->source))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_authorship_set_uncles_V5(
-    parser_context_t* c, pd_authorship_set_uncles_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_authorship_set_uncles_V1(
+    parser_context_t* c, pd_authorship_set_uncles_V1_t* m)
 {
     CHECK_ERROR(_readVecHeader(c, &m->new_uncles))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_set_controller_V5(
-    parser_context_t* c, pd_staking_set_controller_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_set_controller_V1(
+    parser_context_t* c, pd_staking_set_controller_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->controller))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->controller))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_set_validator_count_V5(
-    parser_context_t* c, pd_staking_set_validator_count_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_set_validator_count_V1(
+    parser_context_t* c, pd_staking_set_validator_count_V1_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_increase_validator_count_V5(
-    parser_context_t* c, pd_staking_increase_validator_count_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_increase_validator_count_V1(
+    parser_context_t* c, pd_staking_increase_validator_count_V1_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->additional))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_scale_validator_count_V5(
-    parser_context_t* c, pd_staking_scale_validator_count_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_scale_validator_count_V1(
+    parser_context_t* c, pd_staking_scale_validator_count_V1_t* m)
 {
-    CHECK_ERROR(_readPercent_V5(c, &m->factor))
+    CHECK_ERROR(_readPercent_V1(c, &m->factor))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_force_no_eras_V5(
-    parser_context_t* c, pd_staking_force_no_eras_V5_t* m)
-{
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_force_new_era_V5(
-    parser_context_t* c, pd_staking_force_new_era_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_force_no_eras_V1(
+    parser_context_t* c, pd_staking_force_no_eras_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_set_invulnerables_V5(
-    parser_context_t* c, pd_staking_set_invulnerables_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_force_new_era_V1(
+    parser_context_t* c, pd_staking_force_new_era_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->invulnerables))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_force_unstake_V5(
-    parser_context_t* c, pd_staking_force_unstake_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_set_invulnerables_V1(
+    parser_context_t* c, pd_staking_set_invulnerables_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->stash))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->invulnerables))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_force_unstake_V1(
+    parser_context_t* c, pd_staking_force_unstake_V1_t* m)
+{
+    CHECK_ERROR(_readAccountId_V1(c, &m->stash))
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_force_new_era_always_V5(
-    parser_context_t* c, pd_staking_force_new_era_always_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_force_new_era_always_V1(
+    parser_context_t* c, pd_staking_force_new_era_always_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_cancel_deferred_slash_V5(
-    parser_context_t* c, pd_staking_cancel_deferred_slash_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_cancel_deferred_slash_V1(
+    parser_context_t* c, pd_staking_cancel_deferred_slash_V1_t* m)
 {
-    CHECK_ERROR(_readEraIndex_V5(c, &m->era))
+    CHECK_ERROR(_readEraIndex_V1(c, &m->era))
     CHECK_ERROR(_readVecu32(c, &m->slash_indices))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_set_history_depth_V5(
-    parser_context_t* c, pd_staking_set_history_depth_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_set_history_depth_V1(
+    parser_context_t* c, pd_staking_set_history_depth_V1_t* m)
 {
-    CHECK_ERROR(_readCompactEraIndex_V5(c, &m->new_history_depth))
+    CHECK_ERROR(_readCompactEraIndex_V1(c, &m->new_history_depth))
     CHECK_ERROR(_readCompactu32(c, &m->_era_items_deleted))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_reap_stash_V5(
-    parser_context_t* c, pd_staking_reap_stash_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_reap_stash_V1(
+    parser_context_t* c, pd_staking_reap_stash_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->stash))
+    CHECK_ERROR(_readAccountId_V1(c, &m->stash))
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_staking_kick_V5(
-    parser_context_t* c, pd_staking_kick_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_staking_kick_V1(
+    parser_context_t* c, pd_staking_kick_V1_t* m)
 {
-    CHECK_ERROR(_readVecLookupSource_V5(c, &m->who))
+    CHECK_ERROR(_readVecLookupSource_V1(c, &m->who))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_V5(
-    parser_context_t* c, pd_grandpa_report_equivocation_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_V1(
+    parser_context_t* c, pd_grandpa_report_equivocation_V1_t* m)
 {
-    CHECK_ERROR(_readGrandpaEquivocationProof_V5(c, &m->equivocation_proof))
-    CHECK_ERROR(_readKeyOwnerProof_V5(c, &m->key_owner_proof))
+    CHECK_ERROR(_readGrandpaEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_unsigned_V5(
-    parser_context_t* c, pd_grandpa_report_equivocation_unsigned_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_unsigned_V1(
+    parser_context_t* c, pd_grandpa_report_equivocation_unsigned_V1_t* m)
 {
-    CHECK_ERROR(_readGrandpaEquivocationProof_V5(c, &m->equivocation_proof))
-    CHECK_ERROR(_readKeyOwnerProof_V5(c, &m->key_owner_proof))
+    CHECK_ERROR(_readGrandpaEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_grandpa_note_stalled_V5(
-    parser_context_t* c, pd_grandpa_note_stalled_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_grandpa_note_stalled_V1(
+    parser_context_t* c, pd_grandpa_note_stalled_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     CHECK_ERROR(_readBlockNumber(c, &m->best_finalized_block_number))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_imonline_heartbeat_V5(
-    parser_context_t* c, pd_imonline_heartbeat_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_imonline_heartbeat_V1(
+    parser_context_t* c, pd_imonline_heartbeat_V1_t* m)
 {
     CHECK_ERROR(_readHeartbeat(c, &m->heartbeat))
-    CHECK_ERROR(_readSignature_V5(c, &m->_signature))
+    CHECK_ERROR(_readSignature_V1(c, &m->_signature))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_propose_V5(
-    parser_context_t* c, pd_democracy_propose_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_propose_V1(
+    parser_context_t* c, pd_democracy_propose_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_second_V5(
-    parser_context_t* c, pd_democracy_second_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_second_V1(
+    parser_context_t* c, pd_democracy_second_V1_t* m)
 {
-    CHECK_ERROR(_readCompactPropIndex_V5(c, &m->proposal))
+    CHECK_ERROR(_readCompactPropIndex_V1(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->seconds_upper_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_vote_V5(
-    parser_context_t* c, pd_democracy_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_vote_V1(
+    parser_context_t* c, pd_democracy_vote_V1_t* m)
 {
-    CHECK_ERROR(_readCompactReferendumIndex_V5(c, &m->ref_index))
-    CHECK_ERROR(_readAccountVote_V5(c, &m->vote))
+    CHECK_ERROR(_readCompactReferendumIndex_V1(c, &m->ref_index))
+    CHECK_ERROR(_readAccountVote_V1(c, &m->vote))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_emergency_cancel_V5(
-    parser_context_t* c, pd_democracy_emergency_cancel_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_emergency_cancel_V1(
+    parser_context_t* c, pd_democracy_emergency_cancel_V1_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V5(c, &m->ref_index))
+    CHECK_ERROR(_readReferendumIndex_V1(c, &m->ref_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_external_propose_V5(
-    parser_context_t* c, pd_democracy_external_propose_V5_t* m)
-{
-    CHECK_ERROR(_readHash(c, &m->proposal_hash))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_democracy_external_propose_majority_V5(
-    parser_context_t* c, pd_democracy_external_propose_majority_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_external_propose_V1(
+    parser_context_t* c, pd_democracy_external_propose_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_external_propose_default_V5(
-    parser_context_t* c, pd_democracy_external_propose_default_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_external_propose_majority_V1(
+    parser_context_t* c, pd_democracy_external_propose_majority_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_fast_track_V5(
-    parser_context_t* c, pd_democracy_fast_track_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_external_propose_default_V1(
+    parser_context_t* c, pd_democracy_external_propose_default_V1_t* m)
+{
+    CHECK_ERROR(_readHash(c, &m->proposal_hash))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_democracy_fast_track_V1(
+    parser_context_t* c, pd_democracy_fast_track_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readBlockNumber(c, &m->voting_period))
@@ -485,2426 +492,2429 @@ __Z_INLINE parser_error_t _readMethod_democracy_fast_track_V5(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_veto_external_V5(
-    parser_context_t* c, pd_democracy_veto_external_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_veto_external_V1(
+    parser_context_t* c, pd_democracy_veto_external_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_cancel_referendum_V5(
-    parser_context_t* c, pd_democracy_cancel_referendum_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_cancel_referendum_V1(
+    parser_context_t* c, pd_democracy_cancel_referendum_V1_t* m)
 {
-    CHECK_ERROR(_readCompactReferendumIndex_V5(c, &m->ref_index))
+    CHECK_ERROR(_readCompactReferendumIndex_V1(c, &m->ref_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_cancel_queued_V5(
-    parser_context_t* c, pd_democracy_cancel_queued_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_cancel_queued_V1(
+    parser_context_t* c, pd_democracy_cancel_queued_V1_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V5(c, &m->which))
+    CHECK_ERROR(_readReferendumIndex_V1(c, &m->which))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_delegate_V5(
-    parser_context_t* c, pd_democracy_delegate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_delegate_V1(
+    parser_context_t* c, pd_democracy_delegate_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->to))
-    CHECK_ERROR(_readConviction_V5(c, &m->conviction))
+    CHECK_ERROR(_readAccountId_V1(c, &m->to))
+    CHECK_ERROR(_readConviction_V1(c, &m->conviction))
     CHECK_ERROR(_readBalanceOf(c, &m->balance))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_undelegate_V5(
-    parser_context_t* c, pd_democracy_undelegate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_undelegate_V1(
+    parser_context_t* c, pd_democracy_undelegate_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_clear_public_proposals_V5(
-    parser_context_t* c, pd_democracy_clear_public_proposals_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_clear_public_proposals_V1(
+    parser_context_t* c, pd_democracy_clear_public_proposals_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_note_preimage_V5(
-    parser_context_t* c, pd_democracy_note_preimage_V5_t* m)
-{
-    CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_democracy_note_preimage_operational_V5(
-    parser_context_t* c, pd_democracy_note_preimage_operational_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_note_preimage_V1(
+    parser_context_t* c, pd_democracy_note_preimage_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_note_imminent_preimage_V5(
-    parser_context_t* c, pd_democracy_note_imminent_preimage_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_note_preimage_operational_V1(
+    parser_context_t* c, pd_democracy_note_preimage_operational_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_note_imminent_preimage_operational_V5(
-    parser_context_t* c, pd_democracy_note_imminent_preimage_operational_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_note_imminent_preimage_V1(
+    parser_context_t* c, pd_democracy_note_imminent_preimage_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_reap_preimage_V5(
-    parser_context_t* c, pd_democracy_reap_preimage_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_note_imminent_preimage_operational_V1(
+    parser_context_t* c, pd_democracy_note_imminent_preimage_operational_V1_t* m)
+{
+    CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_democracy_reap_preimage_V1(
+    parser_context_t* c, pd_democracy_reap_preimage_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readCompactu32(c, &m->proposal_len_upper_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_unlock_V5(
-    parser_context_t* c, pd_democracy_unlock_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_unlock_V1(
+    parser_context_t* c, pd_democracy_unlock_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->target))
+    CHECK_ERROR(_readAccountId_V1(c, &m->target))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_remove_vote_V5(
-    parser_context_t* c, pd_democracy_remove_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_remove_vote_V1(
+    parser_context_t* c, pd_democracy_remove_vote_V1_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V5(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_remove_other_vote_V5(
-    parser_context_t* c, pd_democracy_remove_other_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_remove_other_vote_V1(
+    parser_context_t* c, pd_democracy_remove_other_vote_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->target))
-    CHECK_ERROR(_readReferendumIndex_V5(c, &m->index))
+    CHECK_ERROR(_readAccountId_V1(c, &m->target))
+    CHECK_ERROR(_readReferendumIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_enact_proposal_V5(
-    parser_context_t* c, pd_democracy_enact_proposal_V5_t* m)
-{
-    CHECK_ERROR(_readHash(c, &m->proposal_hash))
-    CHECK_ERROR(_readReferendumIndex_V5(c, &m->index))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_democracy_blacklist_V5(
-    parser_context_t* c, pd_democracy_blacklist_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_enact_proposal_V1(
+    parser_context_t* c, pd_democracy_enact_proposal_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
-    CHECK_ERROR(_readOptionReferendumIndex_V5(c, &m->maybe_ref_index))
+    CHECK_ERROR(_readReferendumIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_democracy_cancel_proposal_V5(
-    parser_context_t* c, pd_democracy_cancel_proposal_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_blacklist_V1(
+    parser_context_t* c, pd_democracy_blacklist_V1_t* m)
 {
-    CHECK_ERROR(_readCompactPropIndex_V5(c, &m->prop_index))
+    CHECK_ERROR(_readHash(c, &m->proposal_hash))
+    CHECK_ERROR(_readOptionReferendumIndex_V1(c, &m->maybe_ref_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_council_set_members_V5(
-    parser_context_t* c, pd_council_set_members_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_democracy_cancel_proposal_V1(
+    parser_context_t* c, pd_democracy_cancel_proposal_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->new_members))
-    CHECK_ERROR(_readOptionAccountId_V5(c, &m->prime))
-    CHECK_ERROR(_readMemberCount_V5(c, &m->old_count))
+    CHECK_ERROR(_readCompactPropIndex_V1(c, &m->prop_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_council_execute_V5(
-    parser_context_t* c, pd_council_execute_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_council_set_members_V1(
+    parser_context_t* c, pd_council_set_members_V1_t* m)
+{
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->new_members))
+    CHECK_ERROR(_readOptionAccountId_V1(c, &m->prime))
+    CHECK_ERROR(_readMemberCount_V1(c, &m->old_count))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_council_execute_V1(
+    parser_context_t* c, pd_council_execute_V1_t* m)
 {
     CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_council_propose_V5(
-    parser_context_t* c, pd_council_propose_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_council_propose_V1(
+    parser_context_t* c, pd_council_propose_V1_t* m)
 {
-    CHECK_ERROR(_readCompactMemberCount_V5(c, &m->threshold))
+    CHECK_ERROR(_readCompactMemberCount_V1(c, &m->threshold))
     CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_council_vote_V5(
-    parser_context_t* c, pd_council_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_council_vote_V1(
+    parser_context_t* c, pd_council_vote_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal))
-    CHECK_ERROR(_readCompactProposalIndex_V5(c, &m->index))
+    CHECK_ERROR(_readCompactProposalIndex_V1(c, &m->index))
     CHECK_ERROR(_readbool(c, &m->approve))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_council_close_V5(
-    parser_context_t* c, pd_council_close_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_council_close_V1(
+    parser_context_t* c, pd_council_close_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
-    CHECK_ERROR(_readCompactProposalIndex_V5(c, &m->index))
-    CHECK_ERROR(_readCompactWeight_V5(c, &m->proposal_weight_bound))
+    CHECK_ERROR(_readCompactProposalIndex_V1(c, &m->index))
+    CHECK_ERROR(_readCompactWeight_V1(c, &m->proposal_weight_bound))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_council_disapprove_proposal_V5(
-    parser_context_t* c, pd_council_disapprove_proposal_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_council_disapprove_proposal_V1(
+    parser_context_t* c, pd_council_disapprove_proposal_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalcommittee_set_members_V5(
-    parser_context_t* c, pd_technicalcommittee_set_members_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalcommittee_set_members_V1(
+    parser_context_t* c, pd_technicalcommittee_set_members_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->new_members))
-    CHECK_ERROR(_readOptionAccountId_V5(c, &m->prime))
-    CHECK_ERROR(_readMemberCount_V5(c, &m->old_count))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->new_members))
+    CHECK_ERROR(_readOptionAccountId_V1(c, &m->prime))
+    CHECK_ERROR(_readMemberCount_V1(c, &m->old_count))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalcommittee_execute_V5(
-    parser_context_t* c, pd_technicalcommittee_execute_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalcommittee_execute_V1(
+    parser_context_t* c, pd_technicalcommittee_execute_V1_t* m)
 {
     CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalcommittee_propose_V5(
-    parser_context_t* c, pd_technicalcommittee_propose_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalcommittee_propose_V1(
+    parser_context_t* c, pd_technicalcommittee_propose_V1_t* m)
 {
-    CHECK_ERROR(_readCompactMemberCount_V5(c, &m->threshold))
+    CHECK_ERROR(_readCompactMemberCount_V1(c, &m->threshold))
     CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalcommittee_vote_V5(
-    parser_context_t* c, pd_technicalcommittee_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalcommittee_vote_V1(
+    parser_context_t* c, pd_technicalcommittee_vote_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal))
-    CHECK_ERROR(_readCompactProposalIndex_V5(c, &m->index))
+    CHECK_ERROR(_readCompactProposalIndex_V1(c, &m->index))
     CHECK_ERROR(_readbool(c, &m->approve))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalcommittee_close_V5(
-    parser_context_t* c, pd_technicalcommittee_close_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalcommittee_close_V1(
+    parser_context_t* c, pd_technicalcommittee_close_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
-    CHECK_ERROR(_readCompactProposalIndex_V5(c, &m->index))
-    CHECK_ERROR(_readCompactWeight_V5(c, &m->proposal_weight_bound))
+    CHECK_ERROR(_readCompactProposalIndex_V1(c, &m->index))
+    CHECK_ERROR(_readCompactWeight_V1(c, &m->proposal_weight_bound))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalcommittee_disapprove_proposal_V5(
-    parser_context_t* c, pd_technicalcommittee_disapprove_proposal_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalcommittee_disapprove_proposal_V1(
+    parser_context_t* c, pd_technicalcommittee_disapprove_proposal_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V5(
-    parser_context_t* c, pd_phragmenelection_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V1(
+    parser_context_t* c, pd_phragmenelection_vote_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->votes))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->votes))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_phragmenelection_remove_voter_V5(
-    parser_context_t* c, pd_phragmenelection_remove_voter_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_phragmenelection_remove_voter_V1(
+    parser_context_t* c, pd_phragmenelection_remove_voter_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_phragmenelection_submit_candidacy_V5(
-    parser_context_t* c, pd_phragmenelection_submit_candidacy_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_phragmenelection_submit_candidacy_V1(
+    parser_context_t* c, pd_phragmenelection_submit_candidacy_V1_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->candidate_count))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_phragmenelection_renounce_candidacy_V5(
-    parser_context_t* c, pd_phragmenelection_renounce_candidacy_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_phragmenelection_renounce_candidacy_V1(
+    parser_context_t* c, pd_phragmenelection_renounce_candidacy_V1_t* m)
 {
-    CHECK_ERROR(_readRenouncing_V5(c, &m->renouncing))
+    CHECK_ERROR(_readRenouncing_V1(c, &m->renouncing))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_phragmenelection_remove_member_V5(
-    parser_context_t* c, pd_phragmenelection_remove_member_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_phragmenelection_remove_member_V1(
+    parser_context_t* c, pd_phragmenelection_remove_member_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->who))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->who))
     CHECK_ERROR(_readbool(c, &m->has_replacement))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_phragmenelection_clean_defunct_voters_V5(
-    parser_context_t* c, pd_phragmenelection_clean_defunct_voters_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_phragmenelection_clean_defunct_voters_V1(
+    parser_context_t* c, pd_phragmenelection_clean_defunct_voters_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->_num_voters))
     CHECK_ERROR(_readu32(c, &m->_num_defunct))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_add_member_V5(
-    parser_context_t* c, pd_technicalmembership_add_member_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_add_member_V1(
+    parser_context_t* c, pd_technicalmembership_add_member_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_remove_member_V5(
-    parser_context_t* c, pd_technicalmembership_remove_member_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_remove_member_V1(
+    parser_context_t* c, pd_technicalmembership_remove_member_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_swap_member_V5(
-    parser_context_t* c, pd_technicalmembership_swap_member_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_swap_member_V1(
+    parser_context_t* c, pd_technicalmembership_swap_member_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->remove))
-    CHECK_ERROR(_readAccountId_V5(c, &m->add))
+    CHECK_ERROR(_readAccountId_V1(c, &m->remove))
+    CHECK_ERROR(_readAccountId_V1(c, &m->add))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_reset_members_V5(
-    parser_context_t* c, pd_technicalmembership_reset_members_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_reset_members_V1(
+    parser_context_t* c, pd_technicalmembership_reset_members_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->members))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->members))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_change_key_V5(
-    parser_context_t* c, pd_technicalmembership_change_key_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_change_key_V1(
+    parser_context_t* c, pd_technicalmembership_change_key_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->new_))
+    CHECK_ERROR(_readAccountId_V1(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_set_prime_V5(
-    parser_context_t* c, pd_technicalmembership_set_prime_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_set_prime_V1(
+    parser_context_t* c, pd_technicalmembership_set_prime_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_technicalmembership_clear_prime_V5(
-    parser_context_t* c, pd_technicalmembership_clear_prime_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_technicalmembership_clear_prime_V1(
+    parser_context_t* c, pd_technicalmembership_clear_prime_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_treasury_propose_spend_V5(
-    parser_context_t* c, pd_treasury_propose_spend_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_treasury_propose_spend_V1(
+    parser_context_t* c, pd_treasury_propose_spend_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
-    CHECK_ERROR(_readLookupSource_V5(c, &m->beneficiary))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->beneficiary))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_treasury_reject_proposal_V5(
-    parser_context_t* c, pd_treasury_reject_proposal_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_treasury_reject_proposal_V1(
+    parser_context_t* c, pd_treasury_reject_proposal_V1_t* m)
 {
-    CHECK_ERROR(_readCompactProposalIndex_V5(c, &m->proposal_id))
+    CHECK_ERROR(_readCompactProposalIndex_V1(c, &m->proposal_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_treasury_approve_proposal_V5(
-    parser_context_t* c, pd_treasury_approve_proposal_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_treasury_approve_proposal_V1(
+    parser_context_t* c, pd_treasury_approve_proposal_V1_t* m)
 {
-    CHECK_ERROR(_readCompactProposalIndex_V5(c, &m->proposal_id))
+    CHECK_ERROR(_readCompactProposalIndex_V1(c, &m->proposal_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_claims_claim_V5(
-    parser_context_t* c, pd_claims_claim_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_claims_claim_V1(
+    parser_context_t* c, pd_claims_claim_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->dest))
-    CHECK_ERROR(_readEcdsaSignature_V5(c, &m->ethereum_signature))
+    CHECK_ERROR(_readAccountId_V1(c, &m->dest))
+    CHECK_ERROR(_readEcdsaSignature_V1(c, &m->ethereum_signature))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_claims_mint_claim_V5(
-    parser_context_t* c, pd_claims_mint_claim_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_claims_mint_claim_V1(
+    parser_context_t* c, pd_claims_mint_claim_V1_t* m)
 {
-    CHECK_ERROR(_readEthereumAddress_V5(c, &m->who))
+    CHECK_ERROR(_readEthereumAddress_V1(c, &m->who))
     CHECK_ERROR(_readBalanceOf(c, &m->value))
-    CHECK_ERROR(_readOptionTupleBalanceOfBalanceOfBlockNumber_V5(c, &m->vesting_schedule))
-    CHECK_ERROR(_readOptionStatementKind_V5(c, &m->statement))
+    CHECK_ERROR(_readOptionTupleBalanceOfBalanceOfBlockNumber_V1(c, &m->vesting_schedule))
+    CHECK_ERROR(_readOptionStatementKind_V1(c, &m->statement))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_claims_claim_attest_V5(
-    parser_context_t* c, pd_claims_claim_attest_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_claims_claim_attest_V1(
+    parser_context_t* c, pd_claims_claim_attest_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->dest))
-    CHECK_ERROR(_readEcdsaSignature_V5(c, &m->ethereum_signature))
+    CHECK_ERROR(_readAccountId_V1(c, &m->dest))
+    CHECK_ERROR(_readEcdsaSignature_V1(c, &m->ethereum_signature))
     CHECK_ERROR(_readBytes(c, &m->statement))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_claims_attest_V5(
-    parser_context_t* c, pd_claims_attest_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_claims_attest_V1(
+    parser_context_t* c, pd_claims_attest_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->statement))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_claims_move_claim_V5(
-    parser_context_t* c, pd_claims_move_claim_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_claims_move_claim_V1(
+    parser_context_t* c, pd_claims_move_claim_V1_t* m)
 {
-    CHECK_ERROR(_readEthereumAddress_V5(c, &m->old))
-    CHECK_ERROR(_readEthereumAddress_V5(c, &m->new_))
-    CHECK_ERROR(_readOptionAccountId_V5(c, &m->maybe_preclaim))
+    CHECK_ERROR(_readEthereumAddress_V1(c, &m->old))
+    CHECK_ERROR(_readEthereumAddress_V1(c, &m->new_))
+    CHECK_ERROR(_readOptionAccountId_V1(c, &m->maybe_preclaim))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_utility_as_derivative_V5(
-    parser_context_t* c, pd_utility_as_derivative_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_utility_as_derivative_V1(
+    parser_context_t* c, pd_utility_as_derivative_V1_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->index))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_add_registrar_V5(
-    parser_context_t* c, pd_identity_add_registrar_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_add_registrar_V1(
+    parser_context_t* c, pd_identity_add_registrar_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->account))
+    CHECK_ERROR(_readAccountId_V1(c, &m->account))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_set_identity_V5(
-    parser_context_t* c, pd_identity_set_identity_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_set_identity_V1(
+    parser_context_t* c, pd_identity_set_identity_V1_t* m)
 {
-    CHECK_ERROR(_readIdentityInfo_V5(c, &m->info))
+    CHECK_ERROR(_readIdentityInfo_V1(c, &m->info))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_set_subs_V5(
-    parser_context_t* c, pd_identity_set_subs_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_set_subs_V1(
+    parser_context_t* c, pd_identity_set_subs_V1_t* m)
 {
-    CHECK_ERROR(_readVecTupleAccountIdData_V5(c, &m->subs))
+    CHECK_ERROR(_readVecTupleAccountIdData_V1(c, &m->subs))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_clear_identity_V5(
-    parser_context_t* c, pd_identity_clear_identity_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_clear_identity_V1(
+    parser_context_t* c, pd_identity_clear_identity_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_request_judgement_V5(
-    parser_context_t* c, pd_identity_request_judgement_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_request_judgement_V1(
+    parser_context_t* c, pd_identity_request_judgement_V1_t* m)
 {
-    CHECK_ERROR(_readCompactRegistrarIndex_V5(c, &m->reg_index))
+    CHECK_ERROR(_readCompactRegistrarIndex_V1(c, &m->reg_index))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->max_fee))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_cancel_request_V5(
-    parser_context_t* c, pd_identity_cancel_request_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_cancel_request_V1(
+    parser_context_t* c, pd_identity_cancel_request_V1_t* m)
 {
-    CHECK_ERROR(_readRegistrarIndex_V5(c, &m->reg_index))
+    CHECK_ERROR(_readRegistrarIndex_V1(c, &m->reg_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_set_fee_V5(
-    parser_context_t* c, pd_identity_set_fee_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_set_fee_V1(
+    parser_context_t* c, pd_identity_set_fee_V1_t* m)
 {
-    CHECK_ERROR(_readCompactRegistrarIndex_V5(c, &m->index))
+    CHECK_ERROR(_readCompactRegistrarIndex_V1(c, &m->index))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->fee))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_set_account_id_V5(
-    parser_context_t* c, pd_identity_set_account_id_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_set_account_id_V1(
+    parser_context_t* c, pd_identity_set_account_id_V1_t* m)
 {
-    CHECK_ERROR(_readCompactRegistrarIndex_V5(c, &m->index))
-    CHECK_ERROR(_readAccountId_V5(c, &m->new_))
+    CHECK_ERROR(_readCompactRegistrarIndex_V1(c, &m->index))
+    CHECK_ERROR(_readAccountId_V1(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_set_fields_V5(
-    parser_context_t* c, pd_identity_set_fields_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_set_fields_V1(
+    parser_context_t* c, pd_identity_set_fields_V1_t* m)
 {
-    CHECK_ERROR(_readCompactRegistrarIndex_V5(c, &m->index))
-    CHECK_ERROR(_readIdentityFields_V5(c, &m->fields))
+    CHECK_ERROR(_readCompactRegistrarIndex_V1(c, &m->index))
+    CHECK_ERROR(_readIdentityFields_V1(c, &m->fields))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V5(
-    parser_context_t* c, pd_identity_provide_judgement_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V1(
+    parser_context_t* c, pd_identity_provide_judgement_V1_t* m)
 {
-    CHECK_ERROR(_readCompactRegistrarIndex_V5(c, &m->reg_index))
-    CHECK_ERROR(_readLookupSource_V5(c, &m->target))
-    CHECK_ERROR(_readIdentityJudgement_V5(c, &m->judgement))
+    CHECK_ERROR(_readCompactRegistrarIndex_V1(c, &m->reg_index))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->target))
+    CHECK_ERROR(_readIdentityJudgement_V1(c, &m->judgement))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_kill_identity_V5(
-    parser_context_t* c, pd_identity_kill_identity_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_kill_identity_V1(
+    parser_context_t* c, pd_identity_kill_identity_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->target))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->target))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_add_sub_V5(
-    parser_context_t* c, pd_identity_add_sub_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_add_sub_V1(
+    parser_context_t* c, pd_identity_add_sub_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->sub))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->sub))
     CHECK_ERROR(_readData(c, &m->data))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_rename_sub_V5(
-    parser_context_t* c, pd_identity_rename_sub_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_rename_sub_V1(
+    parser_context_t* c, pd_identity_rename_sub_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->sub))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->sub))
     CHECK_ERROR(_readData(c, &m->data))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_remove_sub_V5(
-    parser_context_t* c, pd_identity_remove_sub_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_remove_sub_V1(
+    parser_context_t* c, pd_identity_remove_sub_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->sub))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->sub))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_identity_quit_sub_V5(
-    parser_context_t* c, pd_identity_quit_sub_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_identity_quit_sub_V1(
+    parser_context_t* c, pd_identity_quit_sub_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_bid_V5(
-    parser_context_t* c, pd_society_bid_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_bid_V1(
+    parser_context_t* c, pd_society_bid_V1_t* m)
 {
     CHECK_ERROR(_readBalanceOf(c, &m->value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_unbid_V5(
-    parser_context_t* c, pd_society_unbid_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_unbid_V1(
+    parser_context_t* c, pd_society_unbid_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->pos))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_vouch_V5(
-    parser_context_t* c, pd_society_vouch_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_vouch_V1(
+    parser_context_t* c, pd_society_vouch_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     CHECK_ERROR(_readBalanceOf(c, &m->value))
     CHECK_ERROR(_readBalanceOf(c, &m->tip))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_unvouch_V5(
-    parser_context_t* c, pd_society_unvouch_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_unvouch_V1(
+    parser_context_t* c, pd_society_unvouch_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->pos))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_vote_V5(
-    parser_context_t* c, pd_society_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_vote_V1(
+    parser_context_t* c, pd_society_vote_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->candidate))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->candidate))
     CHECK_ERROR(_readbool(c, &m->approve))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_defender_vote_V5(
-    parser_context_t* c, pd_society_defender_vote_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_defender_vote_V1(
+    parser_context_t* c, pd_society_defender_vote_V1_t* m)
 {
     CHECK_ERROR(_readbool(c, &m->approve))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_payout_V5(
-    parser_context_t* c, pd_society_payout_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_payout_V1(
+    parser_context_t* c, pd_society_payout_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_found_V5(
-    parser_context_t* c, pd_society_found_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_found_V1(
+    parser_context_t* c, pd_society_found_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->founder))
+    CHECK_ERROR(_readAccountId_V1(c, &m->founder))
     CHECK_ERROR(_readu32(c, &m->max_members))
     CHECK_ERROR(_readBytes(c, &m->rules))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_unfound_V5(
-    parser_context_t* c, pd_society_unfound_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_unfound_V1(
+    parser_context_t* c, pd_society_unfound_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_judge_suspended_member_V5(
-    parser_context_t* c, pd_society_judge_suspended_member_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_judge_suspended_member_V1(
+    parser_context_t* c, pd_society_judge_suspended_member_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     CHECK_ERROR(_readbool(c, &m->forgive))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_judge_suspended_candidate_V5(
-    parser_context_t* c, pd_society_judge_suspended_candidate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_judge_suspended_candidate_V1(
+    parser_context_t* c, pd_society_judge_suspended_candidate_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
-    CHECK_ERROR(_readSocietyJudgement_V5(c, &m->judgement))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
+    CHECK_ERROR(_readSocietyJudgement_V1(c, &m->judgement))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_society_set_max_members_V5(
-    parser_context_t* c, pd_society_set_max_members_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_society_set_max_members_V1(
+    parser_context_t* c, pd_society_set_max_members_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->max))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_as_recovered_V5(
-    parser_context_t* c, pd_recovery_as_recovered_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_as_recovered_V1(
+    parser_context_t* c, pd_recovery_as_recovered_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->account))
+    CHECK_ERROR(_readAccountId_V1(c, &m->account))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_set_recovered_V5(
-    parser_context_t* c, pd_recovery_set_recovered_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_set_recovered_V1(
+    parser_context_t* c, pd_recovery_set_recovered_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->lost))
-    CHECK_ERROR(_readAccountId_V5(c, &m->rescuer))
+    CHECK_ERROR(_readAccountId_V1(c, &m->lost))
+    CHECK_ERROR(_readAccountId_V1(c, &m->rescuer))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_create_recovery_V5(
-    parser_context_t* c, pd_recovery_create_recovery_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_create_recovery_V1(
+    parser_context_t* c, pd_recovery_create_recovery_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->friends))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->friends))
     CHECK_ERROR(_readu16(c, &m->threshold))
     CHECK_ERROR(_readBlockNumber(c, &m->delay_period))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_initiate_recovery_V5(
-    parser_context_t* c, pd_recovery_initiate_recovery_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_initiate_recovery_V1(
+    parser_context_t* c, pd_recovery_initiate_recovery_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->account))
+    CHECK_ERROR(_readAccountId_V1(c, &m->account))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_vouch_recovery_V5(
-    parser_context_t* c, pd_recovery_vouch_recovery_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_vouch_recovery_V1(
+    parser_context_t* c, pd_recovery_vouch_recovery_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->lost))
-    CHECK_ERROR(_readAccountId_V5(c, &m->rescuer))
+    CHECK_ERROR(_readAccountId_V1(c, &m->lost))
+    CHECK_ERROR(_readAccountId_V1(c, &m->rescuer))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_claim_recovery_V5(
-    parser_context_t* c, pd_recovery_claim_recovery_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_claim_recovery_V1(
+    parser_context_t* c, pd_recovery_claim_recovery_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->account))
+    CHECK_ERROR(_readAccountId_V1(c, &m->account))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_close_recovery_V5(
-    parser_context_t* c, pd_recovery_close_recovery_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_close_recovery_V1(
+    parser_context_t* c, pd_recovery_close_recovery_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->rescuer))
+    CHECK_ERROR(_readAccountId_V1(c, &m->rescuer))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_recovery_remove_recovery_V5(
-    parser_context_t* c, pd_recovery_remove_recovery_V5_t* m)
-{
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_recovery_cancel_recovered_V5(
-    parser_context_t* c, pd_recovery_cancel_recovered_V5_t* m)
-{
-    CHECK_ERROR(_readAccountId_V5(c, &m->account))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_vesting_vest_V5(
-    parser_context_t* c, pd_vesting_vest_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_remove_recovery_V1(
+    parser_context_t* c, pd_recovery_remove_recovery_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_vesting_vest_other_V5(
-    parser_context_t* c, pd_vesting_vest_other_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_recovery_cancel_recovered_V1(
+    parser_context_t* c, pd_recovery_cancel_recovered_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->target))
+    CHECK_ERROR(_readAccountId_V1(c, &m->account))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_vesting_vested_transfer_V5(
-    parser_context_t* c, pd_vesting_vested_transfer_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_vesting_vest_V1(
+    parser_context_t* c, pd_vesting_vest_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->target))
-    CHECK_ERROR(_readVestingInfo_V5(c, &m->schedule))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_vesting_force_vested_transfer_V5(
-    parser_context_t* c, pd_vesting_force_vested_transfer_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_vesting_vest_other_V1(
+    parser_context_t* c, pd_vesting_vest_other_V1_t* m)
 {
-    CHECK_ERROR(_readLookupSource_V5(c, &m->source))
-    CHECK_ERROR(_readLookupSource_V5(c, &m->target))
-    CHECK_ERROR(_readVestingInfo_V5(c, &m->schedule))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->target))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_scheduler_schedule_V5(
-    parser_context_t* c, pd_scheduler_schedule_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_vesting_vested_transfer_V1(
+    parser_context_t* c, pd_vesting_vested_transfer_V1_t* m)
+{
+    CHECK_ERROR(_readLookupSource_V1(c, &m->target))
+    CHECK_ERROR(_readVestingInfo_V1(c, &m->schedule))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_vesting_force_vested_transfer_V1(
+    parser_context_t* c, pd_vesting_force_vested_transfer_V1_t* m)
+{
+    CHECK_ERROR(_readLookupSource_V1(c, &m->source))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->target))
+    CHECK_ERROR(_readVestingInfo_V1(c, &m->schedule))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_scheduler_schedule_V1(
+    parser_context_t* c, pd_scheduler_schedule_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->when))
-    CHECK_ERROR(_readOptionPeriod_V5(c, &m->maybe_periodic))
-    CHECK_ERROR(_readPriority_V5(c, &m->priority))
+    CHECK_ERROR(_readOptionPeriod_V1(c, &m->maybe_periodic))
+    CHECK_ERROR(_readPriority_V1(c, &m->priority))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_scheduler_cancel_V5(
-    parser_context_t* c, pd_scheduler_cancel_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_scheduler_cancel_V1(
+    parser_context_t* c, pd_scheduler_cancel_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->when))
     CHECK_ERROR(_readu32(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_V5(
-    parser_context_t* c, pd_scheduler_schedule_named_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_V1(
+    parser_context_t* c, pd_scheduler_schedule_named_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->id))
     CHECK_ERROR(_readBlockNumber(c, &m->when))
-    CHECK_ERROR(_readOptionPeriod_V5(c, &m->maybe_periodic))
-    CHECK_ERROR(_readPriority_V5(c, &m->priority))
+    CHECK_ERROR(_readOptionPeriod_V1(c, &m->maybe_periodic))
+    CHECK_ERROR(_readPriority_V1(c, &m->priority))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_scheduler_cancel_named_V5(
-    parser_context_t* c, pd_scheduler_cancel_named_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_scheduler_cancel_named_V1(
+    parser_context_t* c, pd_scheduler_cancel_named_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_scheduler_schedule_after_V5(
-    parser_context_t* c, pd_scheduler_schedule_after_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_scheduler_schedule_after_V1(
+    parser_context_t* c, pd_scheduler_schedule_after_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->after))
-    CHECK_ERROR(_readOptionPeriod_V5(c, &m->maybe_periodic))
-    CHECK_ERROR(_readPriority_V5(c, &m->priority))
+    CHECK_ERROR(_readOptionPeriod_V1(c, &m->maybe_periodic))
+    CHECK_ERROR(_readPriority_V1(c, &m->priority))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_after_V5(
-    parser_context_t* c, pd_scheduler_schedule_named_after_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_after_V1(
+    parser_context_t* c, pd_scheduler_schedule_named_after_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->id))
     CHECK_ERROR(_readBlockNumber(c, &m->after))
-    CHECK_ERROR(_readOptionPeriod_V5(c, &m->maybe_periodic))
-    CHECK_ERROR(_readPriority_V5(c, &m->priority))
+    CHECK_ERROR(_readOptionPeriod_V1(c, &m->maybe_periodic))
+    CHECK_ERROR(_readPriority_V1(c, &m->priority))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_proxy_V5(
-    parser_context_t* c, pd_proxy_proxy_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_proxy_V1(
+    parser_context_t* c, pd_proxy_proxy_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->real))
-    CHECK_ERROR(_readOptionProxyType_V5(c, &m->force_proxy_type))
+    CHECK_ERROR(_readAccountId_V1(c, &m->real))
+    CHECK_ERROR(_readOptionProxyType_V1(c, &m->force_proxy_type))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_add_proxy_V5(
-    parser_context_t* c, pd_proxy_add_proxy_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_add_proxy_V1(
+    parser_context_t* c, pd_proxy_add_proxy_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->delegate))
-    CHECK_ERROR(_readProxyType_V5(c, &m->proxy_type))
+    CHECK_ERROR(_readAccountId_V1(c, &m->delegate))
+    CHECK_ERROR(_readProxyType_V1(c, &m->proxy_type))
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_remove_proxy_V5(
-    parser_context_t* c, pd_proxy_remove_proxy_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_remove_proxy_V1(
+    parser_context_t* c, pd_proxy_remove_proxy_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->delegate))
-    CHECK_ERROR(_readProxyType_V5(c, &m->proxy_type))
+    CHECK_ERROR(_readAccountId_V1(c, &m->delegate))
+    CHECK_ERROR(_readProxyType_V1(c, &m->proxy_type))
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_remove_proxies_V5(
-    parser_context_t* c, pd_proxy_remove_proxies_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_remove_proxies_V1(
+    parser_context_t* c, pd_proxy_remove_proxies_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_anonymous_V5(
-    parser_context_t* c, pd_proxy_anonymous_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_anonymous_V1(
+    parser_context_t* c, pd_proxy_anonymous_V1_t* m)
 {
-    CHECK_ERROR(_readProxyType_V5(c, &m->proxy_type))
+    CHECK_ERROR(_readProxyType_V1(c, &m->proxy_type))
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     CHECK_ERROR(_readu16(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_kill_anonymous_V5(
-    parser_context_t* c, pd_proxy_kill_anonymous_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_kill_anonymous_V1(
+    parser_context_t* c, pd_proxy_kill_anonymous_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->spawner))
-    CHECK_ERROR(_readProxyType_V5(c, &m->proxy_type))
+    CHECK_ERROR(_readAccountId_V1(c, &m->spawner))
+    CHECK_ERROR(_readProxyType_V1(c, &m->proxy_type))
     CHECK_ERROR(_readu16(c, &m->index))
     CHECK_ERROR(_readCompactBlockNumber(c, &m->height))
     CHECK_ERROR(_readCompactu32(c, &m->ext_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_announce_V5(
-    parser_context_t* c, pd_proxy_announce_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_announce_V1(
+    parser_context_t* c, pd_proxy_announce_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->real))
-    CHECK_ERROR(_readCallHashOf_V5(c, &m->call_hash))
+    CHECK_ERROR(_readAccountId_V1(c, &m->real))
+    CHECK_ERROR(_readCallHashOf_V1(c, &m->call_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_remove_announcement_V5(
-    parser_context_t* c, pd_proxy_remove_announcement_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_remove_announcement_V1(
+    parser_context_t* c, pd_proxy_remove_announcement_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->real))
-    CHECK_ERROR(_readCallHashOf_V5(c, &m->call_hash))
+    CHECK_ERROR(_readAccountId_V1(c, &m->real))
+    CHECK_ERROR(_readCallHashOf_V1(c, &m->call_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_reject_announcement_V5(
-    parser_context_t* c, pd_proxy_reject_announcement_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_reject_announcement_V1(
+    parser_context_t* c, pd_proxy_reject_announcement_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->delegate))
-    CHECK_ERROR(_readCallHashOf_V5(c, &m->call_hash))
+    CHECK_ERROR(_readAccountId_V1(c, &m->delegate))
+    CHECK_ERROR(_readCallHashOf_V1(c, &m->call_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V5(
-    parser_context_t* c, pd_proxy_proxy_announced_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V1(
+    parser_context_t* c, pd_proxy_proxy_announced_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->delegate))
-    CHECK_ERROR(_readAccountId_V5(c, &m->real))
-    CHECK_ERROR(_readOptionProxyType_V5(c, &m->force_proxy_type))
+    CHECK_ERROR(_readAccountId_V1(c, &m->delegate))
+    CHECK_ERROR(_readAccountId_V1(c, &m->real))
+    CHECK_ERROR(_readOptionProxyType_V1(c, &m->force_proxy_type))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_multisig_as_multi_threshold_1_V5(
-    parser_context_t* c, pd_multisig_as_multi_threshold_1_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_multisig_as_multi_threshold_1_V1(
+    parser_context_t* c, pd_multisig_as_multi_threshold_1_V1_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->other_signatories))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->other_signatories))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_multisig_as_multi_V5(
-    parser_context_t* c, pd_multisig_as_multi_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_multisig_as_multi_V1(
+    parser_context_t* c, pd_multisig_as_multi_V1_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->other_signatories))
-    CHECK_ERROR(_readOptionTimepoint_V5(c, &m->maybe_timepoint))
-    CHECK_ERROR(_readOpaqueCall_V5(c, &m->call))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->other_signatories))
+    CHECK_ERROR(_readOptionTimepoint_V1(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readOpaqueCall_V1(c, &m->call))
     CHECK_ERROR(_readbool(c, &m->store_call))
-    CHECK_ERROR(_readWeight_V5(c, &m->max_weight))
+    CHECK_ERROR(_readWeight_V1(c, &m->max_weight))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_multisig_approve_as_multi_V5(
-    parser_context_t* c, pd_multisig_approve_as_multi_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_multisig_approve_as_multi_V1(
+    parser_context_t* c, pd_multisig_approve_as_multi_V1_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->other_signatories))
-    CHECK_ERROR(_readOptionTimepoint_V5(c, &m->maybe_timepoint))
-    CHECK_ERROR(_readu8_array_32_V5(c, &m->call_hash))
-    CHECK_ERROR(_readWeight_V5(c, &m->max_weight))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->other_signatories))
+    CHECK_ERROR(_readOptionTimepoint_V1(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readu8_array_32_V1(c, &m->call_hash))
+    CHECK_ERROR(_readWeight_V1(c, &m->max_weight))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_multisig_cancel_as_multi_V5(
-    parser_context_t* c, pd_multisig_cancel_as_multi_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_multisig_cancel_as_multi_V1(
+    parser_context_t* c, pd_multisig_cancel_as_multi_V1_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
-    CHECK_ERROR(_readVecAccountId_V5(c, &m->other_signatories))
-    CHECK_ERROR(_readTimepoint_V5(c, &m->timepoint))
-    CHECK_ERROR(_readu8_array_32_V5(c, &m->call_hash))
+    CHECK_ERROR(_readVecAccountId_V1(c, &m->other_signatories))
+    CHECK_ERROR(_readTimepoint_V1(c, &m->timepoint))
+    CHECK_ERROR(_readu8_array_32_V1(c, &m->call_hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_propose_bounty_V5(
-    parser_context_t* c, pd_bounties_propose_bounty_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_propose_bounty_V1(
+    parser_context_t* c, pd_bounties_propose_bounty_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     CHECK_ERROR(_readBytes(c, &m->description))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_approve_bounty_V5(
-    parser_context_t* c, pd_bounties_approve_bounty_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_approve_bounty_V1(
+    parser_context_t* c, pd_bounties_approve_bounty_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_propose_curator_V5(
-    parser_context_t* c, pd_bounties_propose_curator_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_propose_curator_V1(
+    parser_context_t* c, pd_bounties_propose_curator_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
-    CHECK_ERROR(_readLookupSource_V5(c, &m->curator))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->curator))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->fee))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_unassign_curator_V5(
-    parser_context_t* c, pd_bounties_unassign_curator_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_unassign_curator_V1(
+    parser_context_t* c, pd_bounties_unassign_curator_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_accept_curator_V5(
-    parser_context_t* c, pd_bounties_accept_curator_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_accept_curator_V1(
+    parser_context_t* c, pd_bounties_accept_curator_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_award_bounty_V5(
-    parser_context_t* c, pd_bounties_award_bounty_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_award_bounty_V1(
+    parser_context_t* c, pd_bounties_award_bounty_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
-    CHECK_ERROR(_readLookupSource_V5(c, &m->beneficiary))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
+    CHECK_ERROR(_readLookupSource_V1(c, &m->beneficiary))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_claim_bounty_V5(
-    parser_context_t* c, pd_bounties_claim_bounty_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_claim_bounty_V1(
+    parser_context_t* c, pd_bounties_claim_bounty_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_close_bounty_V5(
-    parser_context_t* c, pd_bounties_close_bounty_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_close_bounty_V1(
+    parser_context_t* c, pd_bounties_close_bounty_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bounties_extend_bounty_expiry_V5(
-    parser_context_t* c, pd_bounties_extend_bounty_expiry_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_bounties_extend_bounty_expiry_V1(
+    parser_context_t* c, pd_bounties_extend_bounty_expiry_V1_t* m)
 {
-    CHECK_ERROR(_readCompactBountyIndex_V5(c, &m->bounty_id))
+    CHECK_ERROR(_readCompactBountyIndex_V1(c, &m->bounty_id))
     CHECK_ERROR(_readBytes(c, &m->_remark))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_tips_report_awesome_V5(
-    parser_context_t* c, pd_tips_report_awesome_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_tips_report_awesome_V1(
+    parser_context_t* c, pd_tips_report_awesome_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->reason))
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_tips_retract_tip_V5(
-    parser_context_t* c, pd_tips_retract_tip_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_tips_retract_tip_V1(
+    parser_context_t* c, pd_tips_retract_tip_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_tips_tip_new_V5(
-    parser_context_t* c, pd_tips_tip_new_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_tips_tip_new_V1(
+    parser_context_t* c, pd_tips_tip_new_V1_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->reason))
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->tip_value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_tips_tip_V5(
-    parser_context_t* c, pd_tips_tip_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_tips_tip_V1(
+    parser_context_t* c, pd_tips_tip_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->tip_value))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_tips_close_tip_V5(
-    parser_context_t* c, pd_tips_close_tip_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_tips_close_tip_V1(
+    parser_context_t* c, pd_tips_close_tip_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_tips_slash_tip_V5(
-    parser_context_t* c, pd_tips_slash_tip_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_tips_slash_tip_V1(
+    parser_context_t* c, pd_tips_slash_tip_V1_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_electionprovidermultiphase_submit_unsigned_V5(
-    parser_context_t* c, pd_electionprovidermultiphase_submit_unsigned_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_electionprovidermultiphase_submit_unsigned_V1(
+    parser_context_t* c, pd_electionprovidermultiphase_submit_unsigned_V1_t* m)
 {
-    CHECK_ERROR(_readRawSolution_V5(c, &m->solution))
-    CHECK_ERROR(_readSolutionOrSnapshotSize_V5(c, &m->witness))
+    CHECK_ERROR(_readRawSolution_V1(c, &m->solution))
+    CHECK_ERROR(_readSolutionOrSnapshotSize_V1(c, &m->witness))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_gilt_place_bid_V5(
-    parser_context_t* c, pd_gilt_place_bid_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_gilt_place_bid_V1(
+    parser_context_t* c, pd_gilt_place_bid_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->amount))
     CHECK_ERROR(_readu32(c, &m->duration))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_gilt_retract_bid_V5(
-    parser_context_t* c, pd_gilt_retract_bid_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_gilt_retract_bid_V1(
+    parser_context_t* c, pd_gilt_retract_bid_V1_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->amount))
     CHECK_ERROR(_readu32(c, &m->duration))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_gilt_set_target_V5(
-    parser_context_t* c, pd_gilt_set_target_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_gilt_set_target_V1(
+    parser_context_t* c, pd_gilt_set_target_V1_t* m)
 {
-    CHECK_ERROR(_readCompactPerquintill_V5(c, &m->target))
+    CHECK_ERROR(_readCompactPerquintill_V1(c, &m->target))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_gilt_thaw_V5(
-    parser_context_t* c, pd_gilt_thaw_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_gilt_thaw_V1(
+    parser_context_t* c, pd_gilt_thaw_V1_t* m)
 {
-    CHECK_ERROR(_readCompactActiveIndex_V5(c, &m->index))
+    CHECK_ERROR(_readCompactActiveIndex_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_validation_upgrade_frequency_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_validation_upgrade_frequency_V5_t* m)
-{
-    CHECK_ERROR(_readBlockNumber(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_validation_upgrade_delay_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_validation_upgrade_delay_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_validation_upgrade_frequency_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_validation_upgrade_frequency_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_code_retention_period_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_code_retention_period_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_validation_upgrade_delay_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_validation_upgrade_delay_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_code_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_code_size_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_pov_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_pov_size_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_head_data_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_head_data_size_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_parathread_cores_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_parathread_cores_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_parathread_retries_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_parathread_retries_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_group_rotation_frequency_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_group_rotation_frequency_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_code_retention_period_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_code_retention_period_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_chain_availability_period_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_chain_availability_period_V5_t* m)
-{
-    CHECK_ERROR(_readBlockNumber(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_thread_availability_period_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_thread_availability_period_V5_t* m)
-{
-    CHECK_ERROR(_readBlockNumber(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_scheduling_lookahead_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_scheduling_lookahead_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_code_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_code_size_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_validators_per_core_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_validators_per_core_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_pov_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_pov_size_V1_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_head_data_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_head_data_size_V1_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_parathread_cores_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_parathread_cores_V1_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_parathread_retries_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_parathread_retries_V1_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_group_rotation_frequency_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_group_rotation_frequency_V1_t* m)
+{
+    CHECK_ERROR(_readBlockNumber(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_chain_availability_period_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_chain_availability_period_V1_t* m)
+{
+    CHECK_ERROR(_readBlockNumber(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_thread_availability_period_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_thread_availability_period_V1_t* m)
+{
+    CHECK_ERROR(_readBlockNumber(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_scheduling_lookahead_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_scheduling_lookahead_V1_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_validators_per_core_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_validators_per_core_V1_t* m)
 {
     CHECK_ERROR(_readOptionu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_validators_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_validators_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_validators_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_validators_V1_t* m)
 {
     CHECK_ERROR(_readOptionu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_period_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_dispute_period_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_period_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_dispute_period_V1_t* m)
 {
-    CHECK_ERROR(_readSessionIndex_V5(c, &m->new_))
+    CHECK_ERROR(_readSessionIndex_V1(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_max_spam_slots_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_dispute_max_spam_slots_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_max_spam_slots_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_dispute_max_spam_slots_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_no_show_slots_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_no_show_slots_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_no_show_slots_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_no_show_slots_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_n_delay_tranches_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_n_delay_tranches_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_n_delay_tranches_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_n_delay_tranches_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_zeroth_delay_tranche_width_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_zeroth_delay_tranche_width_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_zeroth_delay_tranche_width_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_zeroth_delay_tranche_width_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_needed_approvals_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_needed_approvals_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_needed_approvals_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_needed_approvals_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_relay_vrf_modulo_samples_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_relay_vrf_modulo_samples_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_relay_vrf_modulo_samples_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_relay_vrf_modulo_samples_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_queue_count_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_queue_count_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_queue_count_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_queue_count_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_queue_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_queue_size_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_queue_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_queue_size_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_downward_message_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_downward_message_size_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_downward_message_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_downward_message_size_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V1_t* m)
 {
-    CHECK_ERROR(_readWeight_V5(c, &m->new_))
+    CHECK_ERROR(_readWeight_V1(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_message_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_message_size_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->new_))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_message_num_per_candidate_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_message_num_per_candidate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_message_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_message_size_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_open_request_ttl_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_open_request_ttl_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_upward_message_num_per_candidate_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_max_upward_message_num_per_candidate_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_sender_deposit_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_sender_deposit_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_open_request_ttl_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_open_request_ttl_V1_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->new_))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_sender_deposit_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_sender_deposit_V1_t* m)
 {
     CHECK_ERROR(_readBalance(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_recipient_deposit_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_recipient_deposit_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_recipient_deposit_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_recipient_deposit_V1_t* m)
 {
     CHECK_ERROR(_readBalance(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_channel_max_capacity_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_channel_max_capacity_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_channel_max_capacity_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_channel_max_capacity_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_channel_max_total_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_channel_max_total_size_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_channel_max_total_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_channel_max_total_size_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_channel_max_message_size_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_channel_max_message_size_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_channel_max_message_size_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_channel_max_message_size_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V1(
+    parser_context_t* c, pd_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V1_t* m)
 {
     CHECK_ERROR(_readu32(c, &m->new_))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parasinherent_enter_V5(
-    parser_context_t* c, pd_parasinherent_enter_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parasinherent_enter_V1(
+    parser_context_t* c, pd_parasinherent_enter_V1_t* m)
 {
-    CHECK_ERROR(_readParachainsInherentData_V5(c, &m->data))
+    CHECK_ERROR(_readParachainsInherentData_V1(c, &m->data))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_paras_force_set_current_code_V5(
-    parser_context_t* c, pd_paras_force_set_current_code_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_paras_force_set_current_code_V1(
+    parser_context_t* c, pd_paras_force_set_current_code_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
-    CHECK_ERROR(_readValidationCode_V5(c, &m->new_code))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
+    CHECK_ERROR(_readValidationCode_V1(c, &m->new_code))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_paras_force_set_current_head_V5(
-    parser_context_t* c, pd_paras_force_set_current_head_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_paras_force_set_current_head_V1(
+    parser_context_t* c, pd_paras_force_set_current_head_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
-    CHECK_ERROR(_readHeadData_V5(c, &m->new_head))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
+    CHECK_ERROR(_readHeadData_V1(c, &m->new_head))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_paras_force_schedule_code_upgrade_V5(
-    parser_context_t* c, pd_paras_force_schedule_code_upgrade_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_paras_force_schedule_code_upgrade_V1(
+    parser_context_t* c, pd_paras_force_schedule_code_upgrade_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
-    CHECK_ERROR(_readValidationCode_V5(c, &m->new_code))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
+    CHECK_ERROR(_readValidationCode_V1(c, &m->new_code))
     CHECK_ERROR(_readBlockNumber(c, &m->expected_at))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_paras_force_note_new_head_V5(
-    parser_context_t* c, pd_paras_force_note_new_head_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_paras_force_note_new_head_V1(
+    parser_context_t* c, pd_paras_force_note_new_head_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
-    CHECK_ERROR(_readHeadData_V5(c, &m->new_head))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
+    CHECK_ERROR(_readHeadData_V1(c, &m->new_head))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_paras_force_queue_action_V5(
-    parser_context_t* c, pd_paras_force_queue_action_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_paras_force_queue_action_V1(
+    parser_context_t* c, pd_paras_force_queue_action_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parasinitializer_force_approve_V5(
-    parser_context_t* c, pd_parasinitializer_force_approve_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parasinitializer_force_approve_V1(
+    parser_context_t* c, pd_parasinitializer_force_approve_V1_t* m)
 {
     CHECK_ERROR(_readBlockNumber(c, &m->up_to))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parashrmp_hrmp_init_open_channel_V5(
-    parser_context_t* c, pd_parashrmp_hrmp_init_open_channel_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parashrmp_hrmp_init_open_channel_V1(
+    parser_context_t* c, pd_parashrmp_hrmp_init_open_channel_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->recipient))
+    CHECK_ERROR(_readParaId_V1(c, &m->recipient))
     CHECK_ERROR(_readu32(c, &m->proposed_max_capacity))
     CHECK_ERROR(_readu32(c, &m->proposed_max_message_size))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parashrmp_hrmp_accept_open_channel_V5(
-    parser_context_t* c, pd_parashrmp_hrmp_accept_open_channel_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parashrmp_hrmp_accept_open_channel_V1(
+    parser_context_t* c, pd_parashrmp_hrmp_accept_open_channel_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->sender))
+    CHECK_ERROR(_readParaId_V1(c, &m->sender))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parashrmp_hrmp_close_channel_V5(
-    parser_context_t* c, pd_parashrmp_hrmp_close_channel_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parashrmp_hrmp_close_channel_V1(
+    parser_context_t* c, pd_parashrmp_hrmp_close_channel_V1_t* m)
 {
-    CHECK_ERROR(_readHrmpChannelId_V5(c, &m->channel_id))
+    CHECK_ERROR(_readHrmpChannelId_V1(c, &m->channel_id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parashrmp_force_clean_hrmp_V5(
-    parser_context_t* c, pd_parashrmp_force_clean_hrmp_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parashrmp_force_clean_hrmp_V1(
+    parser_context_t* c, pd_parashrmp_force_clean_hrmp_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parashrmp_force_process_hrmp_open_V5(
-    parser_context_t* c, pd_parashrmp_force_process_hrmp_open_V5_t* m)
-{
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_parashrmp_force_process_hrmp_close_V5(
-    parser_context_t* c, pd_parashrmp_force_process_hrmp_close_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parashrmp_force_process_hrmp_open_V1(
+    parser_context_t* c, pd_parashrmp_force_process_hrmp_open_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_registrar_register_V5(
-    parser_context_t* c, pd_registrar_register_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parashrmp_force_process_hrmp_close_V1(
+    parser_context_t* c, pd_parashrmp_force_process_hrmp_close_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->id))
-    CHECK_ERROR(_readHeadData_V5(c, &m->genesis_head))
-    CHECK_ERROR(_readValidationCode_V5(c, &m->validation_code))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_registrar_force_register_V5(
-    parser_context_t* c, pd_registrar_force_register_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_registrar_register_V1(
+    parser_context_t* c, pd_registrar_register_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
+    CHECK_ERROR(_readParaId_V1(c, &m->id))
+    CHECK_ERROR(_readHeadData_V1(c, &m->genesis_head))
+    CHECK_ERROR(_readValidationCode_V1(c, &m->validation_code))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_registrar_force_register_V1(
+    parser_context_t* c, pd_registrar_force_register_V1_t* m)
+{
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
     CHECK_ERROR(_readBalanceOf(c, &m->deposit))
-    CHECK_ERROR(_readParaId_V5(c, &m->id))
-    CHECK_ERROR(_readHeadData_V5(c, &m->genesis_head))
-    CHECK_ERROR(_readValidationCode_V5(c, &m->validation_code))
+    CHECK_ERROR(_readParaId_V1(c, &m->id))
+    CHECK_ERROR(_readHeadData_V1(c, &m->genesis_head))
+    CHECK_ERROR(_readValidationCode_V1(c, &m->validation_code))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_registrar_deregister_V5(
-    parser_context_t* c, pd_registrar_deregister_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_registrar_deregister_V1(
+    parser_context_t* c, pd_registrar_deregister_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->id))
+    CHECK_ERROR(_readParaId_V1(c, &m->id))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_registrar_swap_V5(
-    parser_context_t* c, pd_registrar_swap_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_registrar_swap_V1(
+    parser_context_t* c, pd_registrar_swap_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->id))
-    CHECK_ERROR(_readParaId_V5(c, &m->other))
+    CHECK_ERROR(_readParaId_V1(c, &m->id))
+    CHECK_ERROR(_readParaId_V1(c, &m->other))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_registrar_force_remove_lock_V5(
-    parser_context_t* c, pd_registrar_force_remove_lock_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_registrar_force_remove_lock_V1(
+    parser_context_t* c, pd_registrar_force_remove_lock_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_registrar_reserve_V5(
-    parser_context_t* c, pd_registrar_reserve_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_registrar_reserve_V1(
+    parser_context_t* c, pd_registrar_reserve_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_slots_force_lease_V5(
-    parser_context_t* c, pd_slots_force_lease_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_slots_force_lease_V1(
+    parser_context_t* c, pd_slots_force_lease_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
-    CHECK_ERROR(_readAccountId_V5(c, &m->leaser))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
+    CHECK_ERROR(_readAccountId_V1(c, &m->leaser))
     CHECK_ERROR(_readBalanceOf(c, &m->amount))
-    CHECK_ERROR(_readLeasePeriodOf_V5(c, &m->period_begin))
-    CHECK_ERROR(_readLeasePeriodOf_V5(c, &m->period_count))
+    CHECK_ERROR(_readLeasePeriodOf_V1(c, &m->period_begin))
+    CHECK_ERROR(_readLeasePeriodOf_V1(c, &m->period_count))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_slots_clear_all_leases_V5(
-    parser_context_t* c, pd_slots_clear_all_leases_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_slots_clear_all_leases_V1(
+    parser_context_t* c, pd_slots_clear_all_leases_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_slots_trigger_onboard_V5(
-    parser_context_t* c, pd_slots_trigger_onboard_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_slots_trigger_onboard_V1(
+    parser_context_t* c, pd_slots_trigger_onboard_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->para))
+    CHECK_ERROR(_readParaId_V1(c, &m->para))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_auctions_new_auction_V5(
-    parser_context_t* c, pd_auctions_new_auction_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_auctions_new_auction_V1(
+    parser_context_t* c, pd_auctions_new_auction_V1_t* m)
 {
     CHECK_ERROR(_readCompactBlockNumber(c, &m->duration))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->lease_period_index))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->lease_period_index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_auctions_bid_V5(
-    parser_context_t* c, pd_auctions_bid_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_auctions_bid_V1(
+    parser_context_t* c, pd_auctions_bid_V1_t* m)
 {
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->para))
-    CHECK_ERROR(_readCompactAuctionIndex_V5(c, &m->auction_index))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->first_slot))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->last_slot))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->para))
+    CHECK_ERROR(_readCompactAuctionIndex_V1(c, &m->auction_index))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->first_slot))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->last_slot))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->amount))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_auctions_cancel_auction_V5(
-    parser_context_t* c, pd_auctions_cancel_auction_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_auctions_cancel_auction_V1(
+    parser_context_t* c, pd_auctions_cancel_auction_V1_t* m)
 {
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_create_V5(
-    parser_context_t* c, pd_crowdloan_create_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_create_V1(
+    parser_context_t* c, pd_crowdloan_create_V1_t* m)
 {
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->index))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->index))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->cap))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->first_period))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->last_period))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->first_period))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->last_period))
     CHECK_ERROR(_readCompactBlockNumber(c, &m->end))
-    CHECK_ERROR(_readOptionMultiSigner_V5(c, &m->verifier))
+    CHECK_ERROR(_readOptionMultiSigner_V1(c, &m->verifier))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_contribute_V5(
-    parser_context_t* c, pd_crowdloan_contribute_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_contribute_V1(
+    parser_context_t* c, pd_crowdloan_contribute_V1_t* m)
 {
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->index))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->index))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
-    CHECK_ERROR(_readOptionMultiSignature_V5(c, &m->signature))
+    CHECK_ERROR(_readOptionMultiSignature_V1(c, &m->signature))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_withdraw_V5(
-    parser_context_t* c, pd_crowdloan_withdraw_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_withdraw_V1(
+    parser_context_t* c, pd_crowdloan_withdraw_V1_t* m)
 {
-    CHECK_ERROR(_readAccountId_V5(c, &m->who))
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->index))
+    CHECK_ERROR(_readAccountId_V1(c, &m->who))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_refund_V5(
-    parser_context_t* c, pd_crowdloan_refund_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_refund_V1(
+    parser_context_t* c, pd_crowdloan_refund_V1_t* m)
 {
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->index))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_dissolve_V5(
-    parser_context_t* c, pd_crowdloan_dissolve_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_dissolve_V1(
+    parser_context_t* c, pd_crowdloan_dissolve_V1_t* m)
 {
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->index))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_edit_V5(
-    parser_context_t* c, pd_crowdloan_edit_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_edit_V1(
+    parser_context_t* c, pd_crowdloan_edit_V1_t* m)
 {
-    CHECK_ERROR(_readCompactParaId_V5(c, &m->index))
+    CHECK_ERROR(_readCompactParaId_V1(c, &m->index))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->cap))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->first_period))
-    CHECK_ERROR(_readCompactLeasePeriodOf_V5(c, &m->last_period))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->first_period))
+    CHECK_ERROR(_readCompactLeasePeriodOf_V1(c, &m->last_period))
     CHECK_ERROR(_readCompactBlockNumber(c, &m->end))
-    CHECK_ERROR(_readOptionMultiSigner_V5(c, &m->verifier))
+    CHECK_ERROR(_readOptionMultiSigner_V1(c, &m->verifier))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_add_memo_V5(
-    parser_context_t* c, pd_crowdloan_add_memo_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_add_memo_V1(
+    parser_context_t* c, pd_crowdloan_add_memo_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->index))
+    CHECK_ERROR(_readParaId_V1(c, &m->index))
     CHECK_ERROR(_readBytes(c, &m->memo))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_crowdloan_poke_V5(
-    parser_context_t* c, pd_crowdloan_poke_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_crowdloan_poke_V1(
+    parser_context_t* c, pd_crowdloan_poke_V1_t* m)
 {
-    CHECK_ERROR(_readParaId_V5(c, &m->index))
+    CHECK_ERROR(_readParaId_V1(c, &m->index))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_xcmpallet_send_V5(
-    parser_context_t* c, pd_xcmpallet_send_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_xcmpallet_send_V1(
+    parser_context_t* c, pd_xcmpallet_send_V1_t* m)
 {
-    CHECK_ERROR(_readMultiLocation_V5(c, &m->dest))
-    CHECK_ERROR(_readXcm_V5(c, &m->message))
+    CHECK_ERROR(_readMultiLocation_V1(c, &m->dest))
+    CHECK_ERROR(_readXcm_V1(c, &m->message))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_xcmpallet_teleport_assets_V5(
-    parser_context_t* c, pd_xcmpallet_teleport_assets_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_xcmpallet_teleport_assets_V1(
+    parser_context_t* c, pd_xcmpallet_teleport_assets_V1_t* m)
 {
-    CHECK_ERROR(_readMultiLocation_V5(c, &m->dest))
-    CHECK_ERROR(_readMultiLocation_V5(c, &m->beneficiary))
-    CHECK_ERROR(_readVecMultiAsset_V5(c, &m->assets))
-    CHECK_ERROR(_readWeight_V5(c, &m->dest_weight))
+    CHECK_ERROR(_readMultiLocation_V1(c, &m->dest))
+    CHECK_ERROR(_readMultiLocation_V1(c, &m->beneficiary))
+    CHECK_ERROR(_readVecMultiAsset_V1(c, &m->assets))
+    CHECK_ERROR(_readWeight_V1(c, &m->dest_weight))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_xcmpallet_execute_V5(
-    parser_context_t* c, pd_xcmpallet_execute_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_xcmpallet_execute_V1(
+    parser_context_t* c, pd_xcmpallet_execute_V1_t* m)
 {
-    CHECK_ERROR(_readXcm_V5(c, &m->message))
-    CHECK_ERROR(_readWeight_V5(c, &m->max_weight))
+    CHECK_ERROR(_readXcm_V1(c, &m->message))
+    CHECK_ERROR(_readWeight_V1(c, &m->max_weight))
     return parser_ok;
 }
 
 #endif
 
-parser_error_t _readMethod_V5(
+parser_error_t _readMethod_V1(
     parser_context_t* c,
     uint8_t moduleIdx,
     uint8_t callIdx,
-    pd_Method_V5_t* method)
+    pd_Method_V1_t* method)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
 
     case 1024: /* module 4 call 0 */
-        CHECK_ERROR(_readMethod_balances_transfer_V5(c, &method->nested.balances_transfer_V5))
+        CHECK_ERROR(_readMethod_balances_transfer_V1(c, &method->nested.balances_transfer_V1))
         break;
     case 1027: /* module 4 call 3 */
-        CHECK_ERROR(_readMethod_balances_transfer_keep_alive_V5(c, &method->nested.balances_transfer_keep_alive_V5))
+        CHECK_ERROR(_readMethod_balances_transfer_keep_alive_V1(c, &method->nested.balances_transfer_keep_alive_V1))
         break;
     case 1536: /* module 6 call 0 */
-        CHECK_ERROR(_readMethod_staking_bond_V5(c, &method->basic.staking_bond_V5))
+        CHECK_ERROR(_readMethod_staking_bond_V1(c, &method->basic.staking_bond_V1))
         break;
     case 1537: /* module 6 call 1 */
-        CHECK_ERROR(_readMethod_staking_bond_extra_V5(c, &method->basic.staking_bond_extra_V5))
+        CHECK_ERROR(_readMethod_staking_bond_extra_V1(c, &method->basic.staking_bond_extra_V1))
         break;
     case 1538: /* module 6 call 2 */
-        CHECK_ERROR(_readMethod_staking_unbond_V5(c, &method->basic.staking_unbond_V5))
+        CHECK_ERROR(_readMethod_staking_unbond_V1(c, &method->basic.staking_unbond_V1))
         break;
     case 1539: /* module 6 call 3 */
-        CHECK_ERROR(_readMethod_staking_withdraw_unbonded_V5(c, &method->basic.staking_withdraw_unbonded_V5))
+        CHECK_ERROR(_readMethod_staking_withdraw_unbonded_V1(c, &method->basic.staking_withdraw_unbonded_V1))
         break;
     case 1540: /* module 6 call 4 */
-        CHECK_ERROR(_readMethod_staking_validate_V5(c, &method->basic.staking_validate_V5))
+        CHECK_ERROR(_readMethod_staking_validate_V1(c, &method->basic.staking_validate_V1))
         break;
     case 1541: /* module 6 call 5 */
-        CHECK_ERROR(_readMethod_staking_nominate_V5(c, &method->basic.staking_nominate_V5))
+        CHECK_ERROR(_readMethod_staking_nominate_V1(c, &method->basic.staking_nominate_V1))
         break;
     case 1542: /* module 6 call 6 */
-        CHECK_ERROR(_readMethod_staking_chill_V5(c, &method->basic.staking_chill_V5))
+        CHECK_ERROR(_readMethod_staking_chill_V1(c, &method->basic.staking_chill_V1))
         break;
     case 1543: /* module 6 call 7 */
-        CHECK_ERROR(_readMethod_staking_set_payee_V5(c, &method->basic.staking_set_payee_V5))
+        CHECK_ERROR(_readMethod_staking_set_payee_V1(c, &method->basic.staking_set_payee_V1))
         break;
     case 1554: /* module 6 call 18 */
-        CHECK_ERROR(_readMethod_staking_payout_stakers_V5(c, &method->basic.staking_payout_stakers_V5))
+        CHECK_ERROR(_readMethod_staking_payout_stakers_V1(c, &method->basic.staking_payout_stakers_V1))
         break;
     case 1555: /* module 6 call 19 */
-        CHECK_ERROR(_readMethod_staking_rebond_V5(c, &method->basic.staking_rebond_V5))
+        CHECK_ERROR(_readMethod_staking_rebond_V1(c, &method->basic.staking_rebond_V1))
         break;
     case 2048: /* module 8 call 0 */
-        CHECK_ERROR(_readMethod_session_set_keys_V5(c, &method->basic.session_set_keys_V5))
+        CHECK_ERROR(_readMethod_session_set_keys_V1(c, &method->basic.session_set_keys_V1))
         break;
     case 2049: /* module 8 call 1 */
-        CHECK_ERROR(_readMethod_session_purge_keys_V5(c, &method->basic.session_purge_keys_V5))
+        CHECK_ERROR(_readMethod_session_purge_keys_V1(c, &method->basic.session_purge_keys_V1))
         break;
     case 6144: /* module 24 call 0 */
-        CHECK_ERROR(_readMethod_utility_batch_V5(c, &method->basic.utility_batch_V5))
+        CHECK_ERROR(_readMethod_utility_batch_V1(c, &method->basic.utility_batch_V1))
         break;
     case 6146: /* module 24 call 2 */
-        CHECK_ERROR(_readMethod_utility_batch_all_V5(c, &method->basic.utility_batch_all_V5))
+        CHECK_ERROR(_readMethod_utility_batch_all_V1(c, &method->basic.utility_batch_all_V1))
+        break;
+    case 8448: /* module 33 call 0 */
+        CHECK_ERROR(_readMethod_eqlockdrop_lock_V1(c, &method->basic.eqlockdrop_lock_V1))
         break;
 
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
-        CHECK_ERROR(_readMethod_system_fill_block_V5(c, &method->nested.system_fill_block_V5))
+        CHECK_ERROR(_readMethod_system_fill_block_V1(c, &method->nested.system_fill_block_V1))
         break;
     case 1: /* module 0 call 1 */
-        CHECK_ERROR(_readMethod_system_remark_V5(c, &method->nested.system_remark_V5))
+        CHECK_ERROR(_readMethod_system_remark_V1(c, &method->nested.system_remark_V1))
         break;
     case 2: /* module 0 call 2 */
-        CHECK_ERROR(_readMethod_system_set_heap_pages_V5(c, &method->nested.system_set_heap_pages_V5))
+        CHECK_ERROR(_readMethod_system_set_heap_pages_V1(c, &method->nested.system_set_heap_pages_V1))
         break;
     case 3: /* module 0 call 3 */
-        CHECK_ERROR(_readMethod_system_set_code_V5(c, &method->nested.system_set_code_V5))
+        CHECK_ERROR(_readMethod_system_set_code_V1(c, &method->nested.system_set_code_V1))
         break;
     case 4: /* module 0 call 4 */
-        CHECK_ERROR(_readMethod_system_set_code_without_checks_V5(c, &method->nested.system_set_code_without_checks_V5))
+        CHECK_ERROR(_readMethod_system_set_code_without_checks_V1(c, &method->nested.system_set_code_without_checks_V1))
         break;
     case 5: /* module 0 call 5 */
-        CHECK_ERROR(_readMethod_system_set_changes_trie_config_V5(c, &method->nested.system_set_changes_trie_config_V5))
+        CHECK_ERROR(_readMethod_system_set_changes_trie_config_V1(c, &method->nested.system_set_changes_trie_config_V1))
         break;
     case 6: /* module 0 call 6 */
-        CHECK_ERROR(_readMethod_system_set_storage_V5(c, &method->nested.system_set_storage_V5))
+        CHECK_ERROR(_readMethod_system_set_storage_V1(c, &method->nested.system_set_storage_V1))
         break;
     case 7: /* module 0 call 7 */
-        CHECK_ERROR(_readMethod_system_kill_storage_V5(c, &method->nested.system_kill_storage_V5))
+        CHECK_ERROR(_readMethod_system_kill_storage_V1(c, &method->nested.system_kill_storage_V1))
         break;
     case 8: /* module 0 call 8 */
-        CHECK_ERROR(_readMethod_system_kill_prefix_V5(c, &method->nested.system_kill_prefix_V5))
+        CHECK_ERROR(_readMethod_system_kill_prefix_V1(c, &method->nested.system_kill_prefix_V1))
         break;
     case 9: /* module 0 call 9 */
-        CHECK_ERROR(_readMethod_system_remark_with_event_V5(c, &method->basic.system_remark_with_event_V5))
+        CHECK_ERROR(_readMethod_system_remark_with_event_V1(c, &method->basic.system_remark_with_event_V1))
         break;
     case 256: /* module 1 call 0 */
-        CHECK_ERROR(_readMethod_babe_report_equivocation_V5(c, &method->basic.babe_report_equivocation_V5))
+        CHECK_ERROR(_readMethod_babe_report_equivocation_V1(c, &method->basic.babe_report_equivocation_V1))
         break;
     case 257: /* module 1 call 1 */
-        CHECK_ERROR(_readMethod_babe_report_equivocation_unsigned_V5(c, &method->basic.babe_report_equivocation_unsigned_V5))
+        CHECK_ERROR(_readMethod_babe_report_equivocation_unsigned_V1(c, &method->basic.babe_report_equivocation_unsigned_V1))
         break;
     case 258: /* module 1 call 2 */
-        CHECK_ERROR(_readMethod_babe_plan_config_change_V5(c, &method->basic.babe_plan_config_change_V5))
+        CHECK_ERROR(_readMethod_babe_plan_config_change_V1(c, &method->basic.babe_plan_config_change_V1))
         break;
     case 512: /* module 2 call 0 */
-        CHECK_ERROR(_readMethod_timestamp_set_V5(c, &method->basic.timestamp_set_V5))
+        CHECK_ERROR(_readMethod_timestamp_set_V1(c, &method->basic.timestamp_set_V1))
         break;
     case 768: /* module 3 call 0 */
-        CHECK_ERROR(_readMethod_indices_claim_V5(c, &method->basic.indices_claim_V5))
+        CHECK_ERROR(_readMethod_indices_claim_V1(c, &method->basic.indices_claim_V1))
         break;
     case 769: /* module 3 call 1 */
-        CHECK_ERROR(_readMethod_indices_transfer_V5(c, &method->basic.indices_transfer_V5))
+        CHECK_ERROR(_readMethod_indices_transfer_V1(c, &method->basic.indices_transfer_V1))
         break;
     case 770: /* module 3 call 2 */
-        CHECK_ERROR(_readMethod_indices_free_V5(c, &method->basic.indices_free_V5))
+        CHECK_ERROR(_readMethod_indices_free_V1(c, &method->basic.indices_free_V1))
         break;
     case 771: /* module 3 call 3 */
-        CHECK_ERROR(_readMethod_indices_force_transfer_V5(c, &method->basic.indices_force_transfer_V5))
+        CHECK_ERROR(_readMethod_indices_force_transfer_V1(c, &method->basic.indices_force_transfer_V1))
         break;
     case 772: /* module 3 call 4 */
-        CHECK_ERROR(_readMethod_indices_freeze_V5(c, &method->basic.indices_freeze_V5))
+        CHECK_ERROR(_readMethod_indices_freeze_V1(c, &method->basic.indices_freeze_V1))
         break;
     case 1025: /* module 4 call 1 */
-        CHECK_ERROR(_readMethod_balances_set_balance_V5(c, &method->nested.balances_set_balance_V5))
+        CHECK_ERROR(_readMethod_balances_set_balance_V1(c, &method->nested.balances_set_balance_V1))
         break;
     case 1026: /* module 4 call 2 */
-        CHECK_ERROR(_readMethod_balances_force_transfer_V5(c, &method->nested.balances_force_transfer_V5))
+        CHECK_ERROR(_readMethod_balances_force_transfer_V1(c, &method->nested.balances_force_transfer_V1))
         break;
     case 1280: /* module 5 call 0 */
-        CHECK_ERROR(_readMethod_authorship_set_uncles_V5(c, &method->basic.authorship_set_uncles_V5))
+        CHECK_ERROR(_readMethod_authorship_set_uncles_V1(c, &method->basic.authorship_set_uncles_V1))
         break;
     case 1544: /* module 6 call 8 */
-        CHECK_ERROR(_readMethod_staking_set_controller_V5(c, &method->basic.staking_set_controller_V5))
+        CHECK_ERROR(_readMethod_staking_set_controller_V1(c, &method->basic.staking_set_controller_V1))
         break;
     case 1545: /* module 6 call 9 */
-        CHECK_ERROR(_readMethod_staking_set_validator_count_V5(c, &method->basic.staking_set_validator_count_V5))
+        CHECK_ERROR(_readMethod_staking_set_validator_count_V1(c, &method->basic.staking_set_validator_count_V1))
         break;
     case 1546: /* module 6 call 10 */
-        CHECK_ERROR(_readMethod_staking_increase_validator_count_V5(c, &method->basic.staking_increase_validator_count_V5))
+        CHECK_ERROR(_readMethod_staking_increase_validator_count_V1(c, &method->basic.staking_increase_validator_count_V1))
         break;
     case 1547: /* module 6 call 11 */
-        CHECK_ERROR(_readMethod_staking_scale_validator_count_V5(c, &method->basic.staking_scale_validator_count_V5))
+        CHECK_ERROR(_readMethod_staking_scale_validator_count_V1(c, &method->basic.staking_scale_validator_count_V1))
         break;
     case 1548: /* module 6 call 12 */
-        CHECK_ERROR(_readMethod_staking_force_no_eras_V5(c, &method->basic.staking_force_no_eras_V5))
+        CHECK_ERROR(_readMethod_staking_force_no_eras_V1(c, &method->basic.staking_force_no_eras_V1))
         break;
     case 1549: /* module 6 call 13 */
-        CHECK_ERROR(_readMethod_staking_force_new_era_V5(c, &method->basic.staking_force_new_era_V5))
+        CHECK_ERROR(_readMethod_staking_force_new_era_V1(c, &method->basic.staking_force_new_era_V1))
         break;
     case 1550: /* module 6 call 14 */
-        CHECK_ERROR(_readMethod_staking_set_invulnerables_V5(c, &method->basic.staking_set_invulnerables_V5))
+        CHECK_ERROR(_readMethod_staking_set_invulnerables_V1(c, &method->basic.staking_set_invulnerables_V1))
         break;
     case 1551: /* module 6 call 15 */
-        CHECK_ERROR(_readMethod_staking_force_unstake_V5(c, &method->basic.staking_force_unstake_V5))
+        CHECK_ERROR(_readMethod_staking_force_unstake_V1(c, &method->basic.staking_force_unstake_V1))
         break;
     case 1552: /* module 6 call 16 */
-        CHECK_ERROR(_readMethod_staking_force_new_era_always_V5(c, &method->basic.staking_force_new_era_always_V5))
+        CHECK_ERROR(_readMethod_staking_force_new_era_always_V1(c, &method->basic.staking_force_new_era_always_V1))
         break;
     case 1553: /* module 6 call 17 */
-        CHECK_ERROR(_readMethod_staking_cancel_deferred_slash_V5(c, &method->basic.staking_cancel_deferred_slash_V5))
+        CHECK_ERROR(_readMethod_staking_cancel_deferred_slash_V1(c, &method->basic.staking_cancel_deferred_slash_V1))
         break;
     case 1556: /* module 6 call 20 */
-        CHECK_ERROR(_readMethod_staking_set_history_depth_V5(c, &method->basic.staking_set_history_depth_V5))
+        CHECK_ERROR(_readMethod_staking_set_history_depth_V1(c, &method->basic.staking_set_history_depth_V1))
         break;
     case 1557: /* module 6 call 21 */
-        CHECK_ERROR(_readMethod_staking_reap_stash_V5(c, &method->basic.staking_reap_stash_V5))
+        CHECK_ERROR(_readMethod_staking_reap_stash_V1(c, &method->basic.staking_reap_stash_V1))
         break;
     case 1558: /* module 6 call 22 */
-        CHECK_ERROR(_readMethod_staking_kick_V5(c, &method->basic.staking_kick_V5))
+        CHECK_ERROR(_readMethod_staking_kick_V1(c, &method->basic.staking_kick_V1))
         break;
     case 2560: /* module 10 call 0 */
-        CHECK_ERROR(_readMethod_grandpa_report_equivocation_V5(c, &method->basic.grandpa_report_equivocation_V5))
+        CHECK_ERROR(_readMethod_grandpa_report_equivocation_V1(c, &method->basic.grandpa_report_equivocation_V1))
         break;
     case 2561: /* module 10 call 1 */
-        CHECK_ERROR(_readMethod_grandpa_report_equivocation_unsigned_V5(c, &method->basic.grandpa_report_equivocation_unsigned_V5))
+        CHECK_ERROR(_readMethod_grandpa_report_equivocation_unsigned_V1(c, &method->basic.grandpa_report_equivocation_unsigned_V1))
         break;
     case 2562: /* module 10 call 2 */
-        CHECK_ERROR(_readMethod_grandpa_note_stalled_V5(c, &method->basic.grandpa_note_stalled_V5))
+        CHECK_ERROR(_readMethod_grandpa_note_stalled_V1(c, &method->basic.grandpa_note_stalled_V1))
         break;
     case 2816: /* module 11 call 0 */
-        CHECK_ERROR(_readMethod_imonline_heartbeat_V5(c, &method->basic.imonline_heartbeat_V5))
+        CHECK_ERROR(_readMethod_imonline_heartbeat_V1(c, &method->basic.imonline_heartbeat_V1))
         break;
     case 3328: /* module 13 call 0 */
-        CHECK_ERROR(_readMethod_democracy_propose_V5(c, &method->basic.democracy_propose_V5))
+        CHECK_ERROR(_readMethod_democracy_propose_V1(c, &method->basic.democracy_propose_V1))
         break;
     case 3329: /* module 13 call 1 */
-        CHECK_ERROR(_readMethod_democracy_second_V5(c, &method->basic.democracy_second_V5))
+        CHECK_ERROR(_readMethod_democracy_second_V1(c, &method->basic.democracy_second_V1))
         break;
     case 3330: /* module 13 call 2 */
-        CHECK_ERROR(_readMethod_democracy_vote_V5(c, &method->basic.democracy_vote_V5))
+        CHECK_ERROR(_readMethod_democracy_vote_V1(c, &method->basic.democracy_vote_V1))
         break;
     case 3331: /* module 13 call 3 */
-        CHECK_ERROR(_readMethod_democracy_emergency_cancel_V5(c, &method->basic.democracy_emergency_cancel_V5))
+        CHECK_ERROR(_readMethod_democracy_emergency_cancel_V1(c, &method->basic.democracy_emergency_cancel_V1))
         break;
     case 3332: /* module 13 call 4 */
-        CHECK_ERROR(_readMethod_democracy_external_propose_V5(c, &method->basic.democracy_external_propose_V5))
+        CHECK_ERROR(_readMethod_democracy_external_propose_V1(c, &method->basic.democracy_external_propose_V1))
         break;
     case 3333: /* module 13 call 5 */
-        CHECK_ERROR(_readMethod_democracy_external_propose_majority_V5(c, &method->basic.democracy_external_propose_majority_V5))
+        CHECK_ERROR(_readMethod_democracy_external_propose_majority_V1(c, &method->basic.democracy_external_propose_majority_V1))
         break;
     case 3334: /* module 13 call 6 */
-        CHECK_ERROR(_readMethod_democracy_external_propose_default_V5(c, &method->basic.democracy_external_propose_default_V5))
+        CHECK_ERROR(_readMethod_democracy_external_propose_default_V1(c, &method->basic.democracy_external_propose_default_V1))
         break;
     case 3335: /* module 13 call 7 */
-        CHECK_ERROR(_readMethod_democracy_fast_track_V5(c, &method->basic.democracy_fast_track_V5))
+        CHECK_ERROR(_readMethod_democracy_fast_track_V1(c, &method->basic.democracy_fast_track_V1))
         break;
     case 3336: /* module 13 call 8 */
-        CHECK_ERROR(_readMethod_democracy_veto_external_V5(c, &method->basic.democracy_veto_external_V5))
+        CHECK_ERROR(_readMethod_democracy_veto_external_V1(c, &method->basic.democracy_veto_external_V1))
         break;
     case 3337: /* module 13 call 9 */
-        CHECK_ERROR(_readMethod_democracy_cancel_referendum_V5(c, &method->basic.democracy_cancel_referendum_V5))
+        CHECK_ERROR(_readMethod_democracy_cancel_referendum_V1(c, &method->basic.democracy_cancel_referendum_V1))
         break;
     case 3338: /* module 13 call 10 */
-        CHECK_ERROR(_readMethod_democracy_cancel_queued_V5(c, &method->basic.democracy_cancel_queued_V5))
+        CHECK_ERROR(_readMethod_democracy_cancel_queued_V1(c, &method->basic.democracy_cancel_queued_V1))
         break;
     case 3339: /* module 13 call 11 */
-        CHECK_ERROR(_readMethod_democracy_delegate_V5(c, &method->basic.democracy_delegate_V5))
+        CHECK_ERROR(_readMethod_democracy_delegate_V1(c, &method->basic.democracy_delegate_V1))
         break;
     case 3340: /* module 13 call 12 */
-        CHECK_ERROR(_readMethod_democracy_undelegate_V5(c, &method->basic.democracy_undelegate_V5))
+        CHECK_ERROR(_readMethod_democracy_undelegate_V1(c, &method->basic.democracy_undelegate_V1))
         break;
     case 3341: /* module 13 call 13 */
-        CHECK_ERROR(_readMethod_democracy_clear_public_proposals_V5(c, &method->basic.democracy_clear_public_proposals_V5))
+        CHECK_ERROR(_readMethod_democracy_clear_public_proposals_V1(c, &method->basic.democracy_clear_public_proposals_V1))
         break;
     case 3342: /* module 13 call 14 */
-        CHECK_ERROR(_readMethod_democracy_note_preimage_V5(c, &method->basic.democracy_note_preimage_V5))
+        CHECK_ERROR(_readMethod_democracy_note_preimage_V1(c, &method->basic.democracy_note_preimage_V1))
         break;
     case 3343: /* module 13 call 15 */
-        CHECK_ERROR(_readMethod_democracy_note_preimage_operational_V5(c, &method->basic.democracy_note_preimage_operational_V5))
+        CHECK_ERROR(_readMethod_democracy_note_preimage_operational_V1(c, &method->basic.democracy_note_preimage_operational_V1))
         break;
     case 3344: /* module 13 call 16 */
-        CHECK_ERROR(_readMethod_democracy_note_imminent_preimage_V5(c, &method->basic.democracy_note_imminent_preimage_V5))
+        CHECK_ERROR(_readMethod_democracy_note_imminent_preimage_V1(c, &method->basic.democracy_note_imminent_preimage_V1))
         break;
     case 3345: /* module 13 call 17 */
-        CHECK_ERROR(_readMethod_democracy_note_imminent_preimage_operational_V5(c, &method->basic.democracy_note_imminent_preimage_operational_V5))
+        CHECK_ERROR(_readMethod_democracy_note_imminent_preimage_operational_V1(c, &method->basic.democracy_note_imminent_preimage_operational_V1))
         break;
     case 3346: /* module 13 call 18 */
-        CHECK_ERROR(_readMethod_democracy_reap_preimage_V5(c, &method->basic.democracy_reap_preimage_V5))
+        CHECK_ERROR(_readMethod_democracy_reap_preimage_V1(c, &method->basic.democracy_reap_preimage_V1))
         break;
     case 3347: /* module 13 call 19 */
-        CHECK_ERROR(_readMethod_democracy_unlock_V5(c, &method->basic.democracy_unlock_V5))
+        CHECK_ERROR(_readMethod_democracy_unlock_V1(c, &method->basic.democracy_unlock_V1))
         break;
     case 3348: /* module 13 call 20 */
-        CHECK_ERROR(_readMethod_democracy_remove_vote_V5(c, &method->basic.democracy_remove_vote_V5))
+        CHECK_ERROR(_readMethod_democracy_remove_vote_V1(c, &method->basic.democracy_remove_vote_V1))
         break;
     case 3349: /* module 13 call 21 */
-        CHECK_ERROR(_readMethod_democracy_remove_other_vote_V5(c, &method->basic.democracy_remove_other_vote_V5))
+        CHECK_ERROR(_readMethod_democracy_remove_other_vote_V1(c, &method->basic.democracy_remove_other_vote_V1))
         break;
     case 3350: /* module 13 call 22 */
-        CHECK_ERROR(_readMethod_democracy_enact_proposal_V5(c, &method->basic.democracy_enact_proposal_V5))
+        CHECK_ERROR(_readMethod_democracy_enact_proposal_V1(c, &method->basic.democracy_enact_proposal_V1))
         break;
     case 3351: /* module 13 call 23 */
-        CHECK_ERROR(_readMethod_democracy_blacklist_V5(c, &method->basic.democracy_blacklist_V5))
+        CHECK_ERROR(_readMethod_democracy_blacklist_V1(c, &method->basic.democracy_blacklist_V1))
         break;
     case 3352: /* module 13 call 24 */
-        CHECK_ERROR(_readMethod_democracy_cancel_proposal_V5(c, &method->basic.democracy_cancel_proposal_V5))
+        CHECK_ERROR(_readMethod_democracy_cancel_proposal_V1(c, &method->basic.democracy_cancel_proposal_V1))
         break;
     case 3584: /* module 14 call 0 */
-        CHECK_ERROR(_readMethod_council_set_members_V5(c, &method->basic.council_set_members_V5))
+        CHECK_ERROR(_readMethod_council_set_members_V1(c, &method->basic.council_set_members_V1))
         break;
     case 3585: /* module 14 call 1 */
-        CHECK_ERROR(_readMethod_council_execute_V5(c, &method->basic.council_execute_V5))
+        CHECK_ERROR(_readMethod_council_execute_V1(c, &method->basic.council_execute_V1))
         break;
     case 3586: /* module 14 call 2 */
-        CHECK_ERROR(_readMethod_council_propose_V5(c, &method->basic.council_propose_V5))
+        CHECK_ERROR(_readMethod_council_propose_V1(c, &method->basic.council_propose_V1))
         break;
     case 3587: /* module 14 call 3 */
-        CHECK_ERROR(_readMethod_council_vote_V5(c, &method->basic.council_vote_V5))
+        CHECK_ERROR(_readMethod_council_vote_V1(c, &method->basic.council_vote_V1))
         break;
     case 3588: /* module 14 call 4 */
-        CHECK_ERROR(_readMethod_council_close_V5(c, &method->basic.council_close_V5))
+        CHECK_ERROR(_readMethod_council_close_V1(c, &method->basic.council_close_V1))
         break;
     case 3589: /* module 14 call 5 */
-        CHECK_ERROR(_readMethod_council_disapprove_proposal_V5(c, &method->basic.council_disapprove_proposal_V5))
+        CHECK_ERROR(_readMethod_council_disapprove_proposal_V1(c, &method->basic.council_disapprove_proposal_V1))
         break;
     case 3840: /* module 15 call 0 */
-        CHECK_ERROR(_readMethod_technicalcommittee_set_members_V5(c, &method->basic.technicalcommittee_set_members_V5))
+        CHECK_ERROR(_readMethod_technicalcommittee_set_members_V1(c, &method->basic.technicalcommittee_set_members_V1))
         break;
     case 3841: /* module 15 call 1 */
-        CHECK_ERROR(_readMethod_technicalcommittee_execute_V5(c, &method->basic.technicalcommittee_execute_V5))
+        CHECK_ERROR(_readMethod_technicalcommittee_execute_V1(c, &method->basic.technicalcommittee_execute_V1))
         break;
     case 3842: /* module 15 call 2 */
-        CHECK_ERROR(_readMethod_technicalcommittee_propose_V5(c, &method->basic.technicalcommittee_propose_V5))
+        CHECK_ERROR(_readMethod_technicalcommittee_propose_V1(c, &method->basic.technicalcommittee_propose_V1))
         break;
     case 3843: /* module 15 call 3 */
-        CHECK_ERROR(_readMethod_technicalcommittee_vote_V5(c, &method->basic.technicalcommittee_vote_V5))
+        CHECK_ERROR(_readMethod_technicalcommittee_vote_V1(c, &method->basic.technicalcommittee_vote_V1))
         break;
     case 3844: /* module 15 call 4 */
-        CHECK_ERROR(_readMethod_technicalcommittee_close_V5(c, &method->basic.technicalcommittee_close_V5))
+        CHECK_ERROR(_readMethod_technicalcommittee_close_V1(c, &method->basic.technicalcommittee_close_V1))
         break;
     case 3845: /* module 15 call 5 */
-        CHECK_ERROR(_readMethod_technicalcommittee_disapprove_proposal_V5(c, &method->basic.technicalcommittee_disapprove_proposal_V5))
+        CHECK_ERROR(_readMethod_technicalcommittee_disapprove_proposal_V1(c, &method->basic.technicalcommittee_disapprove_proposal_V1))
         break;
     case 4096: /* module 16 call 0 */
-        CHECK_ERROR(_readMethod_phragmenelection_vote_V5(c, &method->basic.phragmenelection_vote_V5))
+        CHECK_ERROR(_readMethod_phragmenelection_vote_V1(c, &method->basic.phragmenelection_vote_V1))
         break;
     case 4097: /* module 16 call 1 */
-        CHECK_ERROR(_readMethod_phragmenelection_remove_voter_V5(c, &method->basic.phragmenelection_remove_voter_V5))
+        CHECK_ERROR(_readMethod_phragmenelection_remove_voter_V1(c, &method->basic.phragmenelection_remove_voter_V1))
         break;
     case 4098: /* module 16 call 2 */
-        CHECK_ERROR(_readMethod_phragmenelection_submit_candidacy_V5(c, &method->basic.phragmenelection_submit_candidacy_V5))
+        CHECK_ERROR(_readMethod_phragmenelection_submit_candidacy_V1(c, &method->basic.phragmenelection_submit_candidacy_V1))
         break;
     case 4099: /* module 16 call 3 */
-        CHECK_ERROR(_readMethod_phragmenelection_renounce_candidacy_V5(c, &method->basic.phragmenelection_renounce_candidacy_V5))
+        CHECK_ERROR(_readMethod_phragmenelection_renounce_candidacy_V1(c, &method->basic.phragmenelection_renounce_candidacy_V1))
         break;
     case 4100: /* module 16 call 4 */
-        CHECK_ERROR(_readMethod_phragmenelection_remove_member_V5(c, &method->basic.phragmenelection_remove_member_V5))
+        CHECK_ERROR(_readMethod_phragmenelection_remove_member_V1(c, &method->basic.phragmenelection_remove_member_V1))
         break;
     case 4101: /* module 16 call 5 */
-        CHECK_ERROR(_readMethod_phragmenelection_clean_defunct_voters_V5(c, &method->basic.phragmenelection_clean_defunct_voters_V5))
+        CHECK_ERROR(_readMethod_phragmenelection_clean_defunct_voters_V1(c, &method->basic.phragmenelection_clean_defunct_voters_V1))
         break;
     case 4352: /* module 17 call 0 */
-        CHECK_ERROR(_readMethod_technicalmembership_add_member_V5(c, &method->basic.technicalmembership_add_member_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_add_member_V1(c, &method->basic.technicalmembership_add_member_V1))
         break;
     case 4353: /* module 17 call 1 */
-        CHECK_ERROR(_readMethod_technicalmembership_remove_member_V5(c, &method->basic.technicalmembership_remove_member_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_remove_member_V1(c, &method->basic.technicalmembership_remove_member_V1))
         break;
     case 4354: /* module 17 call 2 */
-        CHECK_ERROR(_readMethod_technicalmembership_swap_member_V5(c, &method->basic.technicalmembership_swap_member_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_swap_member_V1(c, &method->basic.technicalmembership_swap_member_V1))
         break;
     case 4355: /* module 17 call 3 */
-        CHECK_ERROR(_readMethod_technicalmembership_reset_members_V5(c, &method->basic.technicalmembership_reset_members_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_reset_members_V1(c, &method->basic.technicalmembership_reset_members_V1))
         break;
     case 4356: /* module 17 call 4 */
-        CHECK_ERROR(_readMethod_technicalmembership_change_key_V5(c, &method->basic.technicalmembership_change_key_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_change_key_V1(c, &method->basic.technicalmembership_change_key_V1))
         break;
     case 4357: /* module 17 call 5 */
-        CHECK_ERROR(_readMethod_technicalmembership_set_prime_V5(c, &method->basic.technicalmembership_set_prime_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_set_prime_V1(c, &method->basic.technicalmembership_set_prime_V1))
         break;
     case 4358: /* module 17 call 6 */
-        CHECK_ERROR(_readMethod_technicalmembership_clear_prime_V5(c, &method->basic.technicalmembership_clear_prime_V5))
+        CHECK_ERROR(_readMethod_technicalmembership_clear_prime_V1(c, &method->basic.technicalmembership_clear_prime_V1))
         break;
     case 4608: /* module 18 call 0 */
-        CHECK_ERROR(_readMethod_treasury_propose_spend_V5(c, &method->basic.treasury_propose_spend_V5))
+        CHECK_ERROR(_readMethod_treasury_propose_spend_V1(c, &method->basic.treasury_propose_spend_V1))
         break;
     case 4609: /* module 18 call 1 */
-        CHECK_ERROR(_readMethod_treasury_reject_proposal_V5(c, &method->basic.treasury_reject_proposal_V5))
+        CHECK_ERROR(_readMethod_treasury_reject_proposal_V1(c, &method->basic.treasury_reject_proposal_V1))
         break;
     case 4610: /* module 18 call 2 */
-        CHECK_ERROR(_readMethod_treasury_approve_proposal_V5(c, &method->basic.treasury_approve_proposal_V5))
+        CHECK_ERROR(_readMethod_treasury_approve_proposal_V1(c, &method->basic.treasury_approve_proposal_V1))
         break;
     case 4864: /* module 19 call 0 */
-        CHECK_ERROR(_readMethod_claims_claim_V5(c, &method->basic.claims_claim_V5))
+        CHECK_ERROR(_readMethod_claims_claim_V1(c, &method->basic.claims_claim_V1))
         break;
     case 4865: /* module 19 call 1 */
-        CHECK_ERROR(_readMethod_claims_mint_claim_V5(c, &method->basic.claims_mint_claim_V5))
+        CHECK_ERROR(_readMethod_claims_mint_claim_V1(c, &method->basic.claims_mint_claim_V1))
         break;
     case 4866: /* module 19 call 2 */
-        CHECK_ERROR(_readMethod_claims_claim_attest_V5(c, &method->basic.claims_claim_attest_V5))
+        CHECK_ERROR(_readMethod_claims_claim_attest_V1(c, &method->basic.claims_claim_attest_V1))
         break;
     case 4867: /* module 19 call 3 */
-        CHECK_ERROR(_readMethod_claims_attest_V5(c, &method->basic.claims_attest_V5))
+        CHECK_ERROR(_readMethod_claims_attest_V1(c, &method->basic.claims_attest_V1))
         break;
     case 4868: /* module 19 call 4 */
-        CHECK_ERROR(_readMethod_claims_move_claim_V5(c, &method->basic.claims_move_claim_V5))
+        CHECK_ERROR(_readMethod_claims_move_claim_V1(c, &method->basic.claims_move_claim_V1))
         break;
     case 6145: /* module 24 call 1 */
-        CHECK_ERROR(_readMethod_utility_as_derivative_V5(c, &method->basic.utility_as_derivative_V5))
+        CHECK_ERROR(_readMethod_utility_as_derivative_V1(c, &method->basic.utility_as_derivative_V1))
         break;
     case 6400: /* module 25 call 0 */
-        CHECK_ERROR(_readMethod_identity_add_registrar_V5(c, &method->basic.identity_add_registrar_V5))
+        CHECK_ERROR(_readMethod_identity_add_registrar_V1(c, &method->basic.identity_add_registrar_V1))
         break;
     case 6401: /* module 25 call 1 */
-        CHECK_ERROR(_readMethod_identity_set_identity_V5(c, &method->basic.identity_set_identity_V5))
+        CHECK_ERROR(_readMethod_identity_set_identity_V1(c, &method->basic.identity_set_identity_V1))
         break;
     case 6402: /* module 25 call 2 */
-        CHECK_ERROR(_readMethod_identity_set_subs_V5(c, &method->basic.identity_set_subs_V5))
+        CHECK_ERROR(_readMethod_identity_set_subs_V1(c, &method->basic.identity_set_subs_V1))
         break;
     case 6403: /* module 25 call 3 */
-        CHECK_ERROR(_readMethod_identity_clear_identity_V5(c, &method->basic.identity_clear_identity_V5))
+        CHECK_ERROR(_readMethod_identity_clear_identity_V1(c, &method->basic.identity_clear_identity_V1))
         break;
     case 6404: /* module 25 call 4 */
-        CHECK_ERROR(_readMethod_identity_request_judgement_V5(c, &method->basic.identity_request_judgement_V5))
+        CHECK_ERROR(_readMethod_identity_request_judgement_V1(c, &method->basic.identity_request_judgement_V1))
         break;
     case 6405: /* module 25 call 5 */
-        CHECK_ERROR(_readMethod_identity_cancel_request_V5(c, &method->basic.identity_cancel_request_V5))
+        CHECK_ERROR(_readMethod_identity_cancel_request_V1(c, &method->basic.identity_cancel_request_V1))
         break;
     case 6406: /* module 25 call 6 */
-        CHECK_ERROR(_readMethod_identity_set_fee_V5(c, &method->basic.identity_set_fee_V5))
+        CHECK_ERROR(_readMethod_identity_set_fee_V1(c, &method->basic.identity_set_fee_V1))
         break;
     case 6407: /* module 25 call 7 */
-        CHECK_ERROR(_readMethod_identity_set_account_id_V5(c, &method->basic.identity_set_account_id_V5))
+        CHECK_ERROR(_readMethod_identity_set_account_id_V1(c, &method->basic.identity_set_account_id_V1))
         break;
     case 6408: /* module 25 call 8 */
-        CHECK_ERROR(_readMethod_identity_set_fields_V5(c, &method->basic.identity_set_fields_V5))
+        CHECK_ERROR(_readMethod_identity_set_fields_V1(c, &method->basic.identity_set_fields_V1))
         break;
     case 6409: /* module 25 call 9 */
-        CHECK_ERROR(_readMethod_identity_provide_judgement_V5(c, &method->basic.identity_provide_judgement_V5))
+        CHECK_ERROR(_readMethod_identity_provide_judgement_V1(c, &method->basic.identity_provide_judgement_V1))
         break;
     case 6410: /* module 25 call 10 */
-        CHECK_ERROR(_readMethod_identity_kill_identity_V5(c, &method->basic.identity_kill_identity_V5))
+        CHECK_ERROR(_readMethod_identity_kill_identity_V1(c, &method->basic.identity_kill_identity_V1))
         break;
     case 6411: /* module 25 call 11 */
-        CHECK_ERROR(_readMethod_identity_add_sub_V5(c, &method->basic.identity_add_sub_V5))
+        CHECK_ERROR(_readMethod_identity_add_sub_V1(c, &method->basic.identity_add_sub_V1))
         break;
     case 6412: /* module 25 call 12 */
-        CHECK_ERROR(_readMethod_identity_rename_sub_V5(c, &method->basic.identity_rename_sub_V5))
+        CHECK_ERROR(_readMethod_identity_rename_sub_V1(c, &method->basic.identity_rename_sub_V1))
         break;
     case 6413: /* module 25 call 13 */
-        CHECK_ERROR(_readMethod_identity_remove_sub_V5(c, &method->basic.identity_remove_sub_V5))
+        CHECK_ERROR(_readMethod_identity_remove_sub_V1(c, &method->basic.identity_remove_sub_V1))
         break;
     case 6414: /* module 25 call 14 */
-        CHECK_ERROR(_readMethod_identity_quit_sub_V5(c, &method->basic.identity_quit_sub_V5))
+        CHECK_ERROR(_readMethod_identity_quit_sub_V1(c, &method->basic.identity_quit_sub_V1))
         break;
     case 6656: /* module 26 call 0 */
-        CHECK_ERROR(_readMethod_society_bid_V5(c, &method->basic.society_bid_V5))
+        CHECK_ERROR(_readMethod_society_bid_V1(c, &method->basic.society_bid_V1))
         break;
     case 6657: /* module 26 call 1 */
-        CHECK_ERROR(_readMethod_society_unbid_V5(c, &method->basic.society_unbid_V5))
+        CHECK_ERROR(_readMethod_society_unbid_V1(c, &method->basic.society_unbid_V1))
         break;
     case 6658: /* module 26 call 2 */
-        CHECK_ERROR(_readMethod_society_vouch_V5(c, &method->basic.society_vouch_V5))
+        CHECK_ERROR(_readMethod_society_vouch_V1(c, &method->basic.society_vouch_V1))
         break;
     case 6659: /* module 26 call 3 */
-        CHECK_ERROR(_readMethod_society_unvouch_V5(c, &method->basic.society_unvouch_V5))
+        CHECK_ERROR(_readMethod_society_unvouch_V1(c, &method->basic.society_unvouch_V1))
         break;
     case 6660: /* module 26 call 4 */
-        CHECK_ERROR(_readMethod_society_vote_V5(c, &method->basic.society_vote_V5))
+        CHECK_ERROR(_readMethod_society_vote_V1(c, &method->basic.society_vote_V1))
         break;
     case 6661: /* module 26 call 5 */
-        CHECK_ERROR(_readMethod_society_defender_vote_V5(c, &method->basic.society_defender_vote_V5))
+        CHECK_ERROR(_readMethod_society_defender_vote_V1(c, &method->basic.society_defender_vote_V1))
         break;
     case 6662: /* module 26 call 6 */
-        CHECK_ERROR(_readMethod_society_payout_V5(c, &method->basic.society_payout_V5))
+        CHECK_ERROR(_readMethod_society_payout_V1(c, &method->basic.society_payout_V1))
         break;
     case 6663: /* module 26 call 7 */
-        CHECK_ERROR(_readMethod_society_found_V5(c, &method->basic.society_found_V5))
+        CHECK_ERROR(_readMethod_society_found_V1(c, &method->basic.society_found_V1))
         break;
     case 6664: /* module 26 call 8 */
-        CHECK_ERROR(_readMethod_society_unfound_V5(c, &method->basic.society_unfound_V5))
+        CHECK_ERROR(_readMethod_society_unfound_V1(c, &method->basic.society_unfound_V1))
         break;
     case 6665: /* module 26 call 9 */
-        CHECK_ERROR(_readMethod_society_judge_suspended_member_V5(c, &method->basic.society_judge_suspended_member_V5))
+        CHECK_ERROR(_readMethod_society_judge_suspended_member_V1(c, &method->basic.society_judge_suspended_member_V1))
         break;
     case 6666: /* module 26 call 10 */
-        CHECK_ERROR(_readMethod_society_judge_suspended_candidate_V5(c, &method->basic.society_judge_suspended_candidate_V5))
+        CHECK_ERROR(_readMethod_society_judge_suspended_candidate_V1(c, &method->basic.society_judge_suspended_candidate_V1))
         break;
     case 6667: /* module 26 call 11 */
-        CHECK_ERROR(_readMethod_society_set_max_members_V5(c, &method->basic.society_set_max_members_V5))
+        CHECK_ERROR(_readMethod_society_set_max_members_V1(c, &method->basic.society_set_max_members_V1))
         break;
     case 6912: /* module 27 call 0 */
-        CHECK_ERROR(_readMethod_recovery_as_recovered_V5(c, &method->basic.recovery_as_recovered_V5))
+        CHECK_ERROR(_readMethod_recovery_as_recovered_V1(c, &method->basic.recovery_as_recovered_V1))
         break;
     case 6913: /* module 27 call 1 */
-        CHECK_ERROR(_readMethod_recovery_set_recovered_V5(c, &method->basic.recovery_set_recovered_V5))
+        CHECK_ERROR(_readMethod_recovery_set_recovered_V1(c, &method->basic.recovery_set_recovered_V1))
         break;
     case 6914: /* module 27 call 2 */
-        CHECK_ERROR(_readMethod_recovery_create_recovery_V5(c, &method->basic.recovery_create_recovery_V5))
+        CHECK_ERROR(_readMethod_recovery_create_recovery_V1(c, &method->basic.recovery_create_recovery_V1))
         break;
     case 6915: /* module 27 call 3 */
-        CHECK_ERROR(_readMethod_recovery_initiate_recovery_V5(c, &method->basic.recovery_initiate_recovery_V5))
+        CHECK_ERROR(_readMethod_recovery_initiate_recovery_V1(c, &method->basic.recovery_initiate_recovery_V1))
         break;
     case 6916: /* module 27 call 4 */
-        CHECK_ERROR(_readMethod_recovery_vouch_recovery_V5(c, &method->basic.recovery_vouch_recovery_V5))
+        CHECK_ERROR(_readMethod_recovery_vouch_recovery_V1(c, &method->basic.recovery_vouch_recovery_V1))
         break;
     case 6917: /* module 27 call 5 */
-        CHECK_ERROR(_readMethod_recovery_claim_recovery_V5(c, &method->basic.recovery_claim_recovery_V5))
+        CHECK_ERROR(_readMethod_recovery_claim_recovery_V1(c, &method->basic.recovery_claim_recovery_V1))
         break;
     case 6918: /* module 27 call 6 */
-        CHECK_ERROR(_readMethod_recovery_close_recovery_V5(c, &method->basic.recovery_close_recovery_V5))
+        CHECK_ERROR(_readMethod_recovery_close_recovery_V1(c, &method->basic.recovery_close_recovery_V1))
         break;
     case 6919: /* module 27 call 7 */
-        CHECK_ERROR(_readMethod_recovery_remove_recovery_V5(c, &method->basic.recovery_remove_recovery_V5))
+        CHECK_ERROR(_readMethod_recovery_remove_recovery_V1(c, &method->basic.recovery_remove_recovery_V1))
         break;
     case 6920: /* module 27 call 8 */
-        CHECK_ERROR(_readMethod_recovery_cancel_recovered_V5(c, &method->basic.recovery_cancel_recovered_V5))
+        CHECK_ERROR(_readMethod_recovery_cancel_recovered_V1(c, &method->basic.recovery_cancel_recovered_V1))
         break;
     case 7168: /* module 28 call 0 */
-        CHECK_ERROR(_readMethod_vesting_vest_V5(c, &method->basic.vesting_vest_V5))
+        CHECK_ERROR(_readMethod_vesting_vest_V1(c, &method->basic.vesting_vest_V1))
         break;
     case 7169: /* module 28 call 1 */
-        CHECK_ERROR(_readMethod_vesting_vest_other_V5(c, &method->basic.vesting_vest_other_V5))
+        CHECK_ERROR(_readMethod_vesting_vest_other_V1(c, &method->basic.vesting_vest_other_V1))
         break;
     case 7170: /* module 28 call 2 */
-        CHECK_ERROR(_readMethod_vesting_vested_transfer_V5(c, &method->basic.vesting_vested_transfer_V5))
+        CHECK_ERROR(_readMethod_vesting_vested_transfer_V1(c, &method->basic.vesting_vested_transfer_V1))
         break;
     case 7171: /* module 28 call 3 */
-        CHECK_ERROR(_readMethod_vesting_force_vested_transfer_V5(c, &method->basic.vesting_force_vested_transfer_V5))
+        CHECK_ERROR(_readMethod_vesting_force_vested_transfer_V1(c, &method->basic.vesting_force_vested_transfer_V1))
         break;
     case 7424: /* module 29 call 0 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_V5(c, &method->basic.scheduler_schedule_V5))
+        CHECK_ERROR(_readMethod_scheduler_schedule_V1(c, &method->basic.scheduler_schedule_V1))
         break;
     case 7425: /* module 29 call 1 */
-        CHECK_ERROR(_readMethod_scheduler_cancel_V5(c, &method->basic.scheduler_cancel_V5))
+        CHECK_ERROR(_readMethod_scheduler_cancel_V1(c, &method->basic.scheduler_cancel_V1))
         break;
     case 7426: /* module 29 call 2 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_named_V5(c, &method->basic.scheduler_schedule_named_V5))
+        CHECK_ERROR(_readMethod_scheduler_schedule_named_V1(c, &method->basic.scheduler_schedule_named_V1))
         break;
     case 7427: /* module 29 call 3 */
-        CHECK_ERROR(_readMethod_scheduler_cancel_named_V5(c, &method->basic.scheduler_cancel_named_V5))
+        CHECK_ERROR(_readMethod_scheduler_cancel_named_V1(c, &method->basic.scheduler_cancel_named_V1))
         break;
     case 7428: /* module 29 call 4 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_after_V5(c, &method->basic.scheduler_schedule_after_V5))
+        CHECK_ERROR(_readMethod_scheduler_schedule_after_V1(c, &method->basic.scheduler_schedule_after_V1))
         break;
     case 7429: /* module 29 call 5 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_named_after_V5(c, &method->basic.scheduler_schedule_named_after_V5))
+        CHECK_ERROR(_readMethod_scheduler_schedule_named_after_V1(c, &method->basic.scheduler_schedule_named_after_V1))
         break;
     case 7680: /* module 30 call 0 */
-        CHECK_ERROR(_readMethod_proxy_proxy_V5(c, &method->nested.proxy_proxy_V5))
+        CHECK_ERROR(_readMethod_proxy_proxy_V1(c, &method->nested.proxy_proxy_V1))
         break;
     case 7681: /* module 30 call 1 */
-        CHECK_ERROR(_readMethod_proxy_add_proxy_V5(c, &method->basic.proxy_add_proxy_V5))
+        CHECK_ERROR(_readMethod_proxy_add_proxy_V1(c, &method->basic.proxy_add_proxy_V1))
         break;
     case 7682: /* module 30 call 2 */
-        CHECK_ERROR(_readMethod_proxy_remove_proxy_V5(c, &method->basic.proxy_remove_proxy_V5))
+        CHECK_ERROR(_readMethod_proxy_remove_proxy_V1(c, &method->basic.proxy_remove_proxy_V1))
         break;
     case 7683: /* module 30 call 3 */
-        CHECK_ERROR(_readMethod_proxy_remove_proxies_V5(c, &method->basic.proxy_remove_proxies_V5))
+        CHECK_ERROR(_readMethod_proxy_remove_proxies_V1(c, &method->basic.proxy_remove_proxies_V1))
         break;
     case 7684: /* module 30 call 4 */
-        CHECK_ERROR(_readMethod_proxy_anonymous_V5(c, &method->basic.proxy_anonymous_V5))
+        CHECK_ERROR(_readMethod_proxy_anonymous_V1(c, &method->basic.proxy_anonymous_V1))
         break;
     case 7685: /* module 30 call 5 */
-        CHECK_ERROR(_readMethod_proxy_kill_anonymous_V5(c, &method->basic.proxy_kill_anonymous_V5))
+        CHECK_ERROR(_readMethod_proxy_kill_anonymous_V1(c, &method->basic.proxy_kill_anonymous_V1))
         break;
     case 7686: /* module 30 call 6 */
-        CHECK_ERROR(_readMethod_proxy_announce_V5(c, &method->basic.proxy_announce_V5))
+        CHECK_ERROR(_readMethod_proxy_announce_V1(c, &method->basic.proxy_announce_V1))
         break;
     case 7687: /* module 30 call 7 */
-        CHECK_ERROR(_readMethod_proxy_remove_announcement_V5(c, &method->basic.proxy_remove_announcement_V5))
+        CHECK_ERROR(_readMethod_proxy_remove_announcement_V1(c, &method->basic.proxy_remove_announcement_V1))
         break;
     case 7688: /* module 30 call 8 */
-        CHECK_ERROR(_readMethod_proxy_reject_announcement_V5(c, &method->basic.proxy_reject_announcement_V5))
+        CHECK_ERROR(_readMethod_proxy_reject_announcement_V1(c, &method->basic.proxy_reject_announcement_V1))
         break;
     case 7689: /* module 30 call 9 */
-        CHECK_ERROR(_readMethod_proxy_proxy_announced_V5(c, &method->basic.proxy_proxy_announced_V5))
+        CHECK_ERROR(_readMethod_proxy_proxy_announced_V1(c, &method->basic.proxy_proxy_announced_V1))
         break;
     case 7936: /* module 31 call 0 */
-        CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1_V5(c, &method->nested.multisig_as_multi_threshold_1_V5))
+        CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1_V1(c, &method->nested.multisig_as_multi_threshold_1_V1))
         break;
     case 7937: /* module 31 call 1 */
-        CHECK_ERROR(_readMethod_multisig_as_multi_V5(c, &method->nested.multisig_as_multi_V5))
+        CHECK_ERROR(_readMethod_multisig_as_multi_V1(c, &method->nested.multisig_as_multi_V1))
         break;
     case 7938: /* module 31 call 2 */
-        CHECK_ERROR(_readMethod_multisig_approve_as_multi_V5(c, &method->nested.multisig_approve_as_multi_V5))
+        CHECK_ERROR(_readMethod_multisig_approve_as_multi_V1(c, &method->nested.multisig_approve_as_multi_V1))
         break;
     case 7939: /* module 31 call 3 */
-        CHECK_ERROR(_readMethod_multisig_cancel_as_multi_V5(c, &method->nested.multisig_cancel_as_multi_V5))
+        CHECK_ERROR(_readMethod_multisig_cancel_as_multi_V1(c, &method->nested.multisig_cancel_as_multi_V1))
         break;
     case 8960: /* module 35 call 0 */
-        CHECK_ERROR(_readMethod_bounties_propose_bounty_V5(c, &method->basic.bounties_propose_bounty_V5))
+        CHECK_ERROR(_readMethod_bounties_propose_bounty_V1(c, &method->basic.bounties_propose_bounty_V1))
         break;
     case 8961: /* module 35 call 1 */
-        CHECK_ERROR(_readMethod_bounties_approve_bounty_V5(c, &method->basic.bounties_approve_bounty_V5))
+        CHECK_ERROR(_readMethod_bounties_approve_bounty_V1(c, &method->basic.bounties_approve_bounty_V1))
         break;
     case 8962: /* module 35 call 2 */
-        CHECK_ERROR(_readMethod_bounties_propose_curator_V5(c, &method->basic.bounties_propose_curator_V5))
+        CHECK_ERROR(_readMethod_bounties_propose_curator_V1(c, &method->basic.bounties_propose_curator_V1))
         break;
     case 8963: /* module 35 call 3 */
-        CHECK_ERROR(_readMethod_bounties_unassign_curator_V5(c, &method->basic.bounties_unassign_curator_V5))
+        CHECK_ERROR(_readMethod_bounties_unassign_curator_V1(c, &method->basic.bounties_unassign_curator_V1))
         break;
     case 8964: /* module 35 call 4 */
-        CHECK_ERROR(_readMethod_bounties_accept_curator_V5(c, &method->basic.bounties_accept_curator_V5))
+        CHECK_ERROR(_readMethod_bounties_accept_curator_V1(c, &method->basic.bounties_accept_curator_V1))
         break;
     case 8965: /* module 35 call 5 */
-        CHECK_ERROR(_readMethod_bounties_award_bounty_V5(c, &method->basic.bounties_award_bounty_V5))
+        CHECK_ERROR(_readMethod_bounties_award_bounty_V1(c, &method->basic.bounties_award_bounty_V1))
         break;
     case 8966: /* module 35 call 6 */
-        CHECK_ERROR(_readMethod_bounties_claim_bounty_V5(c, &method->basic.bounties_claim_bounty_V5))
+        CHECK_ERROR(_readMethod_bounties_claim_bounty_V1(c, &method->basic.bounties_claim_bounty_V1))
         break;
     case 8967: /* module 35 call 7 */
-        CHECK_ERROR(_readMethod_bounties_close_bounty_V5(c, &method->basic.bounties_close_bounty_V5))
+        CHECK_ERROR(_readMethod_bounties_close_bounty_V1(c, &method->basic.bounties_close_bounty_V1))
         break;
     case 8968: /* module 35 call 8 */
-        CHECK_ERROR(_readMethod_bounties_extend_bounty_expiry_V5(c, &method->basic.bounties_extend_bounty_expiry_V5))
+        CHECK_ERROR(_readMethod_bounties_extend_bounty_expiry_V1(c, &method->basic.bounties_extend_bounty_expiry_V1))
         break;
     case 9216: /* module 36 call 0 */
-        CHECK_ERROR(_readMethod_tips_report_awesome_V5(c, &method->basic.tips_report_awesome_V5))
+        CHECK_ERROR(_readMethod_tips_report_awesome_V1(c, &method->basic.tips_report_awesome_V1))
         break;
     case 9217: /* module 36 call 1 */
-        CHECK_ERROR(_readMethod_tips_retract_tip_V5(c, &method->basic.tips_retract_tip_V5))
+        CHECK_ERROR(_readMethod_tips_retract_tip_V1(c, &method->basic.tips_retract_tip_V1))
         break;
     case 9218: /* module 36 call 2 */
-        CHECK_ERROR(_readMethod_tips_tip_new_V5(c, &method->basic.tips_tip_new_V5))
+        CHECK_ERROR(_readMethod_tips_tip_new_V1(c, &method->basic.tips_tip_new_V1))
         break;
     case 9219: /* module 36 call 3 */
-        CHECK_ERROR(_readMethod_tips_tip_V5(c, &method->basic.tips_tip_V5))
+        CHECK_ERROR(_readMethod_tips_tip_V1(c, &method->basic.tips_tip_V1))
         break;
     case 9220: /* module 36 call 4 */
-        CHECK_ERROR(_readMethod_tips_close_tip_V5(c, &method->basic.tips_close_tip_V5))
+        CHECK_ERROR(_readMethod_tips_close_tip_V1(c, &method->basic.tips_close_tip_V1))
         break;
     case 9221: /* module 36 call 5 */
-        CHECK_ERROR(_readMethod_tips_slash_tip_V5(c, &method->basic.tips_slash_tip_V5))
+        CHECK_ERROR(_readMethod_tips_slash_tip_V1(c, &method->basic.tips_slash_tip_V1))
         break;
     case 9472: /* module 37 call 0 */
-        CHECK_ERROR(_readMethod_electionprovidermultiphase_submit_unsigned_V5(c, &method->basic.electionprovidermultiphase_submit_unsigned_V5))
+        CHECK_ERROR(_readMethod_electionprovidermultiphase_submit_unsigned_V1(c, &method->basic.electionprovidermultiphase_submit_unsigned_V1))
         break;
     case 9728: /* module 38 call 0 */
-        CHECK_ERROR(_readMethod_gilt_place_bid_V5(c, &method->basic.gilt_place_bid_V5))
+        CHECK_ERROR(_readMethod_gilt_place_bid_V1(c, &method->basic.gilt_place_bid_V1))
         break;
     case 9729: /* module 38 call 1 */
-        CHECK_ERROR(_readMethod_gilt_retract_bid_V5(c, &method->basic.gilt_retract_bid_V5))
+        CHECK_ERROR(_readMethod_gilt_retract_bid_V1(c, &method->basic.gilt_retract_bid_V1))
         break;
     case 9730: /* module 38 call 2 */
-        CHECK_ERROR(_readMethod_gilt_set_target_V5(c, &method->basic.gilt_set_target_V5))
+        CHECK_ERROR(_readMethod_gilt_set_target_V1(c, &method->basic.gilt_set_target_V1))
         break;
     case 9731: /* module 38 call 3 */
-        CHECK_ERROR(_readMethod_gilt_thaw_V5(c, &method->basic.gilt_thaw_V5))
+        CHECK_ERROR(_readMethod_gilt_thaw_V1(c, &method->basic.gilt_thaw_V1))
         break;
     case 13056: /* module 51 call 0 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_validation_upgrade_frequency_V5(c, &method->basic.parachainsconfiguration_set_validation_upgrade_frequency_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_validation_upgrade_frequency_V1(c, &method->basic.parachainsconfiguration_set_validation_upgrade_frequency_V1))
         break;
     case 13057: /* module 51 call 1 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_validation_upgrade_delay_V5(c, &method->basic.parachainsconfiguration_set_validation_upgrade_delay_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_validation_upgrade_delay_V1(c, &method->basic.parachainsconfiguration_set_validation_upgrade_delay_V1))
         break;
     case 13058: /* module 51 call 2 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_code_retention_period_V5(c, &method->basic.parachainsconfiguration_set_code_retention_period_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_code_retention_period_V1(c, &method->basic.parachainsconfiguration_set_code_retention_period_V1))
         break;
     case 13059: /* module 51 call 3 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_code_size_V5(c, &method->basic.parachainsconfiguration_set_max_code_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_code_size_V1(c, &method->basic.parachainsconfiguration_set_max_code_size_V1))
         break;
     case 13060: /* module 51 call 4 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_pov_size_V5(c, &method->basic.parachainsconfiguration_set_max_pov_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_pov_size_V1(c, &method->basic.parachainsconfiguration_set_max_pov_size_V1))
         break;
     case 13061: /* module 51 call 5 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_head_data_size_V5(c, &method->basic.parachainsconfiguration_set_max_head_data_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_head_data_size_V1(c, &method->basic.parachainsconfiguration_set_max_head_data_size_V1))
         break;
     case 13062: /* module 51 call 6 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_parathread_cores_V5(c, &method->basic.parachainsconfiguration_set_parathread_cores_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_parathread_cores_V1(c, &method->basic.parachainsconfiguration_set_parathread_cores_V1))
         break;
     case 13063: /* module 51 call 7 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_parathread_retries_V5(c, &method->basic.parachainsconfiguration_set_parathread_retries_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_parathread_retries_V1(c, &method->basic.parachainsconfiguration_set_parathread_retries_V1))
         break;
     case 13064: /* module 51 call 8 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_group_rotation_frequency_V5(c, &method->basic.parachainsconfiguration_set_group_rotation_frequency_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_group_rotation_frequency_V1(c, &method->basic.parachainsconfiguration_set_group_rotation_frequency_V1))
         break;
     case 13065: /* module 51 call 9 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_chain_availability_period_V5(c, &method->basic.parachainsconfiguration_set_chain_availability_period_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_chain_availability_period_V1(c, &method->basic.parachainsconfiguration_set_chain_availability_period_V1))
         break;
     case 13066: /* module 51 call 10 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_thread_availability_period_V5(c, &method->basic.parachainsconfiguration_set_thread_availability_period_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_thread_availability_period_V1(c, &method->basic.parachainsconfiguration_set_thread_availability_period_V1))
         break;
     case 13067: /* module 51 call 11 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_scheduling_lookahead_V5(c, &method->basic.parachainsconfiguration_set_scheduling_lookahead_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_scheduling_lookahead_V1(c, &method->basic.parachainsconfiguration_set_scheduling_lookahead_V1))
         break;
     case 13068: /* module 51 call 12 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_validators_per_core_V5(c, &method->basic.parachainsconfiguration_set_max_validators_per_core_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_validators_per_core_V1(c, &method->basic.parachainsconfiguration_set_max_validators_per_core_V1))
         break;
     case 13069: /* module 51 call 13 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_validators_V5(c, &method->basic.parachainsconfiguration_set_max_validators_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_validators_V1(c, &method->basic.parachainsconfiguration_set_max_validators_V1))
         break;
     case 13070: /* module 51 call 14 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_period_V5(c, &method->basic.parachainsconfiguration_set_dispute_period_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_period_V1(c, &method->basic.parachainsconfiguration_set_dispute_period_V1))
         break;
     case 13071: /* module 51 call 15 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5(c, &method->basic.parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V1(c, &method->basic.parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V1))
         break;
     case 13072: /* module 51 call 16 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_max_spam_slots_V5(c, &method->basic.parachainsconfiguration_set_dispute_max_spam_slots_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_max_spam_slots_V1(c, &method->basic.parachainsconfiguration_set_dispute_max_spam_slots_V1))
         break;
     case 13073: /* module 51 call 17 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5(c, &method->basic.parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V1(c, &method->basic.parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V1))
         break;
     case 13074: /* module 51 call 18 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_no_show_slots_V5(c, &method->basic.parachainsconfiguration_set_no_show_slots_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_no_show_slots_V1(c, &method->basic.parachainsconfiguration_set_no_show_slots_V1))
         break;
     case 13075: /* module 51 call 19 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_n_delay_tranches_V5(c, &method->basic.parachainsconfiguration_set_n_delay_tranches_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_n_delay_tranches_V1(c, &method->basic.parachainsconfiguration_set_n_delay_tranches_V1))
         break;
     case 13076: /* module 51 call 20 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_zeroth_delay_tranche_width_V5(c, &method->basic.parachainsconfiguration_set_zeroth_delay_tranche_width_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_zeroth_delay_tranche_width_V1(c, &method->basic.parachainsconfiguration_set_zeroth_delay_tranche_width_V1))
         break;
     case 13077: /* module 51 call 21 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_needed_approvals_V5(c, &method->basic.parachainsconfiguration_set_needed_approvals_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_needed_approvals_V1(c, &method->basic.parachainsconfiguration_set_needed_approvals_V1))
         break;
     case 13078: /* module 51 call 22 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_relay_vrf_modulo_samples_V5(c, &method->basic.parachainsconfiguration_set_relay_vrf_modulo_samples_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_relay_vrf_modulo_samples_V1(c, &method->basic.parachainsconfiguration_set_relay_vrf_modulo_samples_V1))
         break;
     case 13079: /* module 51 call 23 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_queue_count_V5(c, &method->basic.parachainsconfiguration_set_max_upward_queue_count_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_queue_count_V1(c, &method->basic.parachainsconfiguration_set_max_upward_queue_count_V1))
         break;
     case 13080: /* module 51 call 24 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_queue_size_V5(c, &method->basic.parachainsconfiguration_set_max_upward_queue_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_queue_size_V1(c, &method->basic.parachainsconfiguration_set_max_upward_queue_size_V1))
         break;
     case 13081: /* module 51 call 25 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_downward_message_size_V5(c, &method->basic.parachainsconfiguration_set_max_downward_message_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_downward_message_size_V1(c, &method->basic.parachainsconfiguration_set_max_downward_message_size_V1))
         break;
     case 13082: /* module 51 call 26 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5(c, &method->basic.parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V1(c, &method->basic.parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V1))
         break;
     case 13083: /* module 51 call 27 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_message_size_V5(c, &method->basic.parachainsconfiguration_set_max_upward_message_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_message_size_V1(c, &method->basic.parachainsconfiguration_set_max_upward_message_size_V1))
         break;
     case 13084: /* module 51 call 28 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_message_num_per_candidate_V5(c, &method->basic.parachainsconfiguration_set_max_upward_message_num_per_candidate_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_message_num_per_candidate_V1(c, &method->basic.parachainsconfiguration_set_max_upward_message_num_per_candidate_V1))
         break;
     case 13085: /* module 51 call 29 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_open_request_ttl_V5(c, &method->basic.parachainsconfiguration_set_hrmp_open_request_ttl_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_open_request_ttl_V1(c, &method->basic.parachainsconfiguration_set_hrmp_open_request_ttl_V1))
         break;
     case 13086: /* module 51 call 30 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_sender_deposit_V5(c, &method->basic.parachainsconfiguration_set_hrmp_sender_deposit_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_sender_deposit_V1(c, &method->basic.parachainsconfiguration_set_hrmp_sender_deposit_V1))
         break;
     case 13087: /* module 51 call 31 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_recipient_deposit_V5(c, &method->basic.parachainsconfiguration_set_hrmp_recipient_deposit_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_recipient_deposit_V1(c, &method->basic.parachainsconfiguration_set_hrmp_recipient_deposit_V1))
         break;
     case 13088: /* module 51 call 32 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_channel_max_capacity_V5(c, &method->basic.parachainsconfiguration_set_hrmp_channel_max_capacity_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_channel_max_capacity_V1(c, &method->basic.parachainsconfiguration_set_hrmp_channel_max_capacity_V1))
         break;
     case 13089: /* module 51 call 33 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_channel_max_total_size_V5(c, &method->basic.parachainsconfiguration_set_hrmp_channel_max_total_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_channel_max_total_size_V1(c, &method->basic.parachainsconfiguration_set_hrmp_channel_max_total_size_V1))
         break;
     case 13090: /* module 51 call 34 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5(c, &method->basic.parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V1(c, &method->basic.parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V1))
         break;
     case 13091: /* module 51 call 35 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5(c, &method->basic.parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V1(c, &method->basic.parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V1))
         break;
     case 13092: /* module 51 call 36 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_channel_max_message_size_V5(c, &method->basic.parachainsconfiguration_set_hrmp_channel_max_message_size_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_channel_max_message_size_V1(c, &method->basic.parachainsconfiguration_set_hrmp_channel_max_message_size_V1))
         break;
     case 13093: /* module 51 call 37 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5(c, &method->basic.parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V1(c, &method->basic.parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V1))
         break;
     case 13094: /* module 51 call 38 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5(c, &method->basic.parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V1(c, &method->basic.parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V1))
         break;
     case 13095: /* module 51 call 39 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5(c, &method->basic.parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V1(c, &method->basic.parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V1))
         break;
     case 13824: /* module 54 call 0 */
-        CHECK_ERROR(_readMethod_parasinherent_enter_V5(c, &method->basic.parasinherent_enter_V5))
+        CHECK_ERROR(_readMethod_parasinherent_enter_V1(c, &method->basic.parasinherent_enter_V1))
         break;
     case 14336: /* module 56 call 0 */
-        CHECK_ERROR(_readMethod_paras_force_set_current_code_V5(c, &method->basic.paras_force_set_current_code_V5))
+        CHECK_ERROR(_readMethod_paras_force_set_current_code_V1(c, &method->basic.paras_force_set_current_code_V1))
         break;
     case 14337: /* module 56 call 1 */
-        CHECK_ERROR(_readMethod_paras_force_set_current_head_V5(c, &method->basic.paras_force_set_current_head_V5))
+        CHECK_ERROR(_readMethod_paras_force_set_current_head_V1(c, &method->basic.paras_force_set_current_head_V1))
         break;
     case 14338: /* module 56 call 2 */
-        CHECK_ERROR(_readMethod_paras_force_schedule_code_upgrade_V5(c, &method->basic.paras_force_schedule_code_upgrade_V5))
+        CHECK_ERROR(_readMethod_paras_force_schedule_code_upgrade_V1(c, &method->basic.paras_force_schedule_code_upgrade_V1))
         break;
     case 14339: /* module 56 call 3 */
-        CHECK_ERROR(_readMethod_paras_force_note_new_head_V5(c, &method->basic.paras_force_note_new_head_V5))
+        CHECK_ERROR(_readMethod_paras_force_note_new_head_V1(c, &method->basic.paras_force_note_new_head_V1))
         break;
     case 14340: /* module 56 call 4 */
-        CHECK_ERROR(_readMethod_paras_force_queue_action_V5(c, &method->basic.paras_force_queue_action_V5))
+        CHECK_ERROR(_readMethod_paras_force_queue_action_V1(c, &method->basic.paras_force_queue_action_V1))
         break;
     case 14592: /* module 57 call 0 */
-        CHECK_ERROR(_readMethod_parasinitializer_force_approve_V5(c, &method->basic.parasinitializer_force_approve_V5))
+        CHECK_ERROR(_readMethod_parasinitializer_force_approve_V1(c, &method->basic.parasinitializer_force_approve_V1))
         break;
     case 15360: /* module 60 call 0 */
-        CHECK_ERROR(_readMethod_parashrmp_hrmp_init_open_channel_V5(c, &method->basic.parashrmp_hrmp_init_open_channel_V5))
+        CHECK_ERROR(_readMethod_parashrmp_hrmp_init_open_channel_V1(c, &method->basic.parashrmp_hrmp_init_open_channel_V1))
         break;
     case 15361: /* module 60 call 1 */
-        CHECK_ERROR(_readMethod_parashrmp_hrmp_accept_open_channel_V5(c, &method->basic.parashrmp_hrmp_accept_open_channel_V5))
+        CHECK_ERROR(_readMethod_parashrmp_hrmp_accept_open_channel_V1(c, &method->basic.parashrmp_hrmp_accept_open_channel_V1))
         break;
     case 15362: /* module 60 call 2 */
-        CHECK_ERROR(_readMethod_parashrmp_hrmp_close_channel_V5(c, &method->basic.parashrmp_hrmp_close_channel_V5))
+        CHECK_ERROR(_readMethod_parashrmp_hrmp_close_channel_V1(c, &method->basic.parashrmp_hrmp_close_channel_V1))
         break;
     case 15363: /* module 60 call 3 */
-        CHECK_ERROR(_readMethod_parashrmp_force_clean_hrmp_V5(c, &method->basic.parashrmp_force_clean_hrmp_V5))
+        CHECK_ERROR(_readMethod_parashrmp_force_clean_hrmp_V1(c, &method->basic.parashrmp_force_clean_hrmp_V1))
         break;
     case 15364: /* module 60 call 4 */
-        CHECK_ERROR(_readMethod_parashrmp_force_process_hrmp_open_V5(c, &method->basic.parashrmp_force_process_hrmp_open_V5))
+        CHECK_ERROR(_readMethod_parashrmp_force_process_hrmp_open_V1(c, &method->basic.parashrmp_force_process_hrmp_open_V1))
         break;
     case 15365: /* module 60 call 5 */
-        CHECK_ERROR(_readMethod_parashrmp_force_process_hrmp_close_V5(c, &method->basic.parashrmp_force_process_hrmp_close_V5))
+        CHECK_ERROR(_readMethod_parashrmp_force_process_hrmp_close_V1(c, &method->basic.parashrmp_force_process_hrmp_close_V1))
         break;
     case 17920: /* module 70 call 0 */
-        CHECK_ERROR(_readMethod_registrar_register_V5(c, &method->basic.registrar_register_V5))
+        CHECK_ERROR(_readMethod_registrar_register_V1(c, &method->basic.registrar_register_V1))
         break;
     case 17921: /* module 70 call 1 */
-        CHECK_ERROR(_readMethod_registrar_force_register_V5(c, &method->basic.registrar_force_register_V5))
+        CHECK_ERROR(_readMethod_registrar_force_register_V1(c, &method->basic.registrar_force_register_V1))
         break;
     case 17922: /* module 70 call 2 */
-        CHECK_ERROR(_readMethod_registrar_deregister_V5(c, &method->basic.registrar_deregister_V5))
+        CHECK_ERROR(_readMethod_registrar_deregister_V1(c, &method->basic.registrar_deregister_V1))
         break;
     case 17923: /* module 70 call 3 */
-        CHECK_ERROR(_readMethod_registrar_swap_V5(c, &method->basic.registrar_swap_V5))
+        CHECK_ERROR(_readMethod_registrar_swap_V1(c, &method->basic.registrar_swap_V1))
         break;
     case 17924: /* module 70 call 4 */
-        CHECK_ERROR(_readMethod_registrar_force_remove_lock_V5(c, &method->basic.registrar_force_remove_lock_V5))
+        CHECK_ERROR(_readMethod_registrar_force_remove_lock_V1(c, &method->basic.registrar_force_remove_lock_V1))
         break;
     case 17925: /* module 70 call 5 */
-        CHECK_ERROR(_readMethod_registrar_reserve_V5(c, &method->basic.registrar_reserve_V5))
+        CHECK_ERROR(_readMethod_registrar_reserve_V1(c, &method->basic.registrar_reserve_V1))
         break;
     case 18176: /* module 71 call 0 */
-        CHECK_ERROR(_readMethod_slots_force_lease_V5(c, &method->basic.slots_force_lease_V5))
+        CHECK_ERROR(_readMethod_slots_force_lease_V1(c, &method->basic.slots_force_lease_V1))
         break;
     case 18177: /* module 71 call 1 */
-        CHECK_ERROR(_readMethod_slots_clear_all_leases_V5(c, &method->basic.slots_clear_all_leases_V5))
+        CHECK_ERROR(_readMethod_slots_clear_all_leases_V1(c, &method->basic.slots_clear_all_leases_V1))
         break;
     case 18178: /* module 71 call 2 */
-        CHECK_ERROR(_readMethod_slots_trigger_onboard_V5(c, &method->basic.slots_trigger_onboard_V5))
+        CHECK_ERROR(_readMethod_slots_trigger_onboard_V1(c, &method->basic.slots_trigger_onboard_V1))
         break;
     case 18432: /* module 72 call 0 */
-        CHECK_ERROR(_readMethod_auctions_new_auction_V5(c, &method->basic.auctions_new_auction_V5))
+        CHECK_ERROR(_readMethod_auctions_new_auction_V1(c, &method->basic.auctions_new_auction_V1))
         break;
     case 18433: /* module 72 call 1 */
-        CHECK_ERROR(_readMethod_auctions_bid_V5(c, &method->basic.auctions_bid_V5))
+        CHECK_ERROR(_readMethod_auctions_bid_V1(c, &method->basic.auctions_bid_V1))
         break;
     case 18434: /* module 72 call 2 */
-        CHECK_ERROR(_readMethod_auctions_cancel_auction_V5(c, &method->basic.auctions_cancel_auction_V5))
+        CHECK_ERROR(_readMethod_auctions_cancel_auction_V1(c, &method->basic.auctions_cancel_auction_V1))
         break;
     case 18688: /* module 73 call 0 */
-        CHECK_ERROR(_readMethod_crowdloan_create_V5(c, &method->basic.crowdloan_create_V5))
+        CHECK_ERROR(_readMethod_crowdloan_create_V1(c, &method->basic.crowdloan_create_V1))
         break;
     case 18689: /* module 73 call 1 */
-        CHECK_ERROR(_readMethod_crowdloan_contribute_V5(c, &method->basic.crowdloan_contribute_V5))
+        CHECK_ERROR(_readMethod_crowdloan_contribute_V1(c, &method->basic.crowdloan_contribute_V1))
         break;
     case 18690: /* module 73 call 2 */
-        CHECK_ERROR(_readMethod_crowdloan_withdraw_V5(c, &method->basic.crowdloan_withdraw_V5))
+        CHECK_ERROR(_readMethod_crowdloan_withdraw_V1(c, &method->basic.crowdloan_withdraw_V1))
         break;
     case 18691: /* module 73 call 3 */
-        CHECK_ERROR(_readMethod_crowdloan_refund_V5(c, &method->basic.crowdloan_refund_V5))
+        CHECK_ERROR(_readMethod_crowdloan_refund_V1(c, &method->basic.crowdloan_refund_V1))
         break;
     case 18692: /* module 73 call 4 */
-        CHECK_ERROR(_readMethod_crowdloan_dissolve_V5(c, &method->basic.crowdloan_dissolve_V5))
+        CHECK_ERROR(_readMethod_crowdloan_dissolve_V1(c, &method->basic.crowdloan_dissolve_V1))
         break;
     case 18693: /* module 73 call 5 */
-        CHECK_ERROR(_readMethod_crowdloan_edit_V5(c, &method->basic.crowdloan_edit_V5))
+        CHECK_ERROR(_readMethod_crowdloan_edit_V1(c, &method->basic.crowdloan_edit_V1))
         break;
     case 18694: /* module 73 call 6 */
-        CHECK_ERROR(_readMethod_crowdloan_add_memo_V5(c, &method->basic.crowdloan_add_memo_V5))
+        CHECK_ERROR(_readMethod_crowdloan_add_memo_V1(c, &method->basic.crowdloan_add_memo_V1))
         break;
     case 18695: /* module 73 call 7 */
-        CHECK_ERROR(_readMethod_crowdloan_poke_V5(c, &method->basic.crowdloan_poke_V5))
+        CHECK_ERROR(_readMethod_crowdloan_poke_V1(c, &method->basic.crowdloan_poke_V1))
         break;
     case 25344: /* module 99 call 0 */
-        CHECK_ERROR(_readMethod_xcmpallet_send_V5(c, &method->basic.xcmpallet_send_V5))
+        CHECK_ERROR(_readMethod_xcmpallet_send_V1(c, &method->basic.xcmpallet_send_V1))
         break;
     case 25345: /* module 99 call 1 */
-        CHECK_ERROR(_readMethod_xcmpallet_teleport_assets_V5(c, &method->basic.xcmpallet_teleport_assets_V5))
+        CHECK_ERROR(_readMethod_xcmpallet_teleport_assets_V1(c, &method->basic.xcmpallet_teleport_assets_V1))
         break;
     case 25346: /* module 99 call 2 */
-        CHECK_ERROR(_readMethod_xcmpallet_execute_V5(c, &method->basic.xcmpallet_execute_V5))
+        CHECK_ERROR(_readMethod_xcmpallet_execute_V1(c, &method->basic.xcmpallet_execute_V1))
         break;
 #endif
     default:
@@ -2919,7 +2929,7 @@ parser_error_t _readMethod_V5(
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
-const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
+const char* _getMethod_ModuleName_V1(uint8_t moduleIdx)
 {
     switch (moduleIdx) {
     case 4:
@@ -2930,6 +2940,8 @@ const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
         return STR_MO_SESSION;
     case 24:
         return STR_MO_UTILITY;
+    case 33:
+        return STR_MO_EQLOCKDROP;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0:
         return STR_MO_SYSTEM;
@@ -3025,7 +3037,7 @@ const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
     return NULL;
 }
 
-const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
+const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
@@ -3062,6 +3074,8 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_BATCH;
     case 6146: /* module 24 call 2 */
         return STR_ME_BATCH_ALL;
+    case 8448: /* module 33 call 0 */
+        return STR_ME_LOCK;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return STR_ME_FILL_BLOCK;
@@ -3579,7 +3593,7 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
     return NULL;
 }
 
-uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
+uint8_t _getMethod_NumItems_V1(uint8_t moduleIdx, uint8_t callIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
@@ -3615,6 +3629,8 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 6144: /* module 24 call 0 */
         return 1;
     case 6146: /* module 24 call 2 */
+        return 1;
+    case 8448: /* module 33 call 0 */
         return 1;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
@@ -4133,7 +4149,7 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     return 0;
 }
 
-const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
+const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
@@ -4255,6 +4271,14 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         switch (itemIdx) {
         case 0:
             return STR_IT_calls;
+        default:
+            return NULL;
+        }
+    case 8448: /* module 33 call 0 */
+        switch (itemIdx)
+        {
+        case 0:
+            return STR_IT_amount;
         default:
             return NULL;
         }
@@ -6381,8 +6405,8 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     return NULL;
 }
 
-parser_error_t _getMethod_ItemValue_V5(
-    pd_Method_V5_t* m,
+parser_error_t _getMethod_ItemValue_V1(
+    pd_Method_V1_t* m,
     uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx,
     char* outValue, uint16_t outValueLen,
     uint8_t pageIdx, uint8_t* pageCount)
@@ -6392,14 +6416,14 @@ parser_error_t _getMethod_ItemValue_V5(
     switch (callPrivIdx) {
     case 1024: /* module 4 call 0 */
         switch (itemIdx) {
-        case 0: /* balances_transfer_V5 - dest */;
-            return _toStringLookupSource_V5(
-                &m->nested.balances_transfer_V5.dest,
+        case 0: /* balances_transfer_V1 - dest */;
+            return _toStringLookupSource_V1(
+                &m->nested.balances_transfer_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* balances_transfer_V5 - value */;
+        case 1: /* balances_transfer_V1 - value */;
             return _toStringCompactBalance(
-                &m->nested.balances_transfer_V5.value,
+                &m->nested.balances_transfer_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6407,14 +6431,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1027: /* module 4 call 3 */
         switch (itemIdx) {
-        case 0: /* balances_transfer_keep_alive_V5 - dest */;
-            return _toStringLookupSource_V5(
-                &m->nested.balances_transfer_keep_alive_V5.dest,
+        case 0: /* balances_transfer_keep_alive_V1 - dest */;
+            return _toStringLookupSource_V1(
+                &m->nested.balances_transfer_keep_alive_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* balances_transfer_keep_alive_V5 - value */;
+        case 1: /* balances_transfer_keep_alive_V1 - value */;
             return _toStringCompactBalance(
-                &m->nested.balances_transfer_keep_alive_V5.value,
+                &m->nested.balances_transfer_keep_alive_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6422,19 +6446,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1536: /* module 6 call 0 */
         switch (itemIdx) {
-        case 0: /* staking_bond_V5 - controller */;
-            return _toStringLookupSource_V5(
-                &m->basic.staking_bond_V5.controller,
+        case 0: /* staking_bond_V1 - controller */;
+            return _toStringLookupSource_V1(
+                &m->basic.staking_bond_V1.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_bond_V5 - value */;
+        case 1: /* staking_bond_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_bond_V5.value,
+                &m->basic.staking_bond_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* staking_bond_V5 - payee */;
-            return _toStringRewardDestination_V5(
-                &m->basic.staking_bond_V5.payee,
+        case 2: /* staking_bond_V1 - payee */;
+            return _toStringRewardDestination_V1(
+                &m->basic.staking_bond_V1.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6442,9 +6466,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1537: /* module 6 call 1 */
         switch (itemIdx) {
-        case 0: /* staking_bond_extra_V5 - max_additional */;
+        case 0: /* staking_bond_extra_V1 - max_additional */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_bond_extra_V5.max_additional,
+                &m->basic.staking_bond_extra_V1.max_additional,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6452,9 +6476,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1538: /* module 6 call 2 */
         switch (itemIdx) {
-        case 0: /* staking_unbond_V5 - value */;
+        case 0: /* staking_unbond_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_unbond_V5.value,
+                &m->basic.staking_unbond_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6462,9 +6486,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1539: /* module 6 call 3 */
         switch (itemIdx) {
-        case 0: /* staking_withdraw_unbonded_V5 - num_slashing_spans */;
+        case 0: /* staking_withdraw_unbonded_V1 - num_slashing_spans */;
             return _toStringu32(
-                &m->basic.staking_withdraw_unbonded_V5.num_slashing_spans,
+                &m->basic.staking_withdraw_unbonded_V1.num_slashing_spans,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6472,9 +6496,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1540: /* module 6 call 4 */
         switch (itemIdx) {
-        case 0: /* staking_validate_V5 - prefs */;
-            return _toStringValidatorPrefs_V5(
-                &m->basic.staking_validate_V5.prefs,
+        case 0: /* staking_validate_V1 - prefs */;
+            return _toStringValidatorPrefs_V1(
+                &m->basic.staking_validate_V1.prefs,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6482,9 +6506,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1541: /* module 6 call 5 */
         switch (itemIdx) {
-        case 0: /* staking_nominate_V5 - targets */;
-            return _toStringVecLookupSource_V5(
-                &m->basic.staking_nominate_V5.targets,
+        case 0: /* staking_nominate_V1 - targets */;
+            return _toStringVecLookupSource_V1(
+                &m->basic.staking_nominate_V1.targets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6497,9 +6521,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1543: /* module 6 call 7 */
         switch (itemIdx) {
-        case 0: /* staking_set_payee_V5 - payee */;
-            return _toStringRewardDestination_V5(
-                &m->basic.staking_set_payee_V5.payee,
+        case 0: /* staking_set_payee_V1 - payee */;
+            return _toStringRewardDestination_V1(
+                &m->basic.staking_set_payee_V1.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6507,14 +6531,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1554: /* module 6 call 18 */
         switch (itemIdx) {
-        case 0: /* staking_payout_stakers_V5 - validator_stash */;
-            return _toStringAccountId_V5(
-                &m->basic.staking_payout_stakers_V5.validator_stash,
+        case 0: /* staking_payout_stakers_V1 - validator_stash */;
+            return _toStringAccountId_V1(
+                &m->basic.staking_payout_stakers_V1.validator_stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_payout_stakers_V5 - era */;
-            return _toStringEraIndex_V5(
-                &m->basic.staking_payout_stakers_V5.era,
+        case 1: /* staking_payout_stakers_V1 - era */;
+            return _toStringEraIndex_V1(
+                &m->basic.staking_payout_stakers_V1.era,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6522,9 +6546,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1555: /* module 6 call 19 */
         switch (itemIdx) {
-        case 0: /* staking_rebond_V5 - value */;
+        case 0: /* staking_rebond_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_rebond_V5.value,
+                &m->basic.staking_rebond_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6532,14 +6556,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2048: /* module 8 call 0 */
         switch (itemIdx) {
-        case 0: /* session_set_keys_V5 - keys */;
-            return _toStringKeys_V5(
-                &m->basic.session_set_keys_V5.keys,
+        case 0: /* session_set_keys_V1 - keys */;
+            return _toStringKeys_V1(
+                &m->basic.session_set_keys_V1.keys,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* session_set_keys_V5 - proof */;
+        case 1: /* session_set_keys_V1 - proof */;
             return _toStringBytes(
-                &m->basic.session_set_keys_V5.proof,
+                &m->basic.session_set_keys_V1.proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6552,9 +6576,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6144: /* module 24 call 0 */
         switch (itemIdx) {
-        case 0: /* utility_batch_V5 - calls */;
+        case 0: /* utility_batch_V1 - calls */;
             return _toStringVecCall(
-                &m->basic.utility_batch_V5.calls,
+                &m->basic.utility_batch_V1.calls,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6562,9 +6586,20 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6146: /* module 24 call 2 */
         switch (itemIdx) {
-        case 0: /* utility_batch_all_V5 - calls */;
+        case 0: /* utility_batch_all_V1 - calls */;
             return _toStringVecCall(
-                &m->basic.utility_batch_all_V5.calls,
+                &m->basic.utility_batch_all_V1.calls,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 8448: /* module 33 call 0 */
+        switch (itemIdx)
+        {
+        case 0 /* eqlockdrop_lock_V1 */:
+            return _toStringBalance(
+                &m->basic.eqlockdrop_lock_V1.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6573,9 +6608,9 @@ parser_error_t _getMethod_ItemValue_V5(
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         switch (itemIdx) {
-        case 0: /* system_fill_block_V5 - _ratio */;
-            return _toStringPerbill_V5(
-                &m->nested.system_fill_block_V5._ratio,
+        case 0: /* system_fill_block_V1 - _ratio */;
+            return _toStringPerbill_V1(
+                &m->nested.system_fill_block_V1._ratio,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6583,9 +6618,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1: /* module 0 call 1 */
         switch (itemIdx) {
-        case 0: /* system_remark_V5 - _remark */;
+        case 0: /* system_remark_V1 - _remark */;
             return _toStringBytes(
-                &m->nested.system_remark_V5._remark,
+                &m->nested.system_remark_V1._remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6593,9 +6628,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2: /* module 0 call 2 */
         switch (itemIdx) {
-        case 0: /* system_set_heap_pages_V5 - pages */;
+        case 0: /* system_set_heap_pages_V1 - pages */;
             return _toStringu64(
-                &m->nested.system_set_heap_pages_V5.pages,
+                &m->nested.system_set_heap_pages_V1.pages,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6603,9 +6638,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3: /* module 0 call 3 */
         switch (itemIdx) {
-        case 0: /* system_set_code_V5 - code */;
+        case 0: /* system_set_code_V1 - code */;
             return _toStringBytes(
-                &m->nested.system_set_code_V5.code,
+                &m->nested.system_set_code_V1.code,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6613,9 +6648,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4: /* module 0 call 4 */
         switch (itemIdx) {
-        case 0: /* system_set_code_without_checks_V5 - code */;
+        case 0: /* system_set_code_without_checks_V1 - code */;
             return _toStringBytes(
-                &m->nested.system_set_code_without_checks_V5.code,
+                &m->nested.system_set_code_without_checks_V1.code,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6623,9 +6658,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 5: /* module 0 call 5 */
         switch (itemIdx) {
-        case 0: /* system_set_changes_trie_config_V5 - changes_trie_config */;
-            return _toStringOptionChangesTrieConfiguration_V5(
-                &m->nested.system_set_changes_trie_config_V5.changes_trie_config,
+        case 0: /* system_set_changes_trie_config_V1 - changes_trie_config */;
+            return _toStringOptionChangesTrieConfiguration_V1(
+                &m->nested.system_set_changes_trie_config_V1.changes_trie_config,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6633,9 +6668,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6: /* module 0 call 6 */
         switch (itemIdx) {
-        case 0: /* system_set_storage_V5 - items */;
-            return _toStringVecKeyValue_V5(
-                &m->nested.system_set_storage_V5.items,
+        case 0: /* system_set_storage_V1 - items */;
+            return _toStringVecKeyValue_V1(
+                &m->nested.system_set_storage_V1.items,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6643,9 +6678,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7: /* module 0 call 7 */
         switch (itemIdx) {
-        case 0: /* system_kill_storage_V5 - keys */;
-            return _toStringVecKey_V5(
-                &m->nested.system_kill_storage_V5.keys,
+        case 0: /* system_kill_storage_V1 - keys */;
+            return _toStringVecKey_V1(
+                &m->nested.system_kill_storage_V1.keys,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6653,14 +6688,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8: /* module 0 call 8 */
         switch (itemIdx) {
-        case 0: /* system_kill_prefix_V5 - prefix */;
-            return _toStringKey_V5(
-                &m->nested.system_kill_prefix_V5.prefix,
+        case 0: /* system_kill_prefix_V1 - prefix */;
+            return _toStringKey_V1(
+                &m->nested.system_kill_prefix_V1.prefix,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* system_kill_prefix_V5 - _subkeys */;
+        case 1: /* system_kill_prefix_V1 - _subkeys */;
             return _toStringu32(
-                &m->nested.system_kill_prefix_V5._subkeys,
+                &m->nested.system_kill_prefix_V1._subkeys,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6668,9 +6703,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9: /* module 0 call 9 */
         switch (itemIdx) {
-        case 0: /* system_remark_with_event_V5 - remark */;
+        case 0: /* system_remark_with_event_V1 - remark */;
             return _toStringBytes(
-                &m->basic.system_remark_with_event_V5.remark,
+                &m->basic.system_remark_with_event_V1.remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6678,14 +6713,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 256: /* module 1 call 0 */
         switch (itemIdx) {
-        case 0: /* babe_report_equivocation_V5 - equivocation_proof */;
-            return _toStringBabeEquivocationProof_V5(
-                &m->basic.babe_report_equivocation_V5.equivocation_proof,
+        case 0: /* babe_report_equivocation_V1 - equivocation_proof */;
+            return _toStringBabeEquivocationProof_V1(
+                &m->basic.babe_report_equivocation_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* babe_report_equivocation_V5 - key_owner_proof */;
-            return _toStringKeyOwnerProof_V5(
-                &m->basic.babe_report_equivocation_V5.key_owner_proof,
+        case 1: /* babe_report_equivocation_V1 - key_owner_proof */;
+            return _toStringKeyOwnerProof_V1(
+                &m->basic.babe_report_equivocation_V1.key_owner_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6693,14 +6728,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 257: /* module 1 call 1 */
         switch (itemIdx) {
-        case 0: /* babe_report_equivocation_unsigned_V5 - equivocation_proof */;
-            return _toStringBabeEquivocationProof_V5(
-                &m->basic.babe_report_equivocation_unsigned_V5.equivocation_proof,
+        case 0: /* babe_report_equivocation_unsigned_V1 - equivocation_proof */;
+            return _toStringBabeEquivocationProof_V1(
+                &m->basic.babe_report_equivocation_unsigned_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* babe_report_equivocation_unsigned_V5 - key_owner_proof */;
-            return _toStringKeyOwnerProof_V5(
-                &m->basic.babe_report_equivocation_unsigned_V5.key_owner_proof,
+        case 1: /* babe_report_equivocation_unsigned_V1 - key_owner_proof */;
+            return _toStringKeyOwnerProof_V1(
+                &m->basic.babe_report_equivocation_unsigned_V1.key_owner_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6708,9 +6743,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 258: /* module 1 call 2 */
         switch (itemIdx) {
-        case 0: /* babe_plan_config_change_V5 - config */;
-            return _toStringNextConfigDescriptor_V5(
-                &m->basic.babe_plan_config_change_V5.config,
+        case 0: /* babe_plan_config_change_V1 - config */;
+            return _toStringNextConfigDescriptor_V1(
+                &m->basic.babe_plan_config_change_V1.config,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6718,9 +6753,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 512: /* module 2 call 0 */
         switch (itemIdx) {
-        case 0: /* timestamp_set_V5 - now */;
-            return _toStringCompactMoment_V5(
-                &m->basic.timestamp_set_V5.now,
+        case 0: /* timestamp_set_V1 - now */;
+            return _toStringCompactMoment_V1(
+                &m->basic.timestamp_set_V1.now,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6728,9 +6763,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 768: /* module 3 call 0 */
         switch (itemIdx) {
-        case 0: /* indices_claim_V5 - index */;
-            return _toStringAccountIndex_V5(
-                &m->basic.indices_claim_V5.index,
+        case 0: /* indices_claim_V1 - index */;
+            return _toStringAccountIndex_V1(
+                &m->basic.indices_claim_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6738,14 +6773,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 769: /* module 3 call 1 */
         switch (itemIdx) {
-        case 0: /* indices_transfer_V5 - new_ */;
-            return _toStringAccountId_V5(
-                &m->basic.indices_transfer_V5.new_,
+        case 0: /* indices_transfer_V1 - new_ */;
+            return _toStringAccountId_V1(
+                &m->basic.indices_transfer_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* indices_transfer_V5 - index */;
-            return _toStringAccountIndex_V5(
-                &m->basic.indices_transfer_V5.index,
+        case 1: /* indices_transfer_V1 - index */;
+            return _toStringAccountIndex_V1(
+                &m->basic.indices_transfer_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6753,9 +6788,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 770: /* module 3 call 2 */
         switch (itemIdx) {
-        case 0: /* indices_free_V5 - index */;
-            return _toStringAccountIndex_V5(
-                &m->basic.indices_free_V5.index,
+        case 0: /* indices_free_V1 - index */;
+            return _toStringAccountIndex_V1(
+                &m->basic.indices_free_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6763,19 +6798,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 771: /* module 3 call 3 */
         switch (itemIdx) {
-        case 0: /* indices_force_transfer_V5 - new_ */;
-            return _toStringAccountId_V5(
-                &m->basic.indices_force_transfer_V5.new_,
+        case 0: /* indices_force_transfer_V1 - new_ */;
+            return _toStringAccountId_V1(
+                &m->basic.indices_force_transfer_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* indices_force_transfer_V5 - index */;
-            return _toStringAccountIndex_V5(
-                &m->basic.indices_force_transfer_V5.index,
+        case 1: /* indices_force_transfer_V1 - index */;
+            return _toStringAccountIndex_V1(
+                &m->basic.indices_force_transfer_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* indices_force_transfer_V5 - freeze */;
+        case 2: /* indices_force_transfer_V1 - freeze */;
             return _toStringbool(
-                &m->basic.indices_force_transfer_V5.freeze,
+                &m->basic.indices_force_transfer_V1.freeze,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6783,9 +6818,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 772: /* module 3 call 4 */
         switch (itemIdx) {
-        case 0: /* indices_freeze_V5 - index */;
-            return _toStringAccountIndex_V5(
-                &m->basic.indices_freeze_V5.index,
+        case 0: /* indices_freeze_V1 - index */;
+            return _toStringAccountIndex_V1(
+                &m->basic.indices_freeze_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6793,19 +6828,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1025: /* module 4 call 1 */
         switch (itemIdx) {
-        case 0: /* balances_set_balance_V5 - who */;
-            return _toStringLookupSource_V5(
-                &m->nested.balances_set_balance_V5.who,
+        case 0: /* balances_set_balance_V1 - who */;
+            return _toStringLookupSource_V1(
+                &m->nested.balances_set_balance_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* balances_set_balance_V5 - new_free */;
+        case 1: /* balances_set_balance_V1 - new_free */;
             return _toStringCompactBalance(
-                &m->nested.balances_set_balance_V5.new_free,
+                &m->nested.balances_set_balance_V1.new_free,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* balances_set_balance_V5 - new_reserved */;
+        case 2: /* balances_set_balance_V1 - new_reserved */;
             return _toStringCompactBalance(
-                &m->nested.balances_set_balance_V5.new_reserved,
+                &m->nested.balances_set_balance_V1.new_reserved,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6813,19 +6848,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1026: /* module 4 call 2 */
         switch (itemIdx) {
-        case 0: /* balances_force_transfer_V5 - source */;
-            return _toStringLookupSource_V5(
-                &m->nested.balances_force_transfer_V5.source,
+        case 0: /* balances_force_transfer_V1 - source */;
+            return _toStringLookupSource_V1(
+                &m->nested.balances_force_transfer_V1.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* balances_force_transfer_V5 - dest */;
-            return _toStringLookupSource_V5(
-                &m->nested.balances_force_transfer_V5.dest,
+        case 1: /* balances_force_transfer_V1 - dest */;
+            return _toStringLookupSource_V1(
+                &m->nested.balances_force_transfer_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* balances_force_transfer_V5 - value */;
+        case 2: /* balances_force_transfer_V1 - value */;
             return _toStringCompactBalance(
-                &m->nested.balances_force_transfer_V5.value,
+                &m->nested.balances_force_transfer_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6833,9 +6868,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1280: /* module 5 call 0 */
         switch (itemIdx) {
-        case 0: /* authorship_set_uncles_V5 - new_uncles */;
+        case 0: /* authorship_set_uncles_V1 - new_uncles */;
             return _toStringVecHeader(
-                &m->basic.authorship_set_uncles_V5.new_uncles,
+                &m->basic.authorship_set_uncles_V1.new_uncles,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6843,9 +6878,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1544: /* module 6 call 8 */
         switch (itemIdx) {
-        case 0: /* staking_set_controller_V5 - controller */;
-            return _toStringLookupSource_V5(
-                &m->basic.staking_set_controller_V5.controller,
+        case 0: /* staking_set_controller_V1 - controller */;
+            return _toStringLookupSource_V1(
+                &m->basic.staking_set_controller_V1.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6853,9 +6888,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1545: /* module 6 call 9 */
         switch (itemIdx) {
-        case 0: /* staking_set_validator_count_V5 - new_ */;
+        case 0: /* staking_set_validator_count_V1 - new_ */;
             return _toStringCompactu32(
-                &m->basic.staking_set_validator_count_V5.new_,
+                &m->basic.staking_set_validator_count_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6863,9 +6898,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1546: /* module 6 call 10 */
         switch (itemIdx) {
-        case 0: /* staking_increase_validator_count_V5 - additional */;
+        case 0: /* staking_increase_validator_count_V1 - additional */;
             return _toStringCompactu32(
-                &m->basic.staking_increase_validator_count_V5.additional,
+                &m->basic.staking_increase_validator_count_V1.additional,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6873,9 +6908,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1547: /* module 6 call 11 */
         switch (itemIdx) {
-        case 0: /* staking_scale_validator_count_V5 - factor */;
-            return _toStringPercent_V5(
-                &m->basic.staking_scale_validator_count_V5.factor,
+        case 0: /* staking_scale_validator_count_V1 - factor */;
+            return _toStringPercent_V1(
+                &m->basic.staking_scale_validator_count_V1.factor,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6893,9 +6928,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1550: /* module 6 call 14 */
         switch (itemIdx) {
-        case 0: /* staking_set_invulnerables_V5 - invulnerables */;
-            return _toStringVecAccountId_V5(
-                &m->basic.staking_set_invulnerables_V5.invulnerables,
+        case 0: /* staking_set_invulnerables_V1 - invulnerables */;
+            return _toStringVecAccountId_V1(
+                &m->basic.staking_set_invulnerables_V1.invulnerables,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6903,14 +6938,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1551: /* module 6 call 15 */
         switch (itemIdx) {
-        case 0: /* staking_force_unstake_V5 - stash */;
-            return _toStringAccountId_V5(
-                &m->basic.staking_force_unstake_V5.stash,
+        case 0: /* staking_force_unstake_V1 - stash */;
+            return _toStringAccountId_V1(
+                &m->basic.staking_force_unstake_V1.stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_force_unstake_V5 - num_slashing_spans */;
+        case 1: /* staking_force_unstake_V1 - num_slashing_spans */;
             return _toStringu32(
-                &m->basic.staking_force_unstake_V5.num_slashing_spans,
+                &m->basic.staking_force_unstake_V1.num_slashing_spans,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6923,14 +6958,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1553: /* module 6 call 17 */
         switch (itemIdx) {
-        case 0: /* staking_cancel_deferred_slash_V5 - era */;
-            return _toStringEraIndex_V5(
-                &m->basic.staking_cancel_deferred_slash_V5.era,
+        case 0: /* staking_cancel_deferred_slash_V1 - era */;
+            return _toStringEraIndex_V1(
+                &m->basic.staking_cancel_deferred_slash_V1.era,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_cancel_deferred_slash_V5 - slash_indices */;
+        case 1: /* staking_cancel_deferred_slash_V1 - slash_indices */;
             return _toStringVecu32(
-                &m->basic.staking_cancel_deferred_slash_V5.slash_indices,
+                &m->basic.staking_cancel_deferred_slash_V1.slash_indices,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6938,14 +6973,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1556: /* module 6 call 20 */
         switch (itemIdx) {
-        case 0: /* staking_set_history_depth_V5 - new_history_depth */;
-            return _toStringCompactEraIndex_V5(
-                &m->basic.staking_set_history_depth_V5.new_history_depth,
+        case 0: /* staking_set_history_depth_V1 - new_history_depth */;
+            return _toStringCompactEraIndex_V1(
+                &m->basic.staking_set_history_depth_V1.new_history_depth,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_set_history_depth_V5 - _era_items_deleted */;
+        case 1: /* staking_set_history_depth_V1 - _era_items_deleted */;
             return _toStringCompactu32(
-                &m->basic.staking_set_history_depth_V5._era_items_deleted,
+                &m->basic.staking_set_history_depth_V1._era_items_deleted,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6953,14 +6988,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1557: /* module 6 call 21 */
         switch (itemIdx) {
-        case 0: /* staking_reap_stash_V5 - stash */;
-            return _toStringAccountId_V5(
-                &m->basic.staking_reap_stash_V5.stash,
+        case 0: /* staking_reap_stash_V1 - stash */;
+            return _toStringAccountId_V1(
+                &m->basic.staking_reap_stash_V1.stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_reap_stash_V5 - num_slashing_spans */;
+        case 1: /* staking_reap_stash_V1 - num_slashing_spans */;
             return _toStringu32(
-                &m->basic.staking_reap_stash_V5.num_slashing_spans,
+                &m->basic.staking_reap_stash_V1.num_slashing_spans,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6968,9 +7003,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 1558: /* module 6 call 22 */
         switch (itemIdx) {
-        case 0: /* staking_kick_V5 - who */;
-            return _toStringVecLookupSource_V5(
-                &m->basic.staking_kick_V5.who,
+        case 0: /* staking_kick_V1 - who */;
+            return _toStringVecLookupSource_V1(
+                &m->basic.staking_kick_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6978,14 +7013,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2560: /* module 10 call 0 */
         switch (itemIdx) {
-        case 0: /* grandpa_report_equivocation_V5 - equivocation_proof */;
-            return _toStringGrandpaEquivocationProof_V5(
-                &m->basic.grandpa_report_equivocation_V5.equivocation_proof,
+        case 0: /* grandpa_report_equivocation_V1 - equivocation_proof */;
+            return _toStringGrandpaEquivocationProof_V1(
+                &m->basic.grandpa_report_equivocation_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* grandpa_report_equivocation_V5 - key_owner_proof */;
-            return _toStringKeyOwnerProof_V5(
-                &m->basic.grandpa_report_equivocation_V5.key_owner_proof,
+        case 1: /* grandpa_report_equivocation_V1 - key_owner_proof */;
+            return _toStringKeyOwnerProof_V1(
+                &m->basic.grandpa_report_equivocation_V1.key_owner_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6993,14 +7028,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2561: /* module 10 call 1 */
         switch (itemIdx) {
-        case 0: /* grandpa_report_equivocation_unsigned_V5 - equivocation_proof */;
-            return _toStringGrandpaEquivocationProof_V5(
-                &m->basic.grandpa_report_equivocation_unsigned_V5.equivocation_proof,
+        case 0: /* grandpa_report_equivocation_unsigned_V1 - equivocation_proof */;
+            return _toStringGrandpaEquivocationProof_V1(
+                &m->basic.grandpa_report_equivocation_unsigned_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* grandpa_report_equivocation_unsigned_V5 - key_owner_proof */;
-            return _toStringKeyOwnerProof_V5(
-                &m->basic.grandpa_report_equivocation_unsigned_V5.key_owner_proof,
+        case 1: /* grandpa_report_equivocation_unsigned_V1 - key_owner_proof */;
+            return _toStringKeyOwnerProof_V1(
+                &m->basic.grandpa_report_equivocation_unsigned_V1.key_owner_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7008,14 +7043,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2562: /* module 10 call 2 */
         switch (itemIdx) {
-        case 0: /* grandpa_note_stalled_V5 - delay */;
+        case 0: /* grandpa_note_stalled_V1 - delay */;
             return _toStringBlockNumber(
-                &m->basic.grandpa_note_stalled_V5.delay,
+                &m->basic.grandpa_note_stalled_V1.delay,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* grandpa_note_stalled_V5 - best_finalized_block_number */;
+        case 1: /* grandpa_note_stalled_V1 - best_finalized_block_number */;
             return _toStringBlockNumber(
-                &m->basic.grandpa_note_stalled_V5.best_finalized_block_number,
+                &m->basic.grandpa_note_stalled_V1.best_finalized_block_number,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7023,14 +7058,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2816: /* module 11 call 0 */
         switch (itemIdx) {
-        case 0: /* imonline_heartbeat_V5 - heartbeat */;
+        case 0: /* imonline_heartbeat_V1 - heartbeat */;
             return _toStringHeartbeat(
-                &m->basic.imonline_heartbeat_V5.heartbeat,
+                &m->basic.imonline_heartbeat_V1.heartbeat,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* imonline_heartbeat_V5 - _signature */;
-            return _toStringSignature_V5(
-                &m->basic.imonline_heartbeat_V5._signature,
+        case 1: /* imonline_heartbeat_V1 - _signature */;
+            return _toStringSignature_V1(
+                &m->basic.imonline_heartbeat_V1._signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7038,14 +7073,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3328: /* module 13 call 0 */
         switch (itemIdx) {
-        case 0: /* democracy_propose_V5 - proposal_hash */;
+        case 0: /* democracy_propose_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_propose_V5.proposal_hash,
+                &m->basic.democracy_propose_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_propose_V5 - value */;
+        case 1: /* democracy_propose_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.democracy_propose_V5.value,
+                &m->basic.democracy_propose_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7053,14 +7088,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3329: /* module 13 call 1 */
         switch (itemIdx) {
-        case 0: /* democracy_second_V5 - proposal */;
-            return _toStringCompactPropIndex_V5(
-                &m->basic.democracy_second_V5.proposal,
+        case 0: /* democracy_second_V1 - proposal */;
+            return _toStringCompactPropIndex_V1(
+                &m->basic.democracy_second_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_second_V5 - seconds_upper_bound */;
+        case 1: /* democracy_second_V1 - seconds_upper_bound */;
             return _toStringCompactu32(
-                &m->basic.democracy_second_V5.seconds_upper_bound,
+                &m->basic.democracy_second_V1.seconds_upper_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7068,14 +7103,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3330: /* module 13 call 2 */
         switch (itemIdx) {
-        case 0: /* democracy_vote_V5 - ref_index */;
-            return _toStringCompactReferendumIndex_V5(
-                &m->basic.democracy_vote_V5.ref_index,
+        case 0: /* democracy_vote_V1 - ref_index */;
+            return _toStringCompactReferendumIndex_V1(
+                &m->basic.democracy_vote_V1.ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_vote_V5 - vote */;
-            return _toStringAccountVote_V5(
-                &m->basic.democracy_vote_V5.vote,
+        case 1: /* democracy_vote_V1 - vote */;
+            return _toStringAccountVote_V1(
+                &m->basic.democracy_vote_V1.vote,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7083,9 +7118,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3331: /* module 13 call 3 */
         switch (itemIdx) {
-        case 0: /* democracy_emergency_cancel_V5 - ref_index */;
-            return _toStringReferendumIndex_V5(
-                &m->basic.democracy_emergency_cancel_V5.ref_index,
+        case 0: /* democracy_emergency_cancel_V1 - ref_index */;
+            return _toStringReferendumIndex_V1(
+                &m->basic.democracy_emergency_cancel_V1.ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7093,9 +7128,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3332: /* module 13 call 4 */
         switch (itemIdx) {
-        case 0: /* democracy_external_propose_V5 - proposal_hash */;
+        case 0: /* democracy_external_propose_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_external_propose_V5.proposal_hash,
+                &m->basic.democracy_external_propose_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7103,9 +7138,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3333: /* module 13 call 5 */
         switch (itemIdx) {
-        case 0: /* democracy_external_propose_majority_V5 - proposal_hash */;
+        case 0: /* democracy_external_propose_majority_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_external_propose_majority_V5.proposal_hash,
+                &m->basic.democracy_external_propose_majority_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7113,9 +7148,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3334: /* module 13 call 6 */
         switch (itemIdx) {
-        case 0: /* democracy_external_propose_default_V5 - proposal_hash */;
+        case 0: /* democracy_external_propose_default_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_external_propose_default_V5.proposal_hash,
+                &m->basic.democracy_external_propose_default_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7123,19 +7158,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3335: /* module 13 call 7 */
         switch (itemIdx) {
-        case 0: /* democracy_fast_track_V5 - proposal_hash */;
+        case 0: /* democracy_fast_track_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_fast_track_V5.proposal_hash,
+                &m->basic.democracy_fast_track_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_fast_track_V5 - voting_period */;
+        case 1: /* democracy_fast_track_V1 - voting_period */;
             return _toStringBlockNumber(
-                &m->basic.democracy_fast_track_V5.voting_period,
+                &m->basic.democracy_fast_track_V1.voting_period,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* democracy_fast_track_V5 - delay */;
+        case 2: /* democracy_fast_track_V1 - delay */;
             return _toStringBlockNumber(
-                &m->basic.democracy_fast_track_V5.delay,
+                &m->basic.democracy_fast_track_V1.delay,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7143,9 +7178,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3336: /* module 13 call 8 */
         switch (itemIdx) {
-        case 0: /* democracy_veto_external_V5 - proposal_hash */;
+        case 0: /* democracy_veto_external_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_veto_external_V5.proposal_hash,
+                &m->basic.democracy_veto_external_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7153,9 +7188,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3337: /* module 13 call 9 */
         switch (itemIdx) {
-        case 0: /* democracy_cancel_referendum_V5 - ref_index */;
-            return _toStringCompactReferendumIndex_V5(
-                &m->basic.democracy_cancel_referendum_V5.ref_index,
+        case 0: /* democracy_cancel_referendum_V1 - ref_index */;
+            return _toStringCompactReferendumIndex_V1(
+                &m->basic.democracy_cancel_referendum_V1.ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7163,9 +7198,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3338: /* module 13 call 10 */
         switch (itemIdx) {
-        case 0: /* democracy_cancel_queued_V5 - which */;
-            return _toStringReferendumIndex_V5(
-                &m->basic.democracy_cancel_queued_V5.which,
+        case 0: /* democracy_cancel_queued_V1 - which */;
+            return _toStringReferendumIndex_V1(
+                &m->basic.democracy_cancel_queued_V1.which,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7173,19 +7208,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3339: /* module 13 call 11 */
         switch (itemIdx) {
-        case 0: /* democracy_delegate_V5 - to */;
-            return _toStringAccountId_V5(
-                &m->basic.democracy_delegate_V5.to,
+        case 0: /* democracy_delegate_V1 - to */;
+            return _toStringAccountId_V1(
+                &m->basic.democracy_delegate_V1.to,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_delegate_V5 - conviction */;
-            return _toStringConviction_V5(
-                &m->basic.democracy_delegate_V5.conviction,
+        case 1: /* democracy_delegate_V1 - conviction */;
+            return _toStringConviction_V1(
+                &m->basic.democracy_delegate_V1.conviction,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* democracy_delegate_V5 - balance */;
+        case 2: /* democracy_delegate_V1 - balance */;
             return _toStringBalanceOf(
-                &m->basic.democracy_delegate_V5.balance,
+                &m->basic.democracy_delegate_V1.balance,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7203,9 +7238,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3342: /* module 13 call 14 */
         switch (itemIdx) {
-        case 0: /* democracy_note_preimage_V5 - encoded_proposal */;
+        case 0: /* democracy_note_preimage_V1 - encoded_proposal */;
             return _toStringBytes(
-                &m->basic.democracy_note_preimage_V5.encoded_proposal,
+                &m->basic.democracy_note_preimage_V1.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7213,9 +7248,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3343: /* module 13 call 15 */
         switch (itemIdx) {
-        case 0: /* democracy_note_preimage_operational_V5 - encoded_proposal */;
+        case 0: /* democracy_note_preimage_operational_V1 - encoded_proposal */;
             return _toStringBytes(
-                &m->basic.democracy_note_preimage_operational_V5.encoded_proposal,
+                &m->basic.democracy_note_preimage_operational_V1.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7223,9 +7258,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3344: /* module 13 call 16 */
         switch (itemIdx) {
-        case 0: /* democracy_note_imminent_preimage_V5 - encoded_proposal */;
+        case 0: /* democracy_note_imminent_preimage_V1 - encoded_proposal */;
             return _toStringBytes(
-                &m->basic.democracy_note_imminent_preimage_V5.encoded_proposal,
+                &m->basic.democracy_note_imminent_preimage_V1.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7233,9 +7268,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3345: /* module 13 call 17 */
         switch (itemIdx) {
-        case 0: /* democracy_note_imminent_preimage_operational_V5 - encoded_proposal */;
+        case 0: /* democracy_note_imminent_preimage_operational_V1 - encoded_proposal */;
             return _toStringBytes(
-                &m->basic.democracy_note_imminent_preimage_operational_V5.encoded_proposal,
+                &m->basic.democracy_note_imminent_preimage_operational_V1.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7243,14 +7278,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3346: /* module 13 call 18 */
         switch (itemIdx) {
-        case 0: /* democracy_reap_preimage_V5 - proposal_hash */;
+        case 0: /* democracy_reap_preimage_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_reap_preimage_V5.proposal_hash,
+                &m->basic.democracy_reap_preimage_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_reap_preimage_V5 - proposal_len_upper_bound */;
+        case 1: /* democracy_reap_preimage_V1 - proposal_len_upper_bound */;
             return _toStringCompactu32(
-                &m->basic.democracy_reap_preimage_V5.proposal_len_upper_bound,
+                &m->basic.democracy_reap_preimage_V1.proposal_len_upper_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7258,9 +7293,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3347: /* module 13 call 19 */
         switch (itemIdx) {
-        case 0: /* democracy_unlock_V5 - target */;
-            return _toStringAccountId_V5(
-                &m->basic.democracy_unlock_V5.target,
+        case 0: /* democracy_unlock_V1 - target */;
+            return _toStringAccountId_V1(
+                &m->basic.democracy_unlock_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7268,9 +7303,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3348: /* module 13 call 20 */
         switch (itemIdx) {
-        case 0: /* democracy_remove_vote_V5 - index */;
-            return _toStringReferendumIndex_V5(
-                &m->basic.democracy_remove_vote_V5.index,
+        case 0: /* democracy_remove_vote_V1 - index */;
+            return _toStringReferendumIndex_V1(
+                &m->basic.democracy_remove_vote_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7278,14 +7313,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3349: /* module 13 call 21 */
         switch (itemIdx) {
-        case 0: /* democracy_remove_other_vote_V5 - target */;
-            return _toStringAccountId_V5(
-                &m->basic.democracy_remove_other_vote_V5.target,
+        case 0: /* democracy_remove_other_vote_V1 - target */;
+            return _toStringAccountId_V1(
+                &m->basic.democracy_remove_other_vote_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_remove_other_vote_V5 - index */;
-            return _toStringReferendumIndex_V5(
-                &m->basic.democracy_remove_other_vote_V5.index,
+        case 1: /* democracy_remove_other_vote_V1 - index */;
+            return _toStringReferendumIndex_V1(
+                &m->basic.democracy_remove_other_vote_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7293,14 +7328,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3350: /* module 13 call 22 */
         switch (itemIdx) {
-        case 0: /* democracy_enact_proposal_V5 - proposal_hash */;
+        case 0: /* democracy_enact_proposal_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_enact_proposal_V5.proposal_hash,
+                &m->basic.democracy_enact_proposal_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_enact_proposal_V5 - index */;
-            return _toStringReferendumIndex_V5(
-                &m->basic.democracy_enact_proposal_V5.index,
+        case 1: /* democracy_enact_proposal_V1 - index */;
+            return _toStringReferendumIndex_V1(
+                &m->basic.democracy_enact_proposal_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7308,14 +7343,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3351: /* module 13 call 23 */
         switch (itemIdx) {
-        case 0: /* democracy_blacklist_V5 - proposal_hash */;
+        case 0: /* democracy_blacklist_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.democracy_blacklist_V5.proposal_hash,
+                &m->basic.democracy_blacklist_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_blacklist_V5 - maybe_ref_index */;
-            return _toStringOptionReferendumIndex_V5(
-                &m->basic.democracy_blacklist_V5.maybe_ref_index,
+        case 1: /* democracy_blacklist_V1 - maybe_ref_index */;
+            return _toStringOptionReferendumIndex_V1(
+                &m->basic.democracy_blacklist_V1.maybe_ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7323,9 +7358,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3352: /* module 13 call 24 */
         switch (itemIdx) {
-        case 0: /* democracy_cancel_proposal_V5 - prop_index */;
-            return _toStringCompactPropIndex_V5(
-                &m->basic.democracy_cancel_proposal_V5.prop_index,
+        case 0: /* democracy_cancel_proposal_V1 - prop_index */;
+            return _toStringCompactPropIndex_V1(
+                &m->basic.democracy_cancel_proposal_V1.prop_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7333,19 +7368,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3584: /* module 14 call 0 */
         switch (itemIdx) {
-        case 0: /* council_set_members_V5 - new_members */;
-            return _toStringVecAccountId_V5(
-                &m->basic.council_set_members_V5.new_members,
+        case 0: /* council_set_members_V1 - new_members */;
+            return _toStringVecAccountId_V1(
+                &m->basic.council_set_members_V1.new_members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* council_set_members_V5 - prime */;
-            return _toStringOptionAccountId_V5(
-                &m->basic.council_set_members_V5.prime,
+        case 1: /* council_set_members_V1 - prime */;
+            return _toStringOptionAccountId_V1(
+                &m->basic.council_set_members_V1.prime,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* council_set_members_V5 - old_count */;
-            return _toStringMemberCount_V5(
-                &m->basic.council_set_members_V5.old_count,
+        case 2: /* council_set_members_V1 - old_count */;
+            return _toStringMemberCount_V1(
+                &m->basic.council_set_members_V1.old_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7353,14 +7388,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3585: /* module 14 call 1 */
         switch (itemIdx) {
-        case 0: /* council_execute_V5 - proposal */;
+        case 0: /* council_execute_V1 - proposal */;
             return _toStringProposal(
-                &m->basic.council_execute_V5.proposal,
+                &m->basic.council_execute_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* council_execute_V5 - length_bound */;
+        case 1: /* council_execute_V1 - length_bound */;
             return _toStringCompactu32(
-                &m->basic.council_execute_V5.length_bound,
+                &m->basic.council_execute_V1.length_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7368,19 +7403,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3586: /* module 14 call 2 */
         switch (itemIdx) {
-        case 0: /* council_propose_V5 - threshold */;
-            return _toStringCompactMemberCount_V5(
-                &m->basic.council_propose_V5.threshold,
+        case 0: /* council_propose_V1 - threshold */;
+            return _toStringCompactMemberCount_V1(
+                &m->basic.council_propose_V1.threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* council_propose_V5 - proposal */;
+        case 1: /* council_propose_V1 - proposal */;
             return _toStringProposal(
-                &m->basic.council_propose_V5.proposal,
+                &m->basic.council_propose_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* council_propose_V5 - length_bound */;
+        case 2: /* council_propose_V1 - length_bound */;
             return _toStringCompactu32(
-                &m->basic.council_propose_V5.length_bound,
+                &m->basic.council_propose_V1.length_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7388,19 +7423,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3587: /* module 14 call 3 */
         switch (itemIdx) {
-        case 0: /* council_vote_V5 - proposal */;
+        case 0: /* council_vote_V1 - proposal */;
             return _toStringHash(
-                &m->basic.council_vote_V5.proposal,
+                &m->basic.council_vote_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* council_vote_V5 - index */;
-            return _toStringCompactProposalIndex_V5(
-                &m->basic.council_vote_V5.index,
+        case 1: /* council_vote_V1 - index */;
+            return _toStringCompactProposalIndex_V1(
+                &m->basic.council_vote_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* council_vote_V5 - approve */;
+        case 2: /* council_vote_V1 - approve */;
             return _toStringbool(
-                &m->basic.council_vote_V5.approve,
+                &m->basic.council_vote_V1.approve,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7408,24 +7443,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3588: /* module 14 call 4 */
         switch (itemIdx) {
-        case 0: /* council_close_V5 - proposal_hash */;
+        case 0: /* council_close_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.council_close_V5.proposal_hash,
+                &m->basic.council_close_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* council_close_V5 - index */;
-            return _toStringCompactProposalIndex_V5(
-                &m->basic.council_close_V5.index,
+        case 1: /* council_close_V1 - index */;
+            return _toStringCompactProposalIndex_V1(
+                &m->basic.council_close_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* council_close_V5 - proposal_weight_bound */;
-            return _toStringCompactWeight_V5(
-                &m->basic.council_close_V5.proposal_weight_bound,
+        case 2: /* council_close_V1 - proposal_weight_bound */;
+            return _toStringCompactWeight_V1(
+                &m->basic.council_close_V1.proposal_weight_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* council_close_V5 - length_bound */;
+        case 3: /* council_close_V1 - length_bound */;
             return _toStringCompactu32(
-                &m->basic.council_close_V5.length_bound,
+                &m->basic.council_close_V1.length_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7433,9 +7468,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3589: /* module 14 call 5 */
         switch (itemIdx) {
-        case 0: /* council_disapprove_proposal_V5 - proposal_hash */;
+        case 0: /* council_disapprove_proposal_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.council_disapprove_proposal_V5.proposal_hash,
+                &m->basic.council_disapprove_proposal_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7443,19 +7478,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3840: /* module 15 call 0 */
         switch (itemIdx) {
-        case 0: /* technicalcommittee_set_members_V5 - new_members */;
-            return _toStringVecAccountId_V5(
-                &m->basic.technicalcommittee_set_members_V5.new_members,
+        case 0: /* technicalcommittee_set_members_V1 - new_members */;
+            return _toStringVecAccountId_V1(
+                &m->basic.technicalcommittee_set_members_V1.new_members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* technicalcommittee_set_members_V5 - prime */;
-            return _toStringOptionAccountId_V5(
-                &m->basic.technicalcommittee_set_members_V5.prime,
+        case 1: /* technicalcommittee_set_members_V1 - prime */;
+            return _toStringOptionAccountId_V1(
+                &m->basic.technicalcommittee_set_members_V1.prime,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* technicalcommittee_set_members_V5 - old_count */;
-            return _toStringMemberCount_V5(
-                &m->basic.technicalcommittee_set_members_V5.old_count,
+        case 2: /* technicalcommittee_set_members_V1 - old_count */;
+            return _toStringMemberCount_V1(
+                &m->basic.technicalcommittee_set_members_V1.old_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7463,14 +7498,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3841: /* module 15 call 1 */
         switch (itemIdx) {
-        case 0: /* technicalcommittee_execute_V5 - proposal */;
+        case 0: /* technicalcommittee_execute_V1 - proposal */;
             return _toStringProposal(
-                &m->basic.technicalcommittee_execute_V5.proposal,
+                &m->basic.technicalcommittee_execute_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* technicalcommittee_execute_V5 - length_bound */;
+        case 1: /* technicalcommittee_execute_V1 - length_bound */;
             return _toStringCompactu32(
-                &m->basic.technicalcommittee_execute_V5.length_bound,
+                &m->basic.technicalcommittee_execute_V1.length_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7478,19 +7513,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3842: /* module 15 call 2 */
         switch (itemIdx) {
-        case 0: /* technicalcommittee_propose_V5 - threshold */;
-            return _toStringCompactMemberCount_V5(
-                &m->basic.technicalcommittee_propose_V5.threshold,
+        case 0: /* technicalcommittee_propose_V1 - threshold */;
+            return _toStringCompactMemberCount_V1(
+                &m->basic.technicalcommittee_propose_V1.threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* technicalcommittee_propose_V5 - proposal */;
+        case 1: /* technicalcommittee_propose_V1 - proposal */;
             return _toStringProposal(
-                &m->basic.technicalcommittee_propose_V5.proposal,
+                &m->basic.technicalcommittee_propose_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* technicalcommittee_propose_V5 - length_bound */;
+        case 2: /* technicalcommittee_propose_V1 - length_bound */;
             return _toStringCompactu32(
-                &m->basic.technicalcommittee_propose_V5.length_bound,
+                &m->basic.technicalcommittee_propose_V1.length_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7498,19 +7533,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3843: /* module 15 call 3 */
         switch (itemIdx) {
-        case 0: /* technicalcommittee_vote_V5 - proposal */;
+        case 0: /* technicalcommittee_vote_V1 - proposal */;
             return _toStringHash(
-                &m->basic.technicalcommittee_vote_V5.proposal,
+                &m->basic.technicalcommittee_vote_V1.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* technicalcommittee_vote_V5 - index */;
-            return _toStringCompactProposalIndex_V5(
-                &m->basic.technicalcommittee_vote_V5.index,
+        case 1: /* technicalcommittee_vote_V1 - index */;
+            return _toStringCompactProposalIndex_V1(
+                &m->basic.technicalcommittee_vote_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* technicalcommittee_vote_V5 - approve */;
+        case 2: /* technicalcommittee_vote_V1 - approve */;
             return _toStringbool(
-                &m->basic.technicalcommittee_vote_V5.approve,
+                &m->basic.technicalcommittee_vote_V1.approve,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7518,24 +7553,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3844: /* module 15 call 4 */
         switch (itemIdx) {
-        case 0: /* technicalcommittee_close_V5 - proposal_hash */;
+        case 0: /* technicalcommittee_close_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.technicalcommittee_close_V5.proposal_hash,
+                &m->basic.technicalcommittee_close_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* technicalcommittee_close_V5 - index */;
-            return _toStringCompactProposalIndex_V5(
-                &m->basic.technicalcommittee_close_V5.index,
+        case 1: /* technicalcommittee_close_V1 - index */;
+            return _toStringCompactProposalIndex_V1(
+                &m->basic.technicalcommittee_close_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* technicalcommittee_close_V5 - proposal_weight_bound */;
-            return _toStringCompactWeight_V5(
-                &m->basic.technicalcommittee_close_V5.proposal_weight_bound,
+        case 2: /* technicalcommittee_close_V1 - proposal_weight_bound */;
+            return _toStringCompactWeight_V1(
+                &m->basic.technicalcommittee_close_V1.proposal_weight_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* technicalcommittee_close_V5 - length_bound */;
+        case 3: /* technicalcommittee_close_V1 - length_bound */;
             return _toStringCompactu32(
-                &m->basic.technicalcommittee_close_V5.length_bound,
+                &m->basic.technicalcommittee_close_V1.length_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7543,9 +7578,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 3845: /* module 15 call 5 */
         switch (itemIdx) {
-        case 0: /* technicalcommittee_disapprove_proposal_V5 - proposal_hash */;
+        case 0: /* technicalcommittee_disapprove_proposal_V1 - proposal_hash */;
             return _toStringHash(
-                &m->basic.technicalcommittee_disapprove_proposal_V5.proposal_hash,
+                &m->basic.technicalcommittee_disapprove_proposal_V1.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7553,14 +7588,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4096: /* module 16 call 0 */
         switch (itemIdx) {
-        case 0: /* phragmenelection_vote_V5 - votes */;
-            return _toStringVecAccountId_V5(
-                &m->basic.phragmenelection_vote_V5.votes,
+        case 0: /* phragmenelection_vote_V1 - votes */;
+            return _toStringVecAccountId_V1(
+                &m->basic.phragmenelection_vote_V1.votes,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* phragmenelection_vote_V5 - value */;
+        case 1: /* phragmenelection_vote_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.phragmenelection_vote_V5.value,
+                &m->basic.phragmenelection_vote_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7573,9 +7608,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4098: /* module 16 call 2 */
         switch (itemIdx) {
-        case 0: /* phragmenelection_submit_candidacy_V5 - candidate_count */;
+        case 0: /* phragmenelection_submit_candidacy_V1 - candidate_count */;
             return _toStringCompactu32(
-                &m->basic.phragmenelection_submit_candidacy_V5.candidate_count,
+                &m->basic.phragmenelection_submit_candidacy_V1.candidate_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7583,9 +7618,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4099: /* module 16 call 3 */
         switch (itemIdx) {
-        case 0: /* phragmenelection_renounce_candidacy_V5 - renouncing */;
-            return _toStringRenouncing_V5(
-                &m->basic.phragmenelection_renounce_candidacy_V5.renouncing,
+        case 0: /* phragmenelection_renounce_candidacy_V1 - renouncing */;
+            return _toStringRenouncing_V1(
+                &m->basic.phragmenelection_renounce_candidacy_V1.renouncing,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7593,14 +7628,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4100: /* module 16 call 4 */
         switch (itemIdx) {
-        case 0: /* phragmenelection_remove_member_V5 - who */;
-            return _toStringLookupSource_V5(
-                &m->basic.phragmenelection_remove_member_V5.who,
+        case 0: /* phragmenelection_remove_member_V1 - who */;
+            return _toStringLookupSource_V1(
+                &m->basic.phragmenelection_remove_member_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* phragmenelection_remove_member_V5 - has_replacement */;
+        case 1: /* phragmenelection_remove_member_V1 - has_replacement */;
             return _toStringbool(
-                &m->basic.phragmenelection_remove_member_V5.has_replacement,
+                &m->basic.phragmenelection_remove_member_V1.has_replacement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7608,14 +7643,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4101: /* module 16 call 5 */
         switch (itemIdx) {
-        case 0: /* phragmenelection_clean_defunct_voters_V5 - _num_voters */;
+        case 0: /* phragmenelection_clean_defunct_voters_V1 - _num_voters */;
             return _toStringu32(
-                &m->basic.phragmenelection_clean_defunct_voters_V5._num_voters,
+                &m->basic.phragmenelection_clean_defunct_voters_V1._num_voters,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* phragmenelection_clean_defunct_voters_V5 - _num_defunct */;
+        case 1: /* phragmenelection_clean_defunct_voters_V1 - _num_defunct */;
             return _toStringu32(
-                &m->basic.phragmenelection_clean_defunct_voters_V5._num_defunct,
+                &m->basic.phragmenelection_clean_defunct_voters_V1._num_defunct,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7623,9 +7658,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4352: /* module 17 call 0 */
         switch (itemIdx) {
-        case 0: /* technicalmembership_add_member_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.technicalmembership_add_member_V5.who,
+        case 0: /* technicalmembership_add_member_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.technicalmembership_add_member_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7633,9 +7668,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4353: /* module 17 call 1 */
         switch (itemIdx) {
-        case 0: /* technicalmembership_remove_member_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.technicalmembership_remove_member_V5.who,
+        case 0: /* technicalmembership_remove_member_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.technicalmembership_remove_member_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7643,14 +7678,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4354: /* module 17 call 2 */
         switch (itemIdx) {
-        case 0: /* technicalmembership_swap_member_V5 - remove */;
-            return _toStringAccountId_V5(
-                &m->basic.technicalmembership_swap_member_V5.remove,
+        case 0: /* technicalmembership_swap_member_V1 - remove */;
+            return _toStringAccountId_V1(
+                &m->basic.technicalmembership_swap_member_V1.remove,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* technicalmembership_swap_member_V5 - add */;
-            return _toStringAccountId_V5(
-                &m->basic.technicalmembership_swap_member_V5.add,
+        case 1: /* technicalmembership_swap_member_V1 - add */;
+            return _toStringAccountId_V1(
+                &m->basic.technicalmembership_swap_member_V1.add,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7658,9 +7693,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4355: /* module 17 call 3 */
         switch (itemIdx) {
-        case 0: /* technicalmembership_reset_members_V5 - members */;
-            return _toStringVecAccountId_V5(
-                &m->basic.technicalmembership_reset_members_V5.members,
+        case 0: /* technicalmembership_reset_members_V1 - members */;
+            return _toStringVecAccountId_V1(
+                &m->basic.technicalmembership_reset_members_V1.members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7668,9 +7703,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4356: /* module 17 call 4 */
         switch (itemIdx) {
-        case 0: /* technicalmembership_change_key_V5 - new_ */;
-            return _toStringAccountId_V5(
-                &m->basic.technicalmembership_change_key_V5.new_,
+        case 0: /* technicalmembership_change_key_V1 - new_ */;
+            return _toStringAccountId_V1(
+                &m->basic.technicalmembership_change_key_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7678,9 +7713,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4357: /* module 17 call 5 */
         switch (itemIdx) {
-        case 0: /* technicalmembership_set_prime_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.technicalmembership_set_prime_V5.who,
+        case 0: /* technicalmembership_set_prime_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.technicalmembership_set_prime_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7693,14 +7728,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4608: /* module 18 call 0 */
         switch (itemIdx) {
-        case 0: /* treasury_propose_spend_V5 - value */;
+        case 0: /* treasury_propose_spend_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.treasury_propose_spend_V5.value,
+                &m->basic.treasury_propose_spend_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* treasury_propose_spend_V5 - beneficiary */;
-            return _toStringLookupSource_V5(
-                &m->basic.treasury_propose_spend_V5.beneficiary,
+        case 1: /* treasury_propose_spend_V1 - beneficiary */;
+            return _toStringLookupSource_V1(
+                &m->basic.treasury_propose_spend_V1.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7708,9 +7743,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4609: /* module 18 call 1 */
         switch (itemIdx) {
-        case 0: /* treasury_reject_proposal_V5 - proposal_id */;
-            return _toStringCompactProposalIndex_V5(
-                &m->basic.treasury_reject_proposal_V5.proposal_id,
+        case 0: /* treasury_reject_proposal_V1 - proposal_id */;
+            return _toStringCompactProposalIndex_V1(
+                &m->basic.treasury_reject_proposal_V1.proposal_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7718,9 +7753,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4610: /* module 18 call 2 */
         switch (itemIdx) {
-        case 0: /* treasury_approve_proposal_V5 - proposal_id */;
-            return _toStringCompactProposalIndex_V5(
-                &m->basic.treasury_approve_proposal_V5.proposal_id,
+        case 0: /* treasury_approve_proposal_V1 - proposal_id */;
+            return _toStringCompactProposalIndex_V1(
+                &m->basic.treasury_approve_proposal_V1.proposal_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7728,14 +7763,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4864: /* module 19 call 0 */
         switch (itemIdx) {
-        case 0: /* claims_claim_V5 - dest */;
-            return _toStringAccountId_V5(
-                &m->basic.claims_claim_V5.dest,
+        case 0: /* claims_claim_V1 - dest */;
+            return _toStringAccountId_V1(
+                &m->basic.claims_claim_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* claims_claim_V5 - ethereum_signature */;
-            return _toStringEcdsaSignature_V5(
-                &m->basic.claims_claim_V5.ethereum_signature,
+        case 1: /* claims_claim_V1 - ethereum_signature */;
+            return _toStringEcdsaSignature_V1(
+                &m->basic.claims_claim_V1.ethereum_signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7743,24 +7778,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4865: /* module 19 call 1 */
         switch (itemIdx) {
-        case 0: /* claims_mint_claim_V5 - who */;
-            return _toStringEthereumAddress_V5(
-                &m->basic.claims_mint_claim_V5.who,
+        case 0: /* claims_mint_claim_V1 - who */;
+            return _toStringEthereumAddress_V1(
+                &m->basic.claims_mint_claim_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* claims_mint_claim_V5 - value */;
+        case 1: /* claims_mint_claim_V1 - value */;
             return _toStringBalanceOf(
-                &m->basic.claims_mint_claim_V5.value,
+                &m->basic.claims_mint_claim_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* claims_mint_claim_V5 - vesting_schedule */;
-            return _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V5(
-                &m->basic.claims_mint_claim_V5.vesting_schedule,
+        case 2: /* claims_mint_claim_V1 - vesting_schedule */;
+            return _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V1(
+                &m->basic.claims_mint_claim_V1.vesting_schedule,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* claims_mint_claim_V5 - statement */;
-            return _toStringOptionStatementKind_V5(
-                &m->basic.claims_mint_claim_V5.statement,
+        case 3: /* claims_mint_claim_V1 - statement */;
+            return _toStringOptionStatementKind_V1(
+                &m->basic.claims_mint_claim_V1.statement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7768,19 +7803,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4866: /* module 19 call 2 */
         switch (itemIdx) {
-        case 0: /* claims_claim_attest_V5 - dest */;
-            return _toStringAccountId_V5(
-                &m->basic.claims_claim_attest_V5.dest,
+        case 0: /* claims_claim_attest_V1 - dest */;
+            return _toStringAccountId_V1(
+                &m->basic.claims_claim_attest_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* claims_claim_attest_V5 - ethereum_signature */;
-            return _toStringEcdsaSignature_V5(
-                &m->basic.claims_claim_attest_V5.ethereum_signature,
+        case 1: /* claims_claim_attest_V1 - ethereum_signature */;
+            return _toStringEcdsaSignature_V1(
+                &m->basic.claims_claim_attest_V1.ethereum_signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* claims_claim_attest_V5 - statement */;
+        case 2: /* claims_claim_attest_V1 - statement */;
             return _toStringBytes(
-                &m->basic.claims_claim_attest_V5.statement,
+                &m->basic.claims_claim_attest_V1.statement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7788,9 +7823,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4867: /* module 19 call 3 */
         switch (itemIdx) {
-        case 0: /* claims_attest_V5 - statement */;
+        case 0: /* claims_attest_V1 - statement */;
             return _toStringBytes(
-                &m->basic.claims_attest_V5.statement,
+                &m->basic.claims_attest_V1.statement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7798,19 +7833,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 4868: /* module 19 call 4 */
         switch (itemIdx) {
-        case 0: /* claims_move_claim_V5 - old */;
-            return _toStringEthereumAddress_V5(
-                &m->basic.claims_move_claim_V5.old,
+        case 0: /* claims_move_claim_V1 - old */;
+            return _toStringEthereumAddress_V1(
+                &m->basic.claims_move_claim_V1.old,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* claims_move_claim_V5 - new_ */;
-            return _toStringEthereumAddress_V5(
-                &m->basic.claims_move_claim_V5.new_,
+        case 1: /* claims_move_claim_V1 - new_ */;
+            return _toStringEthereumAddress_V1(
+                &m->basic.claims_move_claim_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* claims_move_claim_V5 - maybe_preclaim */;
-            return _toStringOptionAccountId_V5(
-                &m->basic.claims_move_claim_V5.maybe_preclaim,
+        case 2: /* claims_move_claim_V1 - maybe_preclaim */;
+            return _toStringOptionAccountId_V1(
+                &m->basic.claims_move_claim_V1.maybe_preclaim,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7818,14 +7853,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6145: /* module 24 call 1 */
         switch (itemIdx) {
-        case 0: /* utility_as_derivative_V5 - index */;
+        case 0: /* utility_as_derivative_V1 - index */;
             return _toStringu16(
-                &m->basic.utility_as_derivative_V5.index,
+                &m->basic.utility_as_derivative_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* utility_as_derivative_V5 - call */;
+        case 1: /* utility_as_derivative_V1 - call */;
             return _toStringCall(
-                &m->basic.utility_as_derivative_V5.call,
+                &m->basic.utility_as_derivative_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7833,9 +7868,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6400: /* module 25 call 0 */
         switch (itemIdx) {
-        case 0: /* identity_add_registrar_V5 - account */;
-            return _toStringAccountId_V5(
-                &m->basic.identity_add_registrar_V5.account,
+        case 0: /* identity_add_registrar_V1 - account */;
+            return _toStringAccountId_V1(
+                &m->basic.identity_add_registrar_V1.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7843,9 +7878,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6401: /* module 25 call 1 */
         switch (itemIdx) {
-        case 0: /* identity_set_identity_V5 - info */;
-            return _toStringIdentityInfo_V5(
-                &m->basic.identity_set_identity_V5.info,
+        case 0: /* identity_set_identity_V1 - info */;
+            return _toStringIdentityInfo_V1(
+                &m->basic.identity_set_identity_V1.info,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7853,9 +7888,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6402: /* module 25 call 2 */
         switch (itemIdx) {
-        case 0: /* identity_set_subs_V5 - subs */;
-            return _toStringVecTupleAccountIdData_V5(
-                &m->basic.identity_set_subs_V5.subs,
+        case 0: /* identity_set_subs_V1 - subs */;
+            return _toStringVecTupleAccountIdData_V1(
+                &m->basic.identity_set_subs_V1.subs,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7868,14 +7903,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6404: /* module 25 call 4 */
         switch (itemIdx) {
-        case 0: /* identity_request_judgement_V5 - reg_index */;
-            return _toStringCompactRegistrarIndex_V5(
-                &m->basic.identity_request_judgement_V5.reg_index,
+        case 0: /* identity_request_judgement_V1 - reg_index */;
+            return _toStringCompactRegistrarIndex_V1(
+                &m->basic.identity_request_judgement_V1.reg_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_request_judgement_V5 - max_fee */;
+        case 1: /* identity_request_judgement_V1 - max_fee */;
             return _toStringCompactBalanceOf(
-                &m->basic.identity_request_judgement_V5.max_fee,
+                &m->basic.identity_request_judgement_V1.max_fee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7883,9 +7918,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6405: /* module 25 call 5 */
         switch (itemIdx) {
-        case 0: /* identity_cancel_request_V5 - reg_index */;
-            return _toStringRegistrarIndex_V5(
-                &m->basic.identity_cancel_request_V5.reg_index,
+        case 0: /* identity_cancel_request_V1 - reg_index */;
+            return _toStringRegistrarIndex_V1(
+                &m->basic.identity_cancel_request_V1.reg_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7893,14 +7928,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6406: /* module 25 call 6 */
         switch (itemIdx) {
-        case 0: /* identity_set_fee_V5 - index */;
-            return _toStringCompactRegistrarIndex_V5(
-                &m->basic.identity_set_fee_V5.index,
+        case 0: /* identity_set_fee_V1 - index */;
+            return _toStringCompactRegistrarIndex_V1(
+                &m->basic.identity_set_fee_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_set_fee_V5 - fee */;
+        case 1: /* identity_set_fee_V1 - fee */;
             return _toStringCompactBalanceOf(
-                &m->basic.identity_set_fee_V5.fee,
+                &m->basic.identity_set_fee_V1.fee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7908,14 +7943,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6407: /* module 25 call 7 */
         switch (itemIdx) {
-        case 0: /* identity_set_account_id_V5 - index */;
-            return _toStringCompactRegistrarIndex_V5(
-                &m->basic.identity_set_account_id_V5.index,
+        case 0: /* identity_set_account_id_V1 - index */;
+            return _toStringCompactRegistrarIndex_V1(
+                &m->basic.identity_set_account_id_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_set_account_id_V5 - new_ */;
-            return _toStringAccountId_V5(
-                &m->basic.identity_set_account_id_V5.new_,
+        case 1: /* identity_set_account_id_V1 - new_ */;
+            return _toStringAccountId_V1(
+                &m->basic.identity_set_account_id_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7923,14 +7958,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6408: /* module 25 call 8 */
         switch (itemIdx) {
-        case 0: /* identity_set_fields_V5 - index */;
-            return _toStringCompactRegistrarIndex_V5(
-                &m->basic.identity_set_fields_V5.index,
+        case 0: /* identity_set_fields_V1 - index */;
+            return _toStringCompactRegistrarIndex_V1(
+                &m->basic.identity_set_fields_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_set_fields_V5 - fields */;
-            return _toStringIdentityFields_V5(
-                &m->basic.identity_set_fields_V5.fields,
+        case 1: /* identity_set_fields_V1 - fields */;
+            return _toStringIdentityFields_V1(
+                &m->basic.identity_set_fields_V1.fields,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7938,19 +7973,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6409: /* module 25 call 9 */
         switch (itemIdx) {
-        case 0: /* identity_provide_judgement_V5 - reg_index */;
-            return _toStringCompactRegistrarIndex_V5(
-                &m->basic.identity_provide_judgement_V5.reg_index,
+        case 0: /* identity_provide_judgement_V1 - reg_index */;
+            return _toStringCompactRegistrarIndex_V1(
+                &m->basic.identity_provide_judgement_V1.reg_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_provide_judgement_V5 - target */;
-            return _toStringLookupSource_V5(
-                &m->basic.identity_provide_judgement_V5.target,
+        case 1: /* identity_provide_judgement_V1 - target */;
+            return _toStringLookupSource_V1(
+                &m->basic.identity_provide_judgement_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* identity_provide_judgement_V5 - judgement */;
-            return _toStringIdentityJudgement_V5(
-                &m->basic.identity_provide_judgement_V5.judgement,
+        case 2: /* identity_provide_judgement_V1 - judgement */;
+            return _toStringIdentityJudgement_V1(
+                &m->basic.identity_provide_judgement_V1.judgement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7958,9 +7993,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6410: /* module 25 call 10 */
         switch (itemIdx) {
-        case 0: /* identity_kill_identity_V5 - target */;
-            return _toStringLookupSource_V5(
-                &m->basic.identity_kill_identity_V5.target,
+        case 0: /* identity_kill_identity_V1 - target */;
+            return _toStringLookupSource_V1(
+                &m->basic.identity_kill_identity_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7968,14 +8003,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6411: /* module 25 call 11 */
         switch (itemIdx) {
-        case 0: /* identity_add_sub_V5 - sub */;
-            return _toStringLookupSource_V5(
-                &m->basic.identity_add_sub_V5.sub,
+        case 0: /* identity_add_sub_V1 - sub */;
+            return _toStringLookupSource_V1(
+                &m->basic.identity_add_sub_V1.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_add_sub_V5 - data */;
+        case 1: /* identity_add_sub_V1 - data */;
             return _toStringData(
-                &m->basic.identity_add_sub_V5.data,
+                &m->basic.identity_add_sub_V1.data,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7983,14 +8018,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6412: /* module 25 call 12 */
         switch (itemIdx) {
-        case 0: /* identity_rename_sub_V5 - sub */;
-            return _toStringLookupSource_V5(
-                &m->basic.identity_rename_sub_V5.sub,
+        case 0: /* identity_rename_sub_V1 - sub */;
+            return _toStringLookupSource_V1(
+                &m->basic.identity_rename_sub_V1.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* identity_rename_sub_V5 - data */;
+        case 1: /* identity_rename_sub_V1 - data */;
             return _toStringData(
-                &m->basic.identity_rename_sub_V5.data,
+                &m->basic.identity_rename_sub_V1.data,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7998,9 +8033,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6413: /* module 25 call 13 */
         switch (itemIdx) {
-        case 0: /* identity_remove_sub_V5 - sub */;
-            return _toStringLookupSource_V5(
-                &m->basic.identity_remove_sub_V5.sub,
+        case 0: /* identity_remove_sub_V1 - sub */;
+            return _toStringLookupSource_V1(
+                &m->basic.identity_remove_sub_V1.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8013,9 +8048,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6656: /* module 26 call 0 */
         switch (itemIdx) {
-        case 0: /* society_bid_V5 - value */;
+        case 0: /* society_bid_V1 - value */;
             return _toStringBalanceOf(
-                &m->basic.society_bid_V5.value,
+                &m->basic.society_bid_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8023,9 +8058,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6657: /* module 26 call 1 */
         switch (itemIdx) {
-        case 0: /* society_unbid_V5 - pos */;
+        case 0: /* society_unbid_V1 - pos */;
             return _toStringu32(
-                &m->basic.society_unbid_V5.pos,
+                &m->basic.society_unbid_V1.pos,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8033,19 +8068,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6658: /* module 26 call 2 */
         switch (itemIdx) {
-        case 0: /* society_vouch_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.society_vouch_V5.who,
+        case 0: /* society_vouch_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.society_vouch_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* society_vouch_V5 - value */;
+        case 1: /* society_vouch_V1 - value */;
             return _toStringBalanceOf(
-                &m->basic.society_vouch_V5.value,
+                &m->basic.society_vouch_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* society_vouch_V5 - tip */;
+        case 2: /* society_vouch_V1 - tip */;
             return _toStringBalanceOf(
-                &m->basic.society_vouch_V5.tip,
+                &m->basic.society_vouch_V1.tip,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8053,9 +8088,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6659: /* module 26 call 3 */
         switch (itemIdx) {
-        case 0: /* society_unvouch_V5 - pos */;
+        case 0: /* society_unvouch_V1 - pos */;
             return _toStringu32(
-                &m->basic.society_unvouch_V5.pos,
+                &m->basic.society_unvouch_V1.pos,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8063,14 +8098,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6660: /* module 26 call 4 */
         switch (itemIdx) {
-        case 0: /* society_vote_V5 - candidate */;
-            return _toStringLookupSource_V5(
-                &m->basic.society_vote_V5.candidate,
+        case 0: /* society_vote_V1 - candidate */;
+            return _toStringLookupSource_V1(
+                &m->basic.society_vote_V1.candidate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* society_vote_V5 - approve */;
+        case 1: /* society_vote_V1 - approve */;
             return _toStringbool(
-                &m->basic.society_vote_V5.approve,
+                &m->basic.society_vote_V1.approve,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8078,9 +8113,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6661: /* module 26 call 5 */
         switch (itemIdx) {
-        case 0: /* society_defender_vote_V5 - approve */;
+        case 0: /* society_defender_vote_V1 - approve */;
             return _toStringbool(
-                &m->basic.society_defender_vote_V5.approve,
+                &m->basic.society_defender_vote_V1.approve,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8093,19 +8128,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6663: /* module 26 call 7 */
         switch (itemIdx) {
-        case 0: /* society_found_V5 - founder */;
-            return _toStringAccountId_V5(
-                &m->basic.society_found_V5.founder,
+        case 0: /* society_found_V1 - founder */;
+            return _toStringAccountId_V1(
+                &m->basic.society_found_V1.founder,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* society_found_V5 - max_members */;
+        case 1: /* society_found_V1 - max_members */;
             return _toStringu32(
-                &m->basic.society_found_V5.max_members,
+                &m->basic.society_found_V1.max_members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* society_found_V5 - rules */;
+        case 2: /* society_found_V1 - rules */;
             return _toStringBytes(
-                &m->basic.society_found_V5.rules,
+                &m->basic.society_found_V1.rules,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8118,14 +8153,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6665: /* module 26 call 9 */
         switch (itemIdx) {
-        case 0: /* society_judge_suspended_member_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.society_judge_suspended_member_V5.who,
+        case 0: /* society_judge_suspended_member_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.society_judge_suspended_member_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* society_judge_suspended_member_V5 - forgive */;
+        case 1: /* society_judge_suspended_member_V1 - forgive */;
             return _toStringbool(
-                &m->basic.society_judge_suspended_member_V5.forgive,
+                &m->basic.society_judge_suspended_member_V1.forgive,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8133,14 +8168,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6666: /* module 26 call 10 */
         switch (itemIdx) {
-        case 0: /* society_judge_suspended_candidate_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.society_judge_suspended_candidate_V5.who,
+        case 0: /* society_judge_suspended_candidate_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.society_judge_suspended_candidate_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* society_judge_suspended_candidate_V5 - judgement */;
-            return _toStringSocietyJudgement_V5(
-                &m->basic.society_judge_suspended_candidate_V5.judgement,
+        case 1: /* society_judge_suspended_candidate_V1 - judgement */;
+            return _toStringSocietyJudgement_V1(
+                &m->basic.society_judge_suspended_candidate_V1.judgement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8148,9 +8183,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6667: /* module 26 call 11 */
         switch (itemIdx) {
-        case 0: /* society_set_max_members_V5 - max */;
+        case 0: /* society_set_max_members_V1 - max */;
             return _toStringu32(
-                &m->basic.society_set_max_members_V5.max,
+                &m->basic.society_set_max_members_V1.max,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8158,14 +8193,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6912: /* module 27 call 0 */
         switch (itemIdx) {
-        case 0: /* recovery_as_recovered_V5 - account */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_as_recovered_V5.account,
+        case 0: /* recovery_as_recovered_V1 - account */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_as_recovered_V1.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* recovery_as_recovered_V5 - call */;
+        case 1: /* recovery_as_recovered_V1 - call */;
             return _toStringCall(
-                &m->basic.recovery_as_recovered_V5.call,
+                &m->basic.recovery_as_recovered_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8173,14 +8208,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6913: /* module 27 call 1 */
         switch (itemIdx) {
-        case 0: /* recovery_set_recovered_V5 - lost */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_set_recovered_V5.lost,
+        case 0: /* recovery_set_recovered_V1 - lost */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_set_recovered_V1.lost,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* recovery_set_recovered_V5 - rescuer */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_set_recovered_V5.rescuer,
+        case 1: /* recovery_set_recovered_V1 - rescuer */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_set_recovered_V1.rescuer,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8188,19 +8223,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6914: /* module 27 call 2 */
         switch (itemIdx) {
-        case 0: /* recovery_create_recovery_V5 - friends */;
-            return _toStringVecAccountId_V5(
-                &m->basic.recovery_create_recovery_V5.friends,
+        case 0: /* recovery_create_recovery_V1 - friends */;
+            return _toStringVecAccountId_V1(
+                &m->basic.recovery_create_recovery_V1.friends,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* recovery_create_recovery_V5 - threshold */;
+        case 1: /* recovery_create_recovery_V1 - threshold */;
             return _toStringu16(
-                &m->basic.recovery_create_recovery_V5.threshold,
+                &m->basic.recovery_create_recovery_V1.threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* recovery_create_recovery_V5 - delay_period */;
+        case 2: /* recovery_create_recovery_V1 - delay_period */;
             return _toStringBlockNumber(
-                &m->basic.recovery_create_recovery_V5.delay_period,
+                &m->basic.recovery_create_recovery_V1.delay_period,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8208,9 +8243,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6915: /* module 27 call 3 */
         switch (itemIdx) {
-        case 0: /* recovery_initiate_recovery_V5 - account */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_initiate_recovery_V5.account,
+        case 0: /* recovery_initiate_recovery_V1 - account */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_initiate_recovery_V1.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8218,14 +8253,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6916: /* module 27 call 4 */
         switch (itemIdx) {
-        case 0: /* recovery_vouch_recovery_V5 - lost */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_vouch_recovery_V5.lost,
+        case 0: /* recovery_vouch_recovery_V1 - lost */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_vouch_recovery_V1.lost,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* recovery_vouch_recovery_V5 - rescuer */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_vouch_recovery_V5.rescuer,
+        case 1: /* recovery_vouch_recovery_V1 - rescuer */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_vouch_recovery_V1.rescuer,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8233,9 +8268,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6917: /* module 27 call 5 */
         switch (itemIdx) {
-        case 0: /* recovery_claim_recovery_V5 - account */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_claim_recovery_V5.account,
+        case 0: /* recovery_claim_recovery_V1 - account */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_claim_recovery_V1.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8243,9 +8278,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6918: /* module 27 call 6 */
         switch (itemIdx) {
-        case 0: /* recovery_close_recovery_V5 - rescuer */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_close_recovery_V5.rescuer,
+        case 0: /* recovery_close_recovery_V1 - rescuer */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_close_recovery_V1.rescuer,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8258,9 +8293,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 6920: /* module 27 call 8 */
         switch (itemIdx) {
-        case 0: /* recovery_cancel_recovered_V5 - account */;
-            return _toStringAccountId_V5(
-                &m->basic.recovery_cancel_recovered_V5.account,
+        case 0: /* recovery_cancel_recovered_V1 - account */;
+            return _toStringAccountId_V1(
+                &m->basic.recovery_cancel_recovered_V1.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8273,9 +8308,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7169: /* module 28 call 1 */
         switch (itemIdx) {
-        case 0: /* vesting_vest_other_V5 - target */;
-            return _toStringLookupSource_V5(
-                &m->basic.vesting_vest_other_V5.target,
+        case 0: /* vesting_vest_other_V1 - target */;
+            return _toStringLookupSource_V1(
+                &m->basic.vesting_vest_other_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8283,14 +8318,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7170: /* module 28 call 2 */
         switch (itemIdx) {
-        case 0: /* vesting_vested_transfer_V5 - target */;
-            return _toStringLookupSource_V5(
-                &m->basic.vesting_vested_transfer_V5.target,
+        case 0: /* vesting_vested_transfer_V1 - target */;
+            return _toStringLookupSource_V1(
+                &m->basic.vesting_vested_transfer_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* vesting_vested_transfer_V5 - schedule */;
-            return _toStringVestingInfo_V5(
-                &m->basic.vesting_vested_transfer_V5.schedule,
+        case 1: /* vesting_vested_transfer_V1 - schedule */;
+            return _toStringVestingInfo_V1(
+                &m->basic.vesting_vested_transfer_V1.schedule,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8298,19 +8333,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7171: /* module 28 call 3 */
         switch (itemIdx) {
-        case 0: /* vesting_force_vested_transfer_V5 - source */;
-            return _toStringLookupSource_V5(
-                &m->basic.vesting_force_vested_transfer_V5.source,
+        case 0: /* vesting_force_vested_transfer_V1 - source */;
+            return _toStringLookupSource_V1(
+                &m->basic.vesting_force_vested_transfer_V1.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* vesting_force_vested_transfer_V5 - target */;
-            return _toStringLookupSource_V5(
-                &m->basic.vesting_force_vested_transfer_V5.target,
+        case 1: /* vesting_force_vested_transfer_V1 - target */;
+            return _toStringLookupSource_V1(
+                &m->basic.vesting_force_vested_transfer_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* vesting_force_vested_transfer_V5 - schedule */;
-            return _toStringVestingInfo_V5(
-                &m->basic.vesting_force_vested_transfer_V5.schedule,
+        case 2: /* vesting_force_vested_transfer_V1 - schedule */;
+            return _toStringVestingInfo_V1(
+                &m->basic.vesting_force_vested_transfer_V1.schedule,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8318,24 +8353,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7424: /* module 29 call 0 */
         switch (itemIdx) {
-        case 0: /* scheduler_schedule_V5 - when */;
+        case 0: /* scheduler_schedule_V1 - when */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_V5.when,
+                &m->basic.scheduler_schedule_V1.when,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* scheduler_schedule_V5 - maybe_periodic */;
-            return _toStringOptionPeriod_V5(
-                &m->basic.scheduler_schedule_V5.maybe_periodic,
+        case 1: /* scheduler_schedule_V1 - maybe_periodic */;
+            return _toStringOptionPeriod_V1(
+                &m->basic.scheduler_schedule_V1.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* scheduler_schedule_V5 - priority */;
-            return _toStringPriority_V5(
-                &m->basic.scheduler_schedule_V5.priority,
+        case 2: /* scheduler_schedule_V1 - priority */;
+            return _toStringPriority_V1(
+                &m->basic.scheduler_schedule_V1.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* scheduler_schedule_V5 - call */;
+        case 3: /* scheduler_schedule_V1 - call */;
             return _toStringCall(
-                &m->basic.scheduler_schedule_V5.call,
+                &m->basic.scheduler_schedule_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8343,14 +8378,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7425: /* module 29 call 1 */
         switch (itemIdx) {
-        case 0: /* scheduler_cancel_V5 - when */;
+        case 0: /* scheduler_cancel_V1 - when */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_cancel_V5.when,
+                &m->basic.scheduler_cancel_V1.when,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* scheduler_cancel_V5 - index */;
+        case 1: /* scheduler_cancel_V1 - index */;
             return _toStringu32(
-                &m->basic.scheduler_cancel_V5.index,
+                &m->basic.scheduler_cancel_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8358,29 +8393,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7426: /* module 29 call 2 */
         switch (itemIdx) {
-        case 0: /* scheduler_schedule_named_V5 - id */;
+        case 0: /* scheduler_schedule_named_V1 - id */;
             return _toStringBytes(
-                &m->basic.scheduler_schedule_named_V5.id,
+                &m->basic.scheduler_schedule_named_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* scheduler_schedule_named_V5 - when */;
+        case 1: /* scheduler_schedule_named_V1 - when */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_named_V5.when,
+                &m->basic.scheduler_schedule_named_V1.when,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* scheduler_schedule_named_V5 - maybe_periodic */;
-            return _toStringOptionPeriod_V5(
-                &m->basic.scheduler_schedule_named_V5.maybe_periodic,
+        case 2: /* scheduler_schedule_named_V1 - maybe_periodic */;
+            return _toStringOptionPeriod_V1(
+                &m->basic.scheduler_schedule_named_V1.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* scheduler_schedule_named_V5 - priority */;
-            return _toStringPriority_V5(
-                &m->basic.scheduler_schedule_named_V5.priority,
+        case 3: /* scheduler_schedule_named_V1 - priority */;
+            return _toStringPriority_V1(
+                &m->basic.scheduler_schedule_named_V1.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* scheduler_schedule_named_V5 - call */;
+        case 4: /* scheduler_schedule_named_V1 - call */;
             return _toStringCall(
-                &m->basic.scheduler_schedule_named_V5.call,
+                &m->basic.scheduler_schedule_named_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8388,9 +8423,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7427: /* module 29 call 3 */
         switch (itemIdx) {
-        case 0: /* scheduler_cancel_named_V5 - id */;
+        case 0: /* scheduler_cancel_named_V1 - id */;
             return _toStringBytes(
-                &m->basic.scheduler_cancel_named_V5.id,
+                &m->basic.scheduler_cancel_named_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8398,24 +8433,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7428: /* module 29 call 4 */
         switch (itemIdx) {
-        case 0: /* scheduler_schedule_after_V5 - after */;
+        case 0: /* scheduler_schedule_after_V1 - after */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_after_V5.after,
+                &m->basic.scheduler_schedule_after_V1.after,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* scheduler_schedule_after_V5 - maybe_periodic */;
-            return _toStringOptionPeriod_V5(
-                &m->basic.scheduler_schedule_after_V5.maybe_periodic,
+        case 1: /* scheduler_schedule_after_V1 - maybe_periodic */;
+            return _toStringOptionPeriod_V1(
+                &m->basic.scheduler_schedule_after_V1.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* scheduler_schedule_after_V5 - priority */;
-            return _toStringPriority_V5(
-                &m->basic.scheduler_schedule_after_V5.priority,
+        case 2: /* scheduler_schedule_after_V1 - priority */;
+            return _toStringPriority_V1(
+                &m->basic.scheduler_schedule_after_V1.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* scheduler_schedule_after_V5 - call */;
+        case 3: /* scheduler_schedule_after_V1 - call */;
             return _toStringCall(
-                &m->basic.scheduler_schedule_after_V5.call,
+                &m->basic.scheduler_schedule_after_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8423,29 +8458,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7429: /* module 29 call 5 */
         switch (itemIdx) {
-        case 0: /* scheduler_schedule_named_after_V5 - id */;
+        case 0: /* scheduler_schedule_named_after_V1 - id */;
             return _toStringBytes(
-                &m->basic.scheduler_schedule_named_after_V5.id,
+                &m->basic.scheduler_schedule_named_after_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* scheduler_schedule_named_after_V5 - after */;
+        case 1: /* scheduler_schedule_named_after_V1 - after */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_named_after_V5.after,
+                &m->basic.scheduler_schedule_named_after_V1.after,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* scheduler_schedule_named_after_V5 - maybe_periodic */;
-            return _toStringOptionPeriod_V5(
-                &m->basic.scheduler_schedule_named_after_V5.maybe_periodic,
+        case 2: /* scheduler_schedule_named_after_V1 - maybe_periodic */;
+            return _toStringOptionPeriod_V1(
+                &m->basic.scheduler_schedule_named_after_V1.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* scheduler_schedule_named_after_V5 - priority */;
-            return _toStringPriority_V5(
-                &m->basic.scheduler_schedule_named_after_V5.priority,
+        case 3: /* scheduler_schedule_named_after_V1 - priority */;
+            return _toStringPriority_V1(
+                &m->basic.scheduler_schedule_named_after_V1.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* scheduler_schedule_named_after_V5 - call */;
+        case 4: /* scheduler_schedule_named_after_V1 - call */;
             return _toStringCall(
-                &m->basic.scheduler_schedule_named_after_V5.call,
+                &m->basic.scheduler_schedule_named_after_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8453,19 +8488,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7680: /* module 30 call 0 */
         switch (itemIdx) {
-        case 0: /* proxy_proxy_V5 - real */;
-            return _toStringAccountId_V5(
-                &m->nested.proxy_proxy_V5.real,
+        case 0: /* proxy_proxy_V1 - real */;
+            return _toStringAccountId_V1(
+                &m->nested.proxy_proxy_V1.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_proxy_V5 - force_proxy_type */;
-            return _toStringOptionProxyType_V5(
-                &m->nested.proxy_proxy_V5.force_proxy_type,
+        case 1: /* proxy_proxy_V1 - force_proxy_type */;
+            return _toStringOptionProxyType_V1(
+                &m->nested.proxy_proxy_V1.force_proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* proxy_proxy_V5 - call */;
+        case 2: /* proxy_proxy_V1 - call */;
             return _toStringCall(
-                &m->nested.proxy_proxy_V5.call,
+                &m->nested.proxy_proxy_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8473,19 +8508,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7681: /* module 30 call 1 */
         switch (itemIdx) {
-        case 0: /* proxy_add_proxy_V5 - delegate */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_add_proxy_V5.delegate,
+        case 0: /* proxy_add_proxy_V1 - delegate */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_add_proxy_V1.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_add_proxy_V5 - proxy_type */;
-            return _toStringProxyType_V5(
-                &m->basic.proxy_add_proxy_V5.proxy_type,
+        case 1: /* proxy_add_proxy_V1 - proxy_type */;
+            return _toStringProxyType_V1(
+                &m->basic.proxy_add_proxy_V1.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* proxy_add_proxy_V5 - delay */;
+        case 2: /* proxy_add_proxy_V1 - delay */;
             return _toStringBlockNumber(
-                &m->basic.proxy_add_proxy_V5.delay,
+                &m->basic.proxy_add_proxy_V1.delay,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8493,19 +8528,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7682: /* module 30 call 2 */
         switch (itemIdx) {
-        case 0: /* proxy_remove_proxy_V5 - delegate */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_remove_proxy_V5.delegate,
+        case 0: /* proxy_remove_proxy_V1 - delegate */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_remove_proxy_V1.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_remove_proxy_V5 - proxy_type */;
-            return _toStringProxyType_V5(
-                &m->basic.proxy_remove_proxy_V5.proxy_type,
+        case 1: /* proxy_remove_proxy_V1 - proxy_type */;
+            return _toStringProxyType_V1(
+                &m->basic.proxy_remove_proxy_V1.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* proxy_remove_proxy_V5 - delay */;
+        case 2: /* proxy_remove_proxy_V1 - delay */;
             return _toStringBlockNumber(
-                &m->basic.proxy_remove_proxy_V5.delay,
+                &m->basic.proxy_remove_proxy_V1.delay,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8518,19 +8553,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7684: /* module 30 call 4 */
         switch (itemIdx) {
-        case 0: /* proxy_anonymous_V5 - proxy_type */;
-            return _toStringProxyType_V5(
-                &m->basic.proxy_anonymous_V5.proxy_type,
+        case 0: /* proxy_anonymous_V1 - proxy_type */;
+            return _toStringProxyType_V1(
+                &m->basic.proxy_anonymous_V1.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_anonymous_V5 - delay */;
+        case 1: /* proxy_anonymous_V1 - delay */;
             return _toStringBlockNumber(
-                &m->basic.proxy_anonymous_V5.delay,
+                &m->basic.proxy_anonymous_V1.delay,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* proxy_anonymous_V5 - index */;
+        case 2: /* proxy_anonymous_V1 - index */;
             return _toStringu16(
-                &m->basic.proxy_anonymous_V5.index,
+                &m->basic.proxy_anonymous_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8538,29 +8573,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7685: /* module 30 call 5 */
         switch (itemIdx) {
-        case 0: /* proxy_kill_anonymous_V5 - spawner */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_kill_anonymous_V5.spawner,
+        case 0: /* proxy_kill_anonymous_V1 - spawner */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_kill_anonymous_V1.spawner,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_kill_anonymous_V5 - proxy_type */;
-            return _toStringProxyType_V5(
-                &m->basic.proxy_kill_anonymous_V5.proxy_type,
+        case 1: /* proxy_kill_anonymous_V1 - proxy_type */;
+            return _toStringProxyType_V1(
+                &m->basic.proxy_kill_anonymous_V1.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* proxy_kill_anonymous_V5 - index */;
+        case 2: /* proxy_kill_anonymous_V1 - index */;
             return _toStringu16(
-                &m->basic.proxy_kill_anonymous_V5.index,
+                &m->basic.proxy_kill_anonymous_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* proxy_kill_anonymous_V5 - height */;
+        case 3: /* proxy_kill_anonymous_V1 - height */;
             return _toStringCompactBlockNumber(
-                &m->basic.proxy_kill_anonymous_V5.height,
+                &m->basic.proxy_kill_anonymous_V1.height,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* proxy_kill_anonymous_V5 - ext_index */;
+        case 4: /* proxy_kill_anonymous_V1 - ext_index */;
             return _toStringCompactu32(
-                &m->basic.proxy_kill_anonymous_V5.ext_index,
+                &m->basic.proxy_kill_anonymous_V1.ext_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8568,14 +8603,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7686: /* module 30 call 6 */
         switch (itemIdx) {
-        case 0: /* proxy_announce_V5 - real */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_announce_V5.real,
+        case 0: /* proxy_announce_V1 - real */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_announce_V1.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_announce_V5 - call_hash */;
-            return _toStringCallHashOf_V5(
-                &m->basic.proxy_announce_V5.call_hash,
+        case 1: /* proxy_announce_V1 - call_hash */;
+            return _toStringCallHashOf_V1(
+                &m->basic.proxy_announce_V1.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8583,14 +8618,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7687: /* module 30 call 7 */
         switch (itemIdx) {
-        case 0: /* proxy_remove_announcement_V5 - real */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_remove_announcement_V5.real,
+        case 0: /* proxy_remove_announcement_V1 - real */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_remove_announcement_V1.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_remove_announcement_V5 - call_hash */;
-            return _toStringCallHashOf_V5(
-                &m->basic.proxy_remove_announcement_V5.call_hash,
+        case 1: /* proxy_remove_announcement_V1 - call_hash */;
+            return _toStringCallHashOf_V1(
+                &m->basic.proxy_remove_announcement_V1.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8598,14 +8633,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7688: /* module 30 call 8 */
         switch (itemIdx) {
-        case 0: /* proxy_reject_announcement_V5 - delegate */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_reject_announcement_V5.delegate,
+        case 0: /* proxy_reject_announcement_V1 - delegate */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_reject_announcement_V1.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_reject_announcement_V5 - call_hash */;
-            return _toStringCallHashOf_V5(
-                &m->basic.proxy_reject_announcement_V5.call_hash,
+        case 1: /* proxy_reject_announcement_V1 - call_hash */;
+            return _toStringCallHashOf_V1(
+                &m->basic.proxy_reject_announcement_V1.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8613,24 +8648,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7689: /* module 30 call 9 */
         switch (itemIdx) {
-        case 0: /* proxy_proxy_announced_V5 - delegate */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_proxy_announced_V5.delegate,
+        case 0: /* proxy_proxy_announced_V1 - delegate */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_proxy_announced_V1.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* proxy_proxy_announced_V5 - real */;
-            return _toStringAccountId_V5(
-                &m->basic.proxy_proxy_announced_V5.real,
+        case 1: /* proxy_proxy_announced_V1 - real */;
+            return _toStringAccountId_V1(
+                &m->basic.proxy_proxy_announced_V1.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* proxy_proxy_announced_V5 - force_proxy_type */;
-            return _toStringOptionProxyType_V5(
-                &m->basic.proxy_proxy_announced_V5.force_proxy_type,
+        case 2: /* proxy_proxy_announced_V1 - force_proxy_type */;
+            return _toStringOptionProxyType_V1(
+                &m->basic.proxy_proxy_announced_V1.force_proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* proxy_proxy_announced_V5 - call */;
+        case 3: /* proxy_proxy_announced_V1 - call */;
             return _toStringCall(
-                &m->basic.proxy_proxy_announced_V5.call,
+                &m->basic.proxy_proxy_announced_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8638,14 +8673,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7936: /* module 31 call 0 */
         switch (itemIdx) {
-        case 0: /* multisig_as_multi_threshold_1_V5 - other_signatories */;
-            return _toStringVecAccountId_V5(
-                &m->nested.multisig_as_multi_threshold_1_V5.other_signatories,
+        case 0: /* multisig_as_multi_threshold_1_V1 - other_signatories */;
+            return _toStringVecAccountId_V1(
+                &m->nested.multisig_as_multi_threshold_1_V1.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* multisig_as_multi_threshold_1_V5 - call */;
+        case 1: /* multisig_as_multi_threshold_1_V1 - call */;
             return _toStringCall(
-                &m->nested.multisig_as_multi_threshold_1_V5.call,
+                &m->nested.multisig_as_multi_threshold_1_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8653,34 +8688,34 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7937: /* module 31 call 1 */
         switch (itemIdx) {
-        case 0: /* multisig_as_multi_V5 - threshold */;
+        case 0: /* multisig_as_multi_V1 - threshold */;
             return _toStringu16(
-                &m->nested.multisig_as_multi_V5.threshold,
+                &m->nested.multisig_as_multi_V1.threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* multisig_as_multi_V5 - other_signatories */;
-            return _toStringVecAccountId_V5(
-                &m->nested.multisig_as_multi_V5.other_signatories,
+        case 1: /* multisig_as_multi_V1 - other_signatories */;
+            return _toStringVecAccountId_V1(
+                &m->nested.multisig_as_multi_V1.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* multisig_as_multi_V5 - maybe_timepoint */;
-            return _toStringOptionTimepoint_V5(
-                &m->nested.multisig_as_multi_V5.maybe_timepoint,
+        case 2: /* multisig_as_multi_V1 - maybe_timepoint */;
+            return _toStringOptionTimepoint_V1(
+                &m->nested.multisig_as_multi_V1.maybe_timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* multisig_as_multi_V5 - call */;
-            return _toStringOpaqueCall_V5(
-                &m->nested.multisig_as_multi_V5.call,
+        case 3: /* multisig_as_multi_V1 - call */;
+            return _toStringOpaqueCall_V1(
+                &m->nested.multisig_as_multi_V1.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* multisig_as_multi_V5 - store_call */;
+        case 4: /* multisig_as_multi_V1 - store_call */;
             return _toStringbool(
-                &m->nested.multisig_as_multi_V5.store_call,
+                &m->nested.multisig_as_multi_V1.store_call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 5: /* multisig_as_multi_V5 - max_weight */;
-            return _toStringWeight_V5(
-                &m->nested.multisig_as_multi_V5.max_weight,
+        case 5: /* multisig_as_multi_V1 - max_weight */;
+            return _toStringWeight_V1(
+                &m->nested.multisig_as_multi_V1.max_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8688,29 +8723,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7938: /* module 31 call 2 */
         switch (itemIdx) {
-        case 0: /* multisig_approve_as_multi_V5 - threshold */;
+        case 0: /* multisig_approve_as_multi_V1 - threshold */;
             return _toStringu16(
-                &m->nested.multisig_approve_as_multi_V5.threshold,
+                &m->nested.multisig_approve_as_multi_V1.threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* multisig_approve_as_multi_V5 - other_signatories */;
-            return _toStringVecAccountId_V5(
-                &m->nested.multisig_approve_as_multi_V5.other_signatories,
+        case 1: /* multisig_approve_as_multi_V1 - other_signatories */;
+            return _toStringVecAccountId_V1(
+                &m->nested.multisig_approve_as_multi_V1.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* multisig_approve_as_multi_V5 - maybe_timepoint */;
-            return _toStringOptionTimepoint_V5(
-                &m->nested.multisig_approve_as_multi_V5.maybe_timepoint,
+        case 2: /* multisig_approve_as_multi_V1 - maybe_timepoint */;
+            return _toStringOptionTimepoint_V1(
+                &m->nested.multisig_approve_as_multi_V1.maybe_timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* multisig_approve_as_multi_V5 - call_hash */;
-            return _toStringu8_array_32_V5(
-                &m->nested.multisig_approve_as_multi_V5.call_hash,
+        case 3: /* multisig_approve_as_multi_V1 - call_hash */;
+            return _toStringu8_array_32_V1(
+                &m->nested.multisig_approve_as_multi_V1.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* multisig_approve_as_multi_V5 - max_weight */;
-            return _toStringWeight_V5(
-                &m->nested.multisig_approve_as_multi_V5.max_weight,
+        case 4: /* multisig_approve_as_multi_V1 - max_weight */;
+            return _toStringWeight_V1(
+                &m->nested.multisig_approve_as_multi_V1.max_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8718,24 +8753,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 7939: /* module 31 call 3 */
         switch (itemIdx) {
-        case 0: /* multisig_cancel_as_multi_V5 - threshold */;
+        case 0: /* multisig_cancel_as_multi_V1 - threshold */;
             return _toStringu16(
-                &m->nested.multisig_cancel_as_multi_V5.threshold,
+                &m->nested.multisig_cancel_as_multi_V1.threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* multisig_cancel_as_multi_V5 - other_signatories */;
-            return _toStringVecAccountId_V5(
-                &m->nested.multisig_cancel_as_multi_V5.other_signatories,
+        case 1: /* multisig_cancel_as_multi_V1 - other_signatories */;
+            return _toStringVecAccountId_V1(
+                &m->nested.multisig_cancel_as_multi_V1.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* multisig_cancel_as_multi_V5 - timepoint */;
-            return _toStringTimepoint_V5(
-                &m->nested.multisig_cancel_as_multi_V5.timepoint,
+        case 2: /* multisig_cancel_as_multi_V1 - timepoint */;
+            return _toStringTimepoint_V1(
+                &m->nested.multisig_cancel_as_multi_V1.timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* multisig_cancel_as_multi_V5 - call_hash */;
-            return _toStringu8_array_32_V5(
-                &m->nested.multisig_cancel_as_multi_V5.call_hash,
+        case 3: /* multisig_cancel_as_multi_V1 - call_hash */;
+            return _toStringu8_array_32_V1(
+                &m->nested.multisig_cancel_as_multi_V1.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8743,14 +8778,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8960: /* module 35 call 0 */
         switch (itemIdx) {
-        case 0: /* bounties_propose_bounty_V5 - value */;
+        case 0: /* bounties_propose_bounty_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.bounties_propose_bounty_V5.value,
+                &m->basic.bounties_propose_bounty_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* bounties_propose_bounty_V5 - description */;
+        case 1: /* bounties_propose_bounty_V1 - description */;
             return _toStringBytes(
-                &m->basic.bounties_propose_bounty_V5.description,
+                &m->basic.bounties_propose_bounty_V1.description,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8758,9 +8793,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8961: /* module 35 call 1 */
         switch (itemIdx) {
-        case 0: /* bounties_approve_bounty_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_approve_bounty_V5.bounty_id,
+        case 0: /* bounties_approve_bounty_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_approve_bounty_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8768,19 +8803,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8962: /* module 35 call 2 */
         switch (itemIdx) {
-        case 0: /* bounties_propose_curator_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_propose_curator_V5.bounty_id,
+        case 0: /* bounties_propose_curator_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_propose_curator_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* bounties_propose_curator_V5 - curator */;
-            return _toStringLookupSource_V5(
-                &m->basic.bounties_propose_curator_V5.curator,
+        case 1: /* bounties_propose_curator_V1 - curator */;
+            return _toStringLookupSource_V1(
+                &m->basic.bounties_propose_curator_V1.curator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* bounties_propose_curator_V5 - fee */;
+        case 2: /* bounties_propose_curator_V1 - fee */;
             return _toStringCompactBalanceOf(
-                &m->basic.bounties_propose_curator_V5.fee,
+                &m->basic.bounties_propose_curator_V1.fee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8788,9 +8823,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8963: /* module 35 call 3 */
         switch (itemIdx) {
-        case 0: /* bounties_unassign_curator_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_unassign_curator_V5.bounty_id,
+        case 0: /* bounties_unassign_curator_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_unassign_curator_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8798,9 +8833,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8964: /* module 35 call 4 */
         switch (itemIdx) {
-        case 0: /* bounties_accept_curator_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_accept_curator_V5.bounty_id,
+        case 0: /* bounties_accept_curator_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_accept_curator_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8808,14 +8843,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8965: /* module 35 call 5 */
         switch (itemIdx) {
-        case 0: /* bounties_award_bounty_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_award_bounty_V5.bounty_id,
+        case 0: /* bounties_award_bounty_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_award_bounty_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* bounties_award_bounty_V5 - beneficiary */;
-            return _toStringLookupSource_V5(
-                &m->basic.bounties_award_bounty_V5.beneficiary,
+        case 1: /* bounties_award_bounty_V1 - beneficiary */;
+            return _toStringLookupSource_V1(
+                &m->basic.bounties_award_bounty_V1.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8823,9 +8858,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8966: /* module 35 call 6 */
         switch (itemIdx) {
-        case 0: /* bounties_claim_bounty_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_claim_bounty_V5.bounty_id,
+        case 0: /* bounties_claim_bounty_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_claim_bounty_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8833,9 +8868,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8967: /* module 35 call 7 */
         switch (itemIdx) {
-        case 0: /* bounties_close_bounty_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_close_bounty_V5.bounty_id,
+        case 0: /* bounties_close_bounty_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_close_bounty_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8843,14 +8878,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 8968: /* module 35 call 8 */
         switch (itemIdx) {
-        case 0: /* bounties_extend_bounty_expiry_V5 - bounty_id */;
-            return _toStringCompactBountyIndex_V5(
-                &m->basic.bounties_extend_bounty_expiry_V5.bounty_id,
+        case 0: /* bounties_extend_bounty_expiry_V1 - bounty_id */;
+            return _toStringCompactBountyIndex_V1(
+                &m->basic.bounties_extend_bounty_expiry_V1.bounty_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* bounties_extend_bounty_expiry_V5 - _remark */;
+        case 1: /* bounties_extend_bounty_expiry_V1 - _remark */;
             return _toStringBytes(
-                &m->basic.bounties_extend_bounty_expiry_V5._remark,
+                &m->basic.bounties_extend_bounty_expiry_V1._remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8858,14 +8893,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9216: /* module 36 call 0 */
         switch (itemIdx) {
-        case 0: /* tips_report_awesome_V5 - reason */;
+        case 0: /* tips_report_awesome_V1 - reason */;
             return _toStringBytes(
-                &m->basic.tips_report_awesome_V5.reason,
+                &m->basic.tips_report_awesome_V1.reason,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* tips_report_awesome_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.tips_report_awesome_V5.who,
+        case 1: /* tips_report_awesome_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.tips_report_awesome_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8873,9 +8908,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9217: /* module 36 call 1 */
         switch (itemIdx) {
-        case 0: /* tips_retract_tip_V5 - hash */;
+        case 0: /* tips_retract_tip_V1 - hash */;
             return _toStringHash(
-                &m->basic.tips_retract_tip_V5.hash,
+                &m->basic.tips_retract_tip_V1.hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8883,19 +8918,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9218: /* module 36 call 2 */
         switch (itemIdx) {
-        case 0: /* tips_tip_new_V5 - reason */;
+        case 0: /* tips_tip_new_V1 - reason */;
             return _toStringBytes(
-                &m->basic.tips_tip_new_V5.reason,
+                &m->basic.tips_tip_new_V1.reason,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* tips_tip_new_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.tips_tip_new_V5.who,
+        case 1: /* tips_tip_new_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.tips_tip_new_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* tips_tip_new_V5 - tip_value */;
+        case 2: /* tips_tip_new_V1 - tip_value */;
             return _toStringCompactBalanceOf(
-                &m->basic.tips_tip_new_V5.tip_value,
+                &m->basic.tips_tip_new_V1.tip_value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8903,14 +8938,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9219: /* module 36 call 3 */
         switch (itemIdx) {
-        case 0: /* tips_tip_V5 - hash */;
+        case 0: /* tips_tip_V1 - hash */;
             return _toStringHash(
-                &m->basic.tips_tip_V5.hash,
+                &m->basic.tips_tip_V1.hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* tips_tip_V5 - tip_value */;
+        case 1: /* tips_tip_V1 - tip_value */;
             return _toStringCompactBalanceOf(
-                &m->basic.tips_tip_V5.tip_value,
+                &m->basic.tips_tip_V1.tip_value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8918,9 +8953,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9220: /* module 36 call 4 */
         switch (itemIdx) {
-        case 0: /* tips_close_tip_V5 - hash */;
+        case 0: /* tips_close_tip_V1 - hash */;
             return _toStringHash(
-                &m->basic.tips_close_tip_V5.hash,
+                &m->basic.tips_close_tip_V1.hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8928,9 +8963,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9221: /* module 36 call 5 */
         switch (itemIdx) {
-        case 0: /* tips_slash_tip_V5 - hash */;
+        case 0: /* tips_slash_tip_V1 - hash */;
             return _toStringHash(
-                &m->basic.tips_slash_tip_V5.hash,
+                &m->basic.tips_slash_tip_V1.hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8938,14 +8973,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9472: /* module 37 call 0 */
         switch (itemIdx) {
-        case 0: /* electionprovidermultiphase_submit_unsigned_V5 - solution */;
-            return _toStringRawSolution_V5(
-                &m->basic.electionprovidermultiphase_submit_unsigned_V5.solution,
+        case 0: /* electionprovidermultiphase_submit_unsigned_V1 - solution */;
+            return _toStringRawSolution_V1(
+                &m->basic.electionprovidermultiphase_submit_unsigned_V1.solution,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* electionprovidermultiphase_submit_unsigned_V5 - witness */;
-            return _toStringSolutionOrSnapshotSize_V5(
-                &m->basic.electionprovidermultiphase_submit_unsigned_V5.witness,
+        case 1: /* electionprovidermultiphase_submit_unsigned_V1 - witness */;
+            return _toStringSolutionOrSnapshotSize_V1(
+                &m->basic.electionprovidermultiphase_submit_unsigned_V1.witness,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8953,14 +8988,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9728: /* module 38 call 0 */
         switch (itemIdx) {
-        case 0: /* gilt_place_bid_V5 - amount */;
+        case 0: /* gilt_place_bid_V1 - amount */;
             return _toStringCompactBalanceOf(
-                &m->basic.gilt_place_bid_V5.amount,
+                &m->basic.gilt_place_bid_V1.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* gilt_place_bid_V5 - duration */;
+        case 1: /* gilt_place_bid_V1 - duration */;
             return _toStringu32(
-                &m->basic.gilt_place_bid_V5.duration,
+                &m->basic.gilt_place_bid_V1.duration,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8968,14 +9003,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9729: /* module 38 call 1 */
         switch (itemIdx) {
-        case 0: /* gilt_retract_bid_V5 - amount */;
+        case 0: /* gilt_retract_bid_V1 - amount */;
             return _toStringCompactBalanceOf(
-                &m->basic.gilt_retract_bid_V5.amount,
+                &m->basic.gilt_retract_bid_V1.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* gilt_retract_bid_V5 - duration */;
+        case 1: /* gilt_retract_bid_V1 - duration */;
             return _toStringu32(
-                &m->basic.gilt_retract_bid_V5.duration,
+                &m->basic.gilt_retract_bid_V1.duration,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8983,9 +9018,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9730: /* module 38 call 2 */
         switch (itemIdx) {
-        case 0: /* gilt_set_target_V5 - target */;
-            return _toStringCompactPerquintill_V5(
-                &m->basic.gilt_set_target_V5.target,
+        case 0: /* gilt_set_target_V1 - target */;
+            return _toStringCompactPerquintill_V1(
+                &m->basic.gilt_set_target_V1.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8993,9 +9028,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 9731: /* module 38 call 3 */
         switch (itemIdx) {
-        case 0: /* gilt_thaw_V5 - index */;
-            return _toStringCompactActiveIndex_V5(
-                &m->basic.gilt_thaw_V5.index,
+        case 0: /* gilt_thaw_V1 - index */;
+            return _toStringCompactActiveIndex_V1(
+                &m->basic.gilt_thaw_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9003,9 +9038,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13056: /* module 51 call 0 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_validation_upgrade_frequency_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_validation_upgrade_frequency_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_validation_upgrade_frequency_V5.new_,
+                &m->basic.parachainsconfiguration_set_validation_upgrade_frequency_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9013,9 +9048,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13057: /* module 51 call 1 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_validation_upgrade_delay_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_validation_upgrade_delay_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_validation_upgrade_delay_V5.new_,
+                &m->basic.parachainsconfiguration_set_validation_upgrade_delay_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9023,9 +9058,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13058: /* module 51 call 2 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_code_retention_period_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_code_retention_period_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_code_retention_period_V5.new_,
+                &m->basic.parachainsconfiguration_set_code_retention_period_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9033,9 +9068,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13059: /* module 51 call 3 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_code_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_code_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_code_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_code_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9043,9 +9078,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13060: /* module 51 call 4 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_pov_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_pov_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_pov_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_pov_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9053,9 +9088,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13061: /* module 51 call 5 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_head_data_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_head_data_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_head_data_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_head_data_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9063,9 +9098,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13062: /* module 51 call 6 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_parathread_cores_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_parathread_cores_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_parathread_cores_V5.new_,
+                &m->basic.parachainsconfiguration_set_parathread_cores_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9073,9 +9108,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13063: /* module 51 call 7 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_parathread_retries_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_parathread_retries_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_parathread_retries_V5.new_,
+                &m->basic.parachainsconfiguration_set_parathread_retries_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9083,9 +9118,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13064: /* module 51 call 8 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_group_rotation_frequency_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_group_rotation_frequency_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_group_rotation_frequency_V5.new_,
+                &m->basic.parachainsconfiguration_set_group_rotation_frequency_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9093,9 +9128,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13065: /* module 51 call 9 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_chain_availability_period_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_chain_availability_period_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_chain_availability_period_V5.new_,
+                &m->basic.parachainsconfiguration_set_chain_availability_period_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9103,9 +9138,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13066: /* module 51 call 10 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_thread_availability_period_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_thread_availability_period_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_thread_availability_period_V5.new_,
+                &m->basic.parachainsconfiguration_set_thread_availability_period_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9113,9 +9148,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13067: /* module 51 call 11 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_scheduling_lookahead_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_scheduling_lookahead_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_scheduling_lookahead_V5.new_,
+                &m->basic.parachainsconfiguration_set_scheduling_lookahead_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9123,9 +9158,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13068: /* module 51 call 12 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_validators_per_core_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_validators_per_core_V1 - new_ */;
             return _toStringOptionu32(
-                &m->basic.parachainsconfiguration_set_max_validators_per_core_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_validators_per_core_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9133,9 +9168,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13069: /* module 51 call 13 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_validators_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_validators_V1 - new_ */;
             return _toStringOptionu32(
-                &m->basic.parachainsconfiguration_set_max_validators_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_validators_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9143,9 +9178,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13070: /* module 51 call 14 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_dispute_period_V5 - new_ */;
-            return _toStringSessionIndex_V5(
-                &m->basic.parachainsconfiguration_set_dispute_period_V5.new_,
+        case 0: /* parachainsconfiguration_set_dispute_period_V1 - new_ */;
+            return _toStringSessionIndex_V1(
+                &m->basic.parachainsconfiguration_set_dispute_period_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9153,9 +9188,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13071: /* module 51 call 15 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5.new_,
+                &m->basic.parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9163,9 +9198,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13072: /* module 51 call 16 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_dispute_max_spam_slots_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_dispute_max_spam_slots_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_dispute_max_spam_slots_V5.new_,
+                &m->basic.parachainsconfiguration_set_dispute_max_spam_slots_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9173,9 +9208,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13073: /* module 51 call 17 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V1 - new_ */;
             return _toStringBlockNumber(
-                &m->basic.parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5.new_,
+                &m->basic.parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9183,9 +9218,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13074: /* module 51 call 18 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_no_show_slots_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_no_show_slots_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_no_show_slots_V5.new_,
+                &m->basic.parachainsconfiguration_set_no_show_slots_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9193,9 +9228,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13075: /* module 51 call 19 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_n_delay_tranches_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_n_delay_tranches_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_n_delay_tranches_V5.new_,
+                &m->basic.parachainsconfiguration_set_n_delay_tranches_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9203,9 +9238,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13076: /* module 51 call 20 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_zeroth_delay_tranche_width_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_zeroth_delay_tranche_width_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_zeroth_delay_tranche_width_V5.new_,
+                &m->basic.parachainsconfiguration_set_zeroth_delay_tranche_width_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9213,9 +9248,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13077: /* module 51 call 21 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_needed_approvals_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_needed_approvals_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_needed_approvals_V5.new_,
+                &m->basic.parachainsconfiguration_set_needed_approvals_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9223,9 +9258,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13078: /* module 51 call 22 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_relay_vrf_modulo_samples_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_relay_vrf_modulo_samples_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_relay_vrf_modulo_samples_V5.new_,
+                &m->basic.parachainsconfiguration_set_relay_vrf_modulo_samples_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9233,9 +9268,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13079: /* module 51 call 23 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_upward_queue_count_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_upward_queue_count_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_upward_queue_count_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_upward_queue_count_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9243,9 +9278,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13080: /* module 51 call 24 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_upward_queue_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_upward_queue_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_upward_queue_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_upward_queue_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9253,9 +9288,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13081: /* module 51 call 25 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_downward_message_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_downward_message_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_downward_message_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_downward_message_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9263,9 +9298,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13082: /* module 51 call 26 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5 - new_ */;
-            return _toStringWeight_V5(
-                &m->basic.parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5.new_,
+        case 0: /* parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V1 - new_ */;
+            return _toStringWeight_V1(
+                &m->basic.parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9273,9 +9308,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13083: /* module 51 call 27 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_upward_message_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_upward_message_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_upward_message_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_upward_message_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9283,9 +9318,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13084: /* module 51 call 28 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_max_upward_message_num_per_candidate_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_max_upward_message_num_per_candidate_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_max_upward_message_num_per_candidate_V5.new_,
+                &m->basic.parachainsconfiguration_set_max_upward_message_num_per_candidate_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9293,9 +9328,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13085: /* module 51 call 29 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_open_request_ttl_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_open_request_ttl_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_open_request_ttl_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_open_request_ttl_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9303,9 +9338,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13086: /* module 51 call 30 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_sender_deposit_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_sender_deposit_V1 - new_ */;
             return _toStringBalance(
-                &m->basic.parachainsconfiguration_set_hrmp_sender_deposit_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_sender_deposit_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9313,9 +9348,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13087: /* module 51 call 31 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_recipient_deposit_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_recipient_deposit_V1 - new_ */;
             return _toStringBalance(
-                &m->basic.parachainsconfiguration_set_hrmp_recipient_deposit_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_recipient_deposit_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9323,9 +9358,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13088: /* module 51 call 32 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_channel_max_capacity_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_channel_max_capacity_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_channel_max_capacity_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_channel_max_capacity_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9333,9 +9368,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13089: /* module 51 call 33 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_channel_max_total_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_channel_max_total_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_channel_max_total_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_channel_max_total_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9343,9 +9378,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13090: /* module 51 call 34 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9353,9 +9388,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13091: /* module 51 call 35 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9363,9 +9398,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13092: /* module 51 call 36 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_channel_max_message_size_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_channel_max_message_size_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_channel_max_message_size_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_channel_max_message_size_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9373,9 +9408,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13093: /* module 51 call 37 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9383,9 +9418,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13094: /* module 51 call 38 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9393,9 +9428,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13095: /* module 51 call 39 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V1 - new_ */;
             return _toStringu32(
-                &m->basic.parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5.new_,
+                &m->basic.parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V1.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9403,9 +9438,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13824: /* module 54 call 0 */
         switch (itemIdx) {
-        case 0: /* parasinherent_enter_V5 - data */;
-            return _toStringParachainsInherentData_V5(
-                &m->basic.parasinherent_enter_V5.data,
+        case 0: /* parasinherent_enter_V1 - data */;
+            return _toStringParachainsInherentData_V1(
+                &m->basic.parasinherent_enter_V1.data,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9413,14 +9448,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 14336: /* module 56 call 0 */
         switch (itemIdx) {
-        case 0: /* paras_force_set_current_code_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.paras_force_set_current_code_V5.para,
+        case 0: /* paras_force_set_current_code_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.paras_force_set_current_code_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* paras_force_set_current_code_V5 - new_code */;
-            return _toStringValidationCode_V5(
-                &m->basic.paras_force_set_current_code_V5.new_code,
+        case 1: /* paras_force_set_current_code_V1 - new_code */;
+            return _toStringValidationCode_V1(
+                &m->basic.paras_force_set_current_code_V1.new_code,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9428,14 +9463,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 14337: /* module 56 call 1 */
         switch (itemIdx) {
-        case 0: /* paras_force_set_current_head_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.paras_force_set_current_head_V5.para,
+        case 0: /* paras_force_set_current_head_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.paras_force_set_current_head_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* paras_force_set_current_head_V5 - new_head */;
-            return _toStringHeadData_V5(
-                &m->basic.paras_force_set_current_head_V5.new_head,
+        case 1: /* paras_force_set_current_head_V1 - new_head */;
+            return _toStringHeadData_V1(
+                &m->basic.paras_force_set_current_head_V1.new_head,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9443,19 +9478,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 14338: /* module 56 call 2 */
         switch (itemIdx) {
-        case 0: /* paras_force_schedule_code_upgrade_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.paras_force_schedule_code_upgrade_V5.para,
+        case 0: /* paras_force_schedule_code_upgrade_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.paras_force_schedule_code_upgrade_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* paras_force_schedule_code_upgrade_V5 - new_code */;
-            return _toStringValidationCode_V5(
-                &m->basic.paras_force_schedule_code_upgrade_V5.new_code,
+        case 1: /* paras_force_schedule_code_upgrade_V1 - new_code */;
+            return _toStringValidationCode_V1(
+                &m->basic.paras_force_schedule_code_upgrade_V1.new_code,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* paras_force_schedule_code_upgrade_V5 - expected_at */;
+        case 2: /* paras_force_schedule_code_upgrade_V1 - expected_at */;
             return _toStringBlockNumber(
-                &m->basic.paras_force_schedule_code_upgrade_V5.expected_at,
+                &m->basic.paras_force_schedule_code_upgrade_V1.expected_at,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9463,14 +9498,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 14339: /* module 56 call 3 */
         switch (itemIdx) {
-        case 0: /* paras_force_note_new_head_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.paras_force_note_new_head_V5.para,
+        case 0: /* paras_force_note_new_head_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.paras_force_note_new_head_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* paras_force_note_new_head_V5 - new_head */;
-            return _toStringHeadData_V5(
-                &m->basic.paras_force_note_new_head_V5.new_head,
+        case 1: /* paras_force_note_new_head_V1 - new_head */;
+            return _toStringHeadData_V1(
+                &m->basic.paras_force_note_new_head_V1.new_head,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9478,9 +9513,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 14340: /* module 56 call 4 */
         switch (itemIdx) {
-        case 0: /* paras_force_queue_action_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.paras_force_queue_action_V5.para,
+        case 0: /* paras_force_queue_action_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.paras_force_queue_action_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9488,9 +9523,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 14592: /* module 57 call 0 */
         switch (itemIdx) {
-        case 0: /* parasinitializer_force_approve_V5 - up_to */;
+        case 0: /* parasinitializer_force_approve_V1 - up_to */;
             return _toStringBlockNumber(
-                &m->basic.parasinitializer_force_approve_V5.up_to,
+                &m->basic.parasinitializer_force_approve_V1.up_to,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9498,19 +9533,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 15360: /* module 60 call 0 */
         switch (itemIdx) {
-        case 0: /* parashrmp_hrmp_init_open_channel_V5 - recipient */;
-            return _toStringParaId_V5(
-                &m->basic.parashrmp_hrmp_init_open_channel_V5.recipient,
+        case 0: /* parashrmp_hrmp_init_open_channel_V1 - recipient */;
+            return _toStringParaId_V1(
+                &m->basic.parashrmp_hrmp_init_open_channel_V1.recipient,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* parashrmp_hrmp_init_open_channel_V5 - proposed_max_capacity */;
+        case 1: /* parashrmp_hrmp_init_open_channel_V1 - proposed_max_capacity */;
             return _toStringu32(
-                &m->basic.parashrmp_hrmp_init_open_channel_V5.proposed_max_capacity,
+                &m->basic.parashrmp_hrmp_init_open_channel_V1.proposed_max_capacity,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* parashrmp_hrmp_init_open_channel_V5 - proposed_max_message_size */;
+        case 2: /* parashrmp_hrmp_init_open_channel_V1 - proposed_max_message_size */;
             return _toStringu32(
-                &m->basic.parashrmp_hrmp_init_open_channel_V5.proposed_max_message_size,
+                &m->basic.parashrmp_hrmp_init_open_channel_V1.proposed_max_message_size,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9518,9 +9553,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 15361: /* module 60 call 1 */
         switch (itemIdx) {
-        case 0: /* parashrmp_hrmp_accept_open_channel_V5 - sender */;
-            return _toStringParaId_V5(
-                &m->basic.parashrmp_hrmp_accept_open_channel_V5.sender,
+        case 0: /* parashrmp_hrmp_accept_open_channel_V1 - sender */;
+            return _toStringParaId_V1(
+                &m->basic.parashrmp_hrmp_accept_open_channel_V1.sender,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9528,9 +9563,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 15362: /* module 60 call 2 */
         switch (itemIdx) {
-        case 0: /* parashrmp_hrmp_close_channel_V5 - channel_id */;
-            return _toStringHrmpChannelId_V5(
-                &m->basic.parashrmp_hrmp_close_channel_V5.channel_id,
+        case 0: /* parashrmp_hrmp_close_channel_V1 - channel_id */;
+            return _toStringHrmpChannelId_V1(
+                &m->basic.parashrmp_hrmp_close_channel_V1.channel_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9538,9 +9573,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 15363: /* module 60 call 3 */
         switch (itemIdx) {
-        case 0: /* parashrmp_force_clean_hrmp_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.parashrmp_force_clean_hrmp_V5.para,
+        case 0: /* parashrmp_force_clean_hrmp_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.parashrmp_force_clean_hrmp_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9558,19 +9593,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 17920: /* module 70 call 0 */
         switch (itemIdx) {
-        case 0: /* registrar_register_V5 - id */;
-            return _toStringParaId_V5(
-                &m->basic.registrar_register_V5.id,
+        case 0: /* registrar_register_V1 - id */;
+            return _toStringParaId_V1(
+                &m->basic.registrar_register_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* registrar_register_V5 - genesis_head */;
-            return _toStringHeadData_V5(
-                &m->basic.registrar_register_V5.genesis_head,
+        case 1: /* registrar_register_V1 - genesis_head */;
+            return _toStringHeadData_V1(
+                &m->basic.registrar_register_V1.genesis_head,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* registrar_register_V5 - validation_code */;
-            return _toStringValidationCode_V5(
-                &m->basic.registrar_register_V5.validation_code,
+        case 2: /* registrar_register_V1 - validation_code */;
+            return _toStringValidationCode_V1(
+                &m->basic.registrar_register_V1.validation_code,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9578,29 +9613,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 17921: /* module 70 call 1 */
         switch (itemIdx) {
-        case 0: /* registrar_force_register_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.registrar_force_register_V5.who,
+        case 0: /* registrar_force_register_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.registrar_force_register_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* registrar_force_register_V5 - deposit */;
+        case 1: /* registrar_force_register_V1 - deposit */;
             return _toStringBalanceOf(
-                &m->basic.registrar_force_register_V5.deposit,
+                &m->basic.registrar_force_register_V1.deposit,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* registrar_force_register_V5 - id */;
-            return _toStringParaId_V5(
-                &m->basic.registrar_force_register_V5.id,
+        case 2: /* registrar_force_register_V1 - id */;
+            return _toStringParaId_V1(
+                &m->basic.registrar_force_register_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* registrar_force_register_V5 - genesis_head */;
-            return _toStringHeadData_V5(
-                &m->basic.registrar_force_register_V5.genesis_head,
+        case 3: /* registrar_force_register_V1 - genesis_head */;
+            return _toStringHeadData_V1(
+                &m->basic.registrar_force_register_V1.genesis_head,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* registrar_force_register_V5 - validation_code */;
-            return _toStringValidationCode_V5(
-                &m->basic.registrar_force_register_V5.validation_code,
+        case 4: /* registrar_force_register_V1 - validation_code */;
+            return _toStringValidationCode_V1(
+                &m->basic.registrar_force_register_V1.validation_code,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9608,9 +9643,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 17922: /* module 70 call 2 */
         switch (itemIdx) {
-        case 0: /* registrar_deregister_V5 - id */;
-            return _toStringParaId_V5(
-                &m->basic.registrar_deregister_V5.id,
+        case 0: /* registrar_deregister_V1 - id */;
+            return _toStringParaId_V1(
+                &m->basic.registrar_deregister_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9618,14 +9653,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 17923: /* module 70 call 3 */
         switch (itemIdx) {
-        case 0: /* registrar_swap_V5 - id */;
-            return _toStringParaId_V5(
-                &m->basic.registrar_swap_V5.id,
+        case 0: /* registrar_swap_V1 - id */;
+            return _toStringParaId_V1(
+                &m->basic.registrar_swap_V1.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* registrar_swap_V5 - other */;
-            return _toStringParaId_V5(
-                &m->basic.registrar_swap_V5.other,
+        case 1: /* registrar_swap_V1 - other */;
+            return _toStringParaId_V1(
+                &m->basic.registrar_swap_V1.other,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9633,9 +9668,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 17924: /* module 70 call 4 */
         switch (itemIdx) {
-        case 0: /* registrar_force_remove_lock_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.registrar_force_remove_lock_V5.para,
+        case 0: /* registrar_force_remove_lock_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.registrar_force_remove_lock_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9648,29 +9683,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18176: /* module 71 call 0 */
         switch (itemIdx) {
-        case 0: /* slots_force_lease_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.slots_force_lease_V5.para,
+        case 0: /* slots_force_lease_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.slots_force_lease_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* slots_force_lease_V5 - leaser */;
-            return _toStringAccountId_V5(
-                &m->basic.slots_force_lease_V5.leaser,
+        case 1: /* slots_force_lease_V1 - leaser */;
+            return _toStringAccountId_V1(
+                &m->basic.slots_force_lease_V1.leaser,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* slots_force_lease_V5 - amount */;
+        case 2: /* slots_force_lease_V1 - amount */;
             return _toStringBalanceOf(
-                &m->basic.slots_force_lease_V5.amount,
+                &m->basic.slots_force_lease_V1.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* slots_force_lease_V5 - period_begin */;
-            return _toStringLeasePeriodOf_V5(
-                &m->basic.slots_force_lease_V5.period_begin,
+        case 3: /* slots_force_lease_V1 - period_begin */;
+            return _toStringLeasePeriodOf_V1(
+                &m->basic.slots_force_lease_V1.period_begin,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* slots_force_lease_V5 - period_count */;
-            return _toStringLeasePeriodOf_V5(
-                &m->basic.slots_force_lease_V5.period_count,
+        case 4: /* slots_force_lease_V1 - period_count */;
+            return _toStringLeasePeriodOf_V1(
+                &m->basic.slots_force_lease_V1.period_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9678,9 +9713,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18177: /* module 71 call 1 */
         switch (itemIdx) {
-        case 0: /* slots_clear_all_leases_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.slots_clear_all_leases_V5.para,
+        case 0: /* slots_clear_all_leases_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.slots_clear_all_leases_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9688,9 +9723,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18178: /* module 71 call 2 */
         switch (itemIdx) {
-        case 0: /* slots_trigger_onboard_V5 - para */;
-            return _toStringParaId_V5(
-                &m->basic.slots_trigger_onboard_V5.para,
+        case 0: /* slots_trigger_onboard_V1 - para */;
+            return _toStringParaId_V1(
+                &m->basic.slots_trigger_onboard_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9698,14 +9733,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18432: /* module 72 call 0 */
         switch (itemIdx) {
-        case 0: /* auctions_new_auction_V5 - duration */;
+        case 0: /* auctions_new_auction_V1 - duration */;
             return _toStringCompactBlockNumber(
-                &m->basic.auctions_new_auction_V5.duration,
+                &m->basic.auctions_new_auction_V1.duration,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* auctions_new_auction_V5 - lease_period_index */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.auctions_new_auction_V5.lease_period_index,
+        case 1: /* auctions_new_auction_V1 - lease_period_index */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.auctions_new_auction_V1.lease_period_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9713,29 +9748,29 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18433: /* module 72 call 1 */
         switch (itemIdx) {
-        case 0: /* auctions_bid_V5 - para */;
-            return _toStringCompactParaId_V5(
-                &m->basic.auctions_bid_V5.para,
+        case 0: /* auctions_bid_V1 - para */;
+            return _toStringCompactParaId_V1(
+                &m->basic.auctions_bid_V1.para,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* auctions_bid_V5 - auction_index */;
-            return _toStringCompactAuctionIndex_V5(
-                &m->basic.auctions_bid_V5.auction_index,
+        case 1: /* auctions_bid_V1 - auction_index */;
+            return _toStringCompactAuctionIndex_V1(
+                &m->basic.auctions_bid_V1.auction_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* auctions_bid_V5 - first_slot */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.auctions_bid_V5.first_slot,
+        case 2: /* auctions_bid_V1 - first_slot */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.auctions_bid_V1.first_slot,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* auctions_bid_V5 - last_slot */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.auctions_bid_V5.last_slot,
+        case 3: /* auctions_bid_V1 - last_slot */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.auctions_bid_V1.last_slot,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* auctions_bid_V5 - amount */;
+        case 4: /* auctions_bid_V1 - amount */;
             return _toStringCompactBalanceOf(
-                &m->basic.auctions_bid_V5.amount,
+                &m->basic.auctions_bid_V1.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9748,34 +9783,34 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18688: /* module 73 call 0 */
         switch (itemIdx) {
-        case 0: /* crowdloan_create_V5 - index */;
-            return _toStringCompactParaId_V5(
-                &m->basic.crowdloan_create_V5.index,
+        case 0: /* crowdloan_create_V1 - index */;
+            return _toStringCompactParaId_V1(
+                &m->basic.crowdloan_create_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* crowdloan_create_V5 - cap */;
+        case 1: /* crowdloan_create_V1 - cap */;
             return _toStringCompactBalanceOf(
-                &m->basic.crowdloan_create_V5.cap,
+                &m->basic.crowdloan_create_V1.cap,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* crowdloan_create_V5 - first_period */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.crowdloan_create_V5.first_period,
+        case 2: /* crowdloan_create_V1 - first_period */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.crowdloan_create_V1.first_period,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* crowdloan_create_V5 - last_period */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.crowdloan_create_V5.last_period,
+        case 3: /* crowdloan_create_V1 - last_period */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.crowdloan_create_V1.last_period,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* crowdloan_create_V5 - end */;
+        case 4: /* crowdloan_create_V1 - end */;
             return _toStringCompactBlockNumber(
-                &m->basic.crowdloan_create_V5.end,
+                &m->basic.crowdloan_create_V1.end,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 5: /* crowdloan_create_V5 - verifier */;
-            return _toStringOptionMultiSigner_V5(
-                &m->basic.crowdloan_create_V5.verifier,
+        case 5: /* crowdloan_create_V1 - verifier */;
+            return _toStringOptionMultiSigner_V1(
+                &m->basic.crowdloan_create_V1.verifier,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9783,19 +9818,19 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18689: /* module 73 call 1 */
         switch (itemIdx) {
-        case 0: /* crowdloan_contribute_V5 - index */;
-            return _toStringCompactParaId_V5(
-                &m->basic.crowdloan_contribute_V5.index,
+        case 0: /* crowdloan_contribute_V1 - index */;
+            return _toStringCompactParaId_V1(
+                &m->basic.crowdloan_contribute_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* crowdloan_contribute_V5 - value */;
+        case 1: /* crowdloan_contribute_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.crowdloan_contribute_V5.value,
+                &m->basic.crowdloan_contribute_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* crowdloan_contribute_V5 - signature */;
-            return _toStringOptionMultiSignature_V5(
-                &m->basic.crowdloan_contribute_V5.signature,
+        case 2: /* crowdloan_contribute_V1 - signature */;
+            return _toStringOptionMultiSignature_V1(
+                &m->basic.crowdloan_contribute_V1.signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9803,14 +9838,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18690: /* module 73 call 2 */
         switch (itemIdx) {
-        case 0: /* crowdloan_withdraw_V5 - who */;
-            return _toStringAccountId_V5(
-                &m->basic.crowdloan_withdraw_V5.who,
+        case 0: /* crowdloan_withdraw_V1 - who */;
+            return _toStringAccountId_V1(
+                &m->basic.crowdloan_withdraw_V1.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* crowdloan_withdraw_V5 - index */;
-            return _toStringCompactParaId_V5(
-                &m->basic.crowdloan_withdraw_V5.index,
+        case 1: /* crowdloan_withdraw_V1 - index */;
+            return _toStringCompactParaId_V1(
+                &m->basic.crowdloan_withdraw_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9818,9 +9853,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18691: /* module 73 call 3 */
         switch (itemIdx) {
-        case 0: /* crowdloan_refund_V5 - index */;
-            return _toStringCompactParaId_V5(
-                &m->basic.crowdloan_refund_V5.index,
+        case 0: /* crowdloan_refund_V1 - index */;
+            return _toStringCompactParaId_V1(
+                &m->basic.crowdloan_refund_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9828,9 +9863,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18692: /* module 73 call 4 */
         switch (itemIdx) {
-        case 0: /* crowdloan_dissolve_V5 - index */;
-            return _toStringCompactParaId_V5(
-                &m->basic.crowdloan_dissolve_V5.index,
+        case 0: /* crowdloan_dissolve_V1 - index */;
+            return _toStringCompactParaId_V1(
+                &m->basic.crowdloan_dissolve_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9838,34 +9873,34 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18693: /* module 73 call 5 */
         switch (itemIdx) {
-        case 0: /* crowdloan_edit_V5 - index */;
-            return _toStringCompactParaId_V5(
-                &m->basic.crowdloan_edit_V5.index,
+        case 0: /* crowdloan_edit_V1 - index */;
+            return _toStringCompactParaId_V1(
+                &m->basic.crowdloan_edit_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* crowdloan_edit_V5 - cap */;
+        case 1: /* crowdloan_edit_V1 - cap */;
             return _toStringCompactBalanceOf(
-                &m->basic.crowdloan_edit_V5.cap,
+                &m->basic.crowdloan_edit_V1.cap,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* crowdloan_edit_V5 - first_period */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.crowdloan_edit_V5.first_period,
+        case 2: /* crowdloan_edit_V1 - first_period */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.crowdloan_edit_V1.first_period,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* crowdloan_edit_V5 - last_period */;
-            return _toStringCompactLeasePeriodOf_V5(
-                &m->basic.crowdloan_edit_V5.last_period,
+        case 3: /* crowdloan_edit_V1 - last_period */;
+            return _toStringCompactLeasePeriodOf_V1(
+                &m->basic.crowdloan_edit_V1.last_period,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 4: /* crowdloan_edit_V5 - end */;
+        case 4: /* crowdloan_edit_V1 - end */;
             return _toStringCompactBlockNumber(
-                &m->basic.crowdloan_edit_V5.end,
+                &m->basic.crowdloan_edit_V1.end,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 5: /* crowdloan_edit_V5 - verifier */;
-            return _toStringOptionMultiSigner_V5(
-                &m->basic.crowdloan_edit_V5.verifier,
+        case 5: /* crowdloan_edit_V1 - verifier */;
+            return _toStringOptionMultiSigner_V1(
+                &m->basic.crowdloan_edit_V1.verifier,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9873,14 +9908,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18694: /* module 73 call 6 */
         switch (itemIdx) {
-        case 0: /* crowdloan_add_memo_V5 - index */;
-            return _toStringParaId_V5(
-                &m->basic.crowdloan_add_memo_V5.index,
+        case 0: /* crowdloan_add_memo_V1 - index */;
+            return _toStringParaId_V1(
+                &m->basic.crowdloan_add_memo_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* crowdloan_add_memo_V5 - memo */;
+        case 1: /* crowdloan_add_memo_V1 - memo */;
             return _toStringBytes(
-                &m->basic.crowdloan_add_memo_V5.memo,
+                &m->basic.crowdloan_add_memo_V1.memo,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9888,9 +9923,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 18695: /* module 73 call 7 */
         switch (itemIdx) {
-        case 0: /* crowdloan_poke_V5 - index */;
-            return _toStringParaId_V5(
-                &m->basic.crowdloan_poke_V5.index,
+        case 0: /* crowdloan_poke_V1 - index */;
+            return _toStringParaId_V1(
+                &m->basic.crowdloan_poke_V1.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9898,14 +9933,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 25344: /* module 99 call 0 */
         switch (itemIdx) {
-        case 0: /* xcmpallet_send_V5 - dest */;
-            return _toStringMultiLocation_V5(
-                &m->basic.xcmpallet_send_V5.dest,
+        case 0: /* xcmpallet_send_V1 - dest */;
+            return _toStringMultiLocation_V1(
+                &m->basic.xcmpallet_send_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* xcmpallet_send_V5 - message */;
-            return _toStringXcm_V5(
-                &m->basic.xcmpallet_send_V5.message,
+        case 1: /* xcmpallet_send_V1 - message */;
+            return _toStringXcm_V1(
+                &m->basic.xcmpallet_send_V1.message,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9913,24 +9948,24 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 25345: /* module 99 call 1 */
         switch (itemIdx) {
-        case 0: /* xcmpallet_teleport_assets_V5 - dest */;
-            return _toStringMultiLocation_V5(
-                &m->basic.xcmpallet_teleport_assets_V5.dest,
+        case 0: /* xcmpallet_teleport_assets_V1 - dest */;
+            return _toStringMultiLocation_V1(
+                &m->basic.xcmpallet_teleport_assets_V1.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* xcmpallet_teleport_assets_V5 - beneficiary */;
-            return _toStringMultiLocation_V5(
-                &m->basic.xcmpallet_teleport_assets_V5.beneficiary,
+        case 1: /* xcmpallet_teleport_assets_V1 - beneficiary */;
+            return _toStringMultiLocation_V1(
+                &m->basic.xcmpallet_teleport_assets_V1.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* xcmpallet_teleport_assets_V5 - assets */;
-            return _toStringVecMultiAsset_V5(
-                &m->basic.xcmpallet_teleport_assets_V5.assets,
+        case 2: /* xcmpallet_teleport_assets_V1 - assets */;
+            return _toStringVecMultiAsset_V1(
+                &m->basic.xcmpallet_teleport_assets_V1.assets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* xcmpallet_teleport_assets_V5 - dest_weight */;
-            return _toStringWeight_V5(
-                &m->basic.xcmpallet_teleport_assets_V5.dest_weight,
+        case 3: /* xcmpallet_teleport_assets_V1 - dest_weight */;
+            return _toStringWeight_V1(
+                &m->basic.xcmpallet_teleport_assets_V1.dest_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9938,14 +9973,14 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 25346: /* module 99 call 2 */
         switch (itemIdx) {
-        case 0: /* xcmpallet_execute_V5 - message */;
-            return _toStringXcm_V5(
-                &m->basic.xcmpallet_execute_V5.message,
+        case 0: /* xcmpallet_execute_V1 - message */;
+            return _toStringXcm_V1(
+                &m->basic.xcmpallet_execute_V1.message,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* xcmpallet_execute_V5 - max_weight */;
-            return _toStringWeight_V5(
-                &m->basic.xcmpallet_execute_V5.max_weight,
+        case 1: /* xcmpallet_execute_V1 - max_weight */;
+            return _toStringWeight_V1(
+                &m->basic.xcmpallet_execute_V1.max_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9959,7 +9994,7 @@ parser_error_t _getMethod_ItemValue_V5(
     return parser_ok;
 }
 
-bool _getMethod_ItemIsExpert_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
+bool _getMethod_ItemIsExpert_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
@@ -9991,7 +10026,7 @@ bool _getMethod_ItemIsExpert_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t item
     }
 }
 
-bool _getMethod_IsNestingSupported_V5(uint8_t moduleIdx, uint8_t callIdx)
+bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
@@ -10152,6 +10187,7 @@ bool _getMethod_IsNestingSupported_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 7687: // Proxy:Remove announcement
     case 7688: // Proxy:Reject announcement
     case 7689: // Proxy:Proxy announced
+    case 8448: // EQLockdrop:Lock
     case 8960: // Bounties:Propose bounty
     case 8961: // Bounties:Approve bounty
     case 8962: // Bounties:Propose curator

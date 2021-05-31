@@ -62,20 +62,20 @@ $(info ************ FULL PARSER ENABLED ************)
 endif
 
 ifndef COIN
-COIN=KSM
+COIN=EQ
 endif
 
 include $(CURDIR)/Makefile.version
 
 $(info COIN  = [$(COIN)])
 
-ifeq ($(COIN),KSM)
+ifeq ($(COIN),EQ)
 # Main app configuration
 DEFINES += APP_STANDARD
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 DEFINES += SUBSTRATE_PARSER_FULL
 endif
-APPNAME = "Kusama"
+APPNAME = "Equilibrium"
 APPPATH = "44'/434'" --path "44'/354'"
 
 else ifeq ($(COIN),KSM_XL)
@@ -240,7 +240,7 @@ dep/%.d: %.c Makefile
 .PHONY: listvariants
 listvariants:
 ifeq ($(TARGET_NAME),TARGET_NANOS)
-	@echo VARIANTS COIN KSM KSM_XL
+	@echo VARIANTS COIN EQ
 else ifeq ($(TARGET_NAME),TARGET_NANOX)
-	@echo VARIANTS COIN KSM
+	@echo VARIANTS COIN EQ
 endif
