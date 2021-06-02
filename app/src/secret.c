@@ -31,7 +31,7 @@ void secret_accept() {
 
 static char *secret_message =
         "USE AT YOUR OWN RISK!! "
-        "You are about to enable the KSM recovery mode."
+        "You are about to enable the EQ recovery mode."
         "If you are not sure why you are here, reject or unplug your device immediately."
         "Activating this mode will temporarily allow you to sign transactions using Polkadot keys";
 
