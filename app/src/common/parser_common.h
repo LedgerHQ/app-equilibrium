@@ -52,6 +52,8 @@ typedef enum {
     parser_print_not_supported,
     parser_tx_nesting_limit_reached,
     parser_tx_call_vec_too_large,
+    // Equilibrium specific
+    parser_currency_not_supported
 } parser_error_t;
 
 typedef struct {

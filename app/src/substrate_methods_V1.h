@@ -35,6 +35,7 @@ extern "C" {
 #define PD_CALL_STAKING_V1      6
 #define PD_CALL_OFFENCES_V1     7
 #define PD_CALL_SESSION_V1      8
+#define PD_CALL_EQBALANCES_V1   9 // EQ Pallet
 #define PD_CALL_GRANDPA_V1      10
 #define PD_CALL_IMONLINE_V1     11
 #define PD_CALL_AUTHORITYDISCOVERY_V1   12
@@ -45,7 +46,7 @@ extern "C" {
 #define PD_CALL_TECHNICALMEMBERSHIP_V1  17
 #define PD_CALL_TREASURY_V1     18
 #define PD_CALL_CLAIMS_V1       19
-#define PD_CALL_EQVESTING_V1    22 // EQ Pallete
+#define PD_CALL_EQVESTING_V1    22 // EQ Pallet
 #define PD_CALL_UTILITY_V1      24
 #define PD_CALL_IDENTITY_V1     25
 #define PD_CALL_SOCIETY_V1      26
@@ -54,7 +55,7 @@ extern "C" {
 #define PD_CALL_SCHEDULER_V1    29
 #define PD_CALL_PROXY_V1        30
 #define PD_CALL_MULTISIG_V1     31
-#define PD_CALL_EQLOCKDROP_V1   33 // EQ Pallete
+#define PD_CALL_EQLOCKDROP_V1   33 // EQ Pallet
 
 #define PD_CALL_BOUNTIES_V1                     35
 #define PD_CALL_TIPS_V1                         36
@@ -154,6 +155,7 @@ typedef struct {
 #define PD_CALL_EQBALANCES_TRANSFER_V1 0
 typedef struct {
     // TODO: add currency
+    eq_currency currency;
     pd_Address_t to;
     pd_Balance_t amount;
 } pd_eqbalances_transfer_V1_t;
@@ -176,7 +178,7 @@ typedef struct {
 
 #define PD_CALL_EQLOCKDROP_SET_LOCK_START_V1 3
 typedef struct {
-    pd_CompactMoment_V1_t lock_start;  // TODO: check
+    pd_CompactMoment_V1_t lock_start;
 } pd_eqlockdrop_set_lock_start_V1_t;
 
 #define PD_CALL_EQLOCKDROP_CLEAR_LOCK_START_V1 4
@@ -1557,6 +1559,7 @@ typedef union {
     pd_eqlockdrop_clear_lock_start_V1_t eqlockdrop_clear_lock_start_V1;
     pd_eqlockdrop_set_auto_unlock_V1_t eqlockdrop_set_auto_unlock_V1;
     pd_eqvesting_vest_V1_t eqvesting_vest_V1;
+    pd_eqbalances_transfer_V1_t eqbalances_transfer_V1;
 
 #ifdef SUBSTRATE_PARSER_FULL
     pd_system_remark_with_event_V1_t system_remark_with_event_V1;

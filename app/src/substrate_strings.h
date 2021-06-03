@@ -23,6 +23,7 @@ extern "C" {
 /// Equilibrium part
 static const char* STR_MO_EQLOCKDROP = "Eqlockdrop";
 static const char* STR_MO_EQVESTING = "Eqvesting";
+static const char* STR_MO_EQBALANCES = "Eqbalances";
 
 static const char* STR_MO_SYSTEM = "System";
 static const char* STR_MO_BABE = "Babe";
@@ -78,6 +79,7 @@ static const char* STR_MO_XCMPALLET = "Xcmpallet";
 static const char* STR_ME_EQLOCK = "Lock";
 static const char* STR_ME_EQUNLOCK_EXTERNAL = "Unlock external";
 static const char* STR_ME_EQVEST = "Vest";
+static const char* STR_ME_EQTRANSFER = "Transfer";
 
 static const char* STR_ME_FILL_BLOCK = "Fill block";
 static const char* STR_ME_REMARK = "Remark";
@@ -505,7 +507,7 @@ static const char* STR_IT_memo = "Memo";
 static const char* STR_IT_message = "Message";
 static const char* STR_IT_assets = "Assets";
 static const char* STR_IT_dest_weight = "Dest weight";
-
+static const char* STR_IT_currency = "Currency";
 #ifdef __cplusplus
 }
 #endif

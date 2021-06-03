@@ -55,6 +55,7 @@ enum EqCurrency {
     Eos = 5,
     Dot = 6,
     Crv = 7,
+    CURRENCY_COUNT
 };
 
 typedef enum EqCurrency eq_currency;
