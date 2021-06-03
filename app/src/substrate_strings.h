@@ -20,7 +20,10 @@ extern "C" {
 #endif
 
 // Modules names
+/// Equilibrium part
 static const char* STR_MO_EQLOCKDROP = "Eqlockdrop";
+static const char* STR_MO_EQVESTING = "Eqvesting";
+
 static const char* STR_MO_SYSTEM = "System";
 static const char* STR_MO_BABE = "Babe";
 static const char* STR_MO_TIMESTAMP = "Timestamp";
@@ -71,7 +74,11 @@ static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
 
 // Methods names
-static const char* STR_ME_LOCK = "Lock";
+/// Equilibrium part
+static const char* STR_ME_EQLOCK = "Lock";
+static const char* STR_ME_EQUNLOCK_EXTERNAL = "Unlock external";
+static const char* STR_ME_EQVEST = "Vest";
+
 static const char* STR_ME_FILL_BLOCK = "Fill block";
 static const char* STR_ME_REMARK = "Remark";
 static const char* STR_ME_SET_HEAP_PAGES = "Set heap pages";

@@ -45,6 +45,20 @@ typedef uint64_t pd_BlockNumber_t;
             return err;                 \
     }
 
+// TODO: change this after release with assets
+enum EqCurrency {
+    Unknown = 0,
+    Usd = 1,
+    Eq = 2,
+    Eth = 3,
+    Btc = 4,
+    Eos = 5,
+    Dot = 6,
+    Crv = 7,
+};
+
+typedef enum EqCurrency eq_currency;
+
 typedef struct {
     uint8_t moduleIdx;
     uint8_t idx;

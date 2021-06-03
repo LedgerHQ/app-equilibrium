@@ -26,54 +26,56 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-#define PD_CALL_SYSTEM_V1 0
-#define PD_CALL_BABE_V1 1
-#define PD_CALL_TIMESTAMP_V1 2
-#define PD_CALL_INDICES_V1 3
-#define PD_CALL_BALANCES_V1 4
-#define PD_CALL_AUTHORSHIP_V1 5
-#define PD_CALL_STAKING_V1 6
-#define PD_CALL_OFFENCES_V1 7
-#define PD_CALL_SESSION_V1 8
-#define PD_CALL_GRANDPA_V1 10
-#define PD_CALL_IMONLINE_V1 11
-#define PD_CALL_AUTHORITYDISCOVERY_V1 12
-#define PD_CALL_DEMOCRACY_V1 13
-#define PD_CALL_COUNCIL_V1 14
-#define PD_CALL_TECHNICALCOMMITTEE_V1 15
-#define PD_CALL_PHRAGMENELECTION_V1 16
-#define PD_CALL_TECHNICALMEMBERSHIP_V1 17
-#define PD_CALL_TREASURY_V1 18
-#define PD_CALL_CLAIMS_V1 19
-#define PD_CALL_UTILITY_V1 24
-#define PD_CALL_IDENTITY_V1 25
-#define PD_CALL_SOCIETY_V1 26
-#define PD_CALL_RECOVERY_V1 27
-#define PD_CALL_VESTING_V1 28
-#define PD_CALL_SCHEDULER_V1 29
-#define PD_CALL_PROXY_V1 30
-#define PD_CALL_MULTISIG_V1 31
-#define PD_CALL_EQLOCKDROP_V1 33 // EQ Pallete
-#define PD_CALL_BOUNTIES_V1 35
-#define PD_CALL_TIPS_V1 36
-#define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V1 37
-#define PD_CALL_GILT_V1 38
-#define PD_CALL_PARACHAINSCONFIGURATION_V1 51
-#define PD_CALL_PARASSHARED_V1 52
-#define PD_CALL_PARASINCLUSION_V1 53
-#define PD_CALL_PARASINHERENT_V1 54
-#define PD_CALL_PARASSCHEDULER_V1 55
-#define PD_CALL_PARAS_V1 56
+#define PD_CALL_SYSTEM_V1       0
+#define PD_CALL_BABE_V1         1
+#define PD_CALL_TIMESTAMP_V1    2
+#define PD_CALL_INDICES_V1      3
+#define PD_CALL_BALANCES_V1     4
+#define PD_CALL_AUTHORSHIP_V1   5
+#define PD_CALL_STAKING_V1      6
+#define PD_CALL_OFFENCES_V1     7
+#define PD_CALL_SESSION_V1      8
+#define PD_CALL_GRANDPA_V1      10
+#define PD_CALL_IMONLINE_V1     11
+#define PD_CALL_AUTHORITYDISCOVERY_V1   12
+#define PD_CALL_DEMOCRACY_V1            13
+#define PD_CALL_COUNCIL_V1              14
+#define PD_CALL_TECHNICALCOMMITTEE_V1   15
+#define PD_CALL_PHRAGMENELECTION_V1     16
+#define PD_CALL_TECHNICALMEMBERSHIP_V1  17
+#define PD_CALL_TREASURY_V1     18
+#define PD_CALL_CLAIMS_V1       19
+#define PD_CALL_EQVESTING_V1    22 // EQ Pallete
+#define PD_CALL_UTILITY_V1      24
+#define PD_CALL_IDENTITY_V1     25
+#define PD_CALL_SOCIETY_V1      26
+#define PD_CALL_RECOVERY_V1     27
+#define PD_CALL_VESTING_V1      28
+#define PD_CALL_SCHEDULER_V1    29
+#define PD_CALL_PROXY_V1        30
+#define PD_CALL_MULTISIG_V1     31
+#define PD_CALL_EQLOCKDROP_V1   33 // EQ Pallete
+
+#define PD_CALL_BOUNTIES_V1                     35
+#define PD_CALL_TIPS_V1                         36
+#define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V1   37
+#define PD_CALL_GILT_V1                         38
+#define PD_CALL_PARACHAINSCONFIGURATION_V1      51
+#define PD_CALL_PARASSHARED_V1      52
+#define PD_CALL_PARASINCLUSION_V1   53
+#define PD_CALL_PARASINHERENT_V1    54
+#define PD_CALL_PARASSCHEDULER_V1   55
+#define PD_CALL_PARAS_V1            56
 #define PD_CALL_PARASINITIALIZER_V1 57
-#define PD_CALL_PARASDMP_V1 58
-#define PD_CALL_PARASUMP_V1 59
-#define PD_CALL_PARASHRMP_V1 60
+#define PD_CALL_PARASDMP_V1         58
+#define PD_CALL_PARASUMP_V1         59
+#define PD_CALL_PARASHRMP_V1        60
 #define PD_CALL_PARASSESSIONINFO_V1 61
-#define PD_CALL_REGISTRAR_V1 70
-#define PD_CALL_SLOTS_V1 71
-#define PD_CALL_AUCTIONS_V1 72
-#define PD_CALL_CROWDLOAN_V1 73
-#define PD_CALL_XCMPALLET_V1 99
+#define PD_CALL_REGISTRAR_V1        70
+#define PD_CALL_SLOTS_V1            71
+#define PD_CALL_AUCTIONS_V1         72
+#define PD_CALL_CROWDLOAN_V1        73
+#define PD_CALL_XCMPALLET_V1        99
 
 #define PD_CALL_STAKING_BOND_V1 0
 typedef struct {
@@ -147,10 +149,50 @@ typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_all_V1_t;
 
+/// Equilibrium part
+/// Pallet EqBalances
+#define PD_CALL_EQBALANCES_TRANSFER_V1 0
+typedef struct {
+    // TODO: add currency
+    pd_Address_t to;
+    pd_Balance_t amount;
+} pd_eqbalances_transfer_V1_t;
+
+
+/// Pallet EqLockdrop
 #define PD_CALL_EQLOCKDROP_LOCK_V1 0
 typedef struct {
     pd_Balance_t amount;
 } pd_eqlockdrop_lock_V1_t;
+
+#define PD_CALL_EQLOCKDROP_UNLOCK_EXTERNAL_V1 1
+typedef struct {
+} pd_eqlockdrop_unlock_external_V1_t;
+
+#define PD_CALL_EQLOCKDROP_UNLOCK_V1 2 // TODO: not implemented
+typedef struct {
+    // ???
+} pd_eqlockdrop_unlock_V1_t;
+
+#define PD_CALL_EQLOCKDROP_SET_LOCK_START_V1 3
+typedef struct {
+    pd_CompactMoment_V1_t lock_start;  // TODO: check
+} pd_eqlockdrop_set_lock_start_V1_t;
+
+#define PD_CALL_EQLOCKDROP_CLEAR_LOCK_START_V1 4
+typedef struct {
+} pd_eqlockdrop_clear_lock_start_V1_t;
+
+#define PD_CALL_EQLOCKDROP_SET_AUTO_UNLOCK_V1 5
+typedef struct {
+    pd_bool_t auto_unlock;
+} pd_eqlockdrop_set_auto_unlock_V1_t;
+
+/// Pallet Vesting
+#define PD_CALL_EQVESTING_VEST_V1 0
+typedef struct {
+    pd_Balance_t amount;
+} pd_eqvesting_vest_V1_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
 #define PD_CALL_SYSTEM_REMARK_WITH_EVENT_V1 9
@@ -1508,7 +1550,14 @@ typedef union {
     pd_session_purge_keys_V1_t session_purge_keys_V1;
     pd_utility_batch_V1_t utility_batch_V1;
     pd_utility_batch_all_V1_t utility_batch_all_V1;
+    // Equilibrium part
     pd_eqlockdrop_lock_V1_t eqlockdrop_lock_V1;
+    pd_eqlockdrop_unlock_external_V1_t eqlockdrop_unlock_external_V1;
+    pd_eqlockdrop_set_lock_start_V1_t eqlockdrop_set_lock_start_V1;
+    pd_eqlockdrop_clear_lock_start_V1_t eqlockdrop_clear_lock_start_V1;
+    pd_eqlockdrop_set_auto_unlock_V1_t eqlockdrop_set_auto_unlock_V1;
+    pd_eqvesting_vest_V1_t eqvesting_vest_V1;
+
 #ifdef SUBSTRATE_PARSER_FULL
     pd_system_remark_with_event_V1_t system_remark_with_event_V1;
     pd_babe_report_equivocation_V1_t babe_report_equivocation_V1;

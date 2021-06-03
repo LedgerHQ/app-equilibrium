@@ -135,10 +135,45 @@ __Z_INLINE parser_error_t _readMethod_utility_batch_all_V1(
     return parser_ok;
 }
 
+/// Equilibrium part
+/// Pallet EqLockdrop
 __Z_INLINE parser_error_t _readMethod_eqlockdrop_lock_V1(
     parser_context_t* c, pd_eqlockdrop_lock_V1_t* m)
 {
     CHECK_ERROR(_readBalance(c, &m->amount))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_eqlockdrop_unlock_external_V1(
+        parser_context_t* c, pd_eqlockdrop_unlock_external_V1_t* m)
+{
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_eqlockdrop_set_lock_start_V1(
+        parser_context_t* c, pd_eqlockdrop_set_lock_start_V1_t* m)
+{
+    //CHECK_ERROR(_readBalance(c, &m->amount)) // TODO: finish
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_eqlockdrop_clear_lock_start_V1(
+        parser_context_t* c, pd_eqlockdrop_clear_lock_start_V1_t* m)
+{
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_eqlockdrop_set_auto_unlock_V1(
+        parser_context_t* c, pd_eqlockdrop_set_auto_unlock_V1_t* m)
+{
+    //CHECK_ERROR(_readBalance(c, &m->amount))// TODO: finish
+    return parser_ok;
+}
+
+/// Pallet Vesting
+__Z_INLINE parser_error_t _readMethod_eqvesting_vest_V1(
+        parser_context_t* c, pd_eqvesting_vest_V1_t* m)
+{
     return parser_ok;
 }
 
@@ -2149,9 +2184,33 @@ parser_error_t _readMethod_V1(
     case 6146: /* module 24 call 2 */
         CHECK_ERROR(_readMethod_utility_batch_all_V1(c, &method->basic.utility_batch_all_V1))
         break;
+
+    /// Equilibrium part
+    /// Pallet Vesting
+    case 5632: /* module 22 call 0 */
+        CHECK_ERROR(_readMethod_vesting_vest_V1(c, &method->basic.vesting_vest_V1))
+        break;
+
+    /// Pallet EqLockdrop
     case 8448: /* module 33 call 0 */
         CHECK_ERROR(_readMethod_eqlockdrop_lock_V1(c, &method->basic.eqlockdrop_lock_V1))
         break;
+    case 8449: /* module 33 call 1 */
+        CHECK_ERROR(_readMethod_eqlockdrop_unlock_external_V1(c, &method->basic.eqlockdrop_unlock_external_V1))
+        break;
+
+    // skip call 2: Unlock(request, _signature)
+
+    case 8451: /* module 33 call 3 */
+        CHECK_ERROR(_readMethod_eqlockdrop_set_lock_start_V1(c, &method->basic.eqlockdrop_set_lock_start_V1))
+        break;
+    case 8452: /* module 33 call 4 */
+        CHECK_ERROR(_readMethod_eqlockdrop_clear_lock_start_V1(c, &method->basic.eqlockdrop_clear_lock_start_V1))
+        break;
+    case 8453: /* module 33 call 5 */
+        CHECK_ERROR(_readMethod_eqlockdrop_set_auto_unlock_V1(c, &method->basic.eqlockdrop_set_auto_unlock_V1))
+        break;
+
 
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
@@ -2938,6 +2997,8 @@ const char* _getMethod_ModuleName_V1(uint8_t moduleIdx)
         return STR_MO_STAKING;
     case 8:
         return STR_MO_SESSION;
+    case 22:
+        return STR_MO_EQVESTING;
     case 24:
         return STR_MO_UTILITY;
     case 33:
@@ -3070,12 +3131,20 @@ const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_KEYS;
     case 2049: /* module 8 call 1 */
         return STR_ME_PURGE_KEYS;
+
+    case 5632: /* module 22 call 0 */
+        return STR_ME_EQVEST;
+
     case 6144: /* module 24 call 0 */
         return STR_ME_BATCH;
     case 6146: /* module 24 call 2 */
         return STR_ME_BATCH_ALL;
+
     case 8448: /* module 33 call 0 */
-        return STR_ME_LOCK;
+        return STR_ME_EQLOCK;
+    case 8449: /* module 33 call 1 */
+        return STR_ME_EQUNLOCK_EXTERNAL;
+
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return STR_ME_FILL_BLOCK;
@@ -3630,6 +3699,7 @@ uint8_t _getMethod_NumItems_V1(uint8_t moduleIdx, uint8_t callIdx)
         return 1;
     case 6146: /* module 24 call 2 */
         return 1;
+
     case 8448: /* module 33 call 0 */
         return 1;
 #ifdef SUBSTRATE_PARSER_FULL
@@ -10067,6 +10137,9 @@ bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 1558: // Staking:Kick
     case 2048: // Session:Set keys
     case 2049: // Session:Purge keys
+
+    case 2304: // EQBalances:transfer
+
     case 2560: // Grandpa:Report equivocation
     case 2561: // Grandpa:Report equivocation unsigned
     case 2562: // Grandpa:Note stalled
@@ -10129,6 +10202,9 @@ bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 4866: // Claims:Claim attest
     case 4867: // Claims:Attest
     case 4868: // Claims:Move claim
+
+    case 5632: // EQVesting:vest
+
     case 6144: // Utility:Batch
     case 6145: // Utility:As derivative
     case 6146: // Utility:Batch all
@@ -10187,7 +10263,10 @@ bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 7687: // Proxy:Remove announcement
     case 7688: // Proxy:Reject announcement
     case 7689: // Proxy:Proxy announced
+
     case 8448: // EQLockdrop:Lock
+    case 8449: // EQLockdrop:Unlock external
+
     case 8960: // Bounties:Propose bounty
     case 8961: // Bounties:Approve bounty
     case 8962: // Bounties:Propose curator

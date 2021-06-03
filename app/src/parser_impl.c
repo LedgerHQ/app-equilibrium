@@ -120,6 +120,11 @@ parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
     return parser_ok;
 }
 
+//parser_error_t _readCurrency(parser_context_t *c, eq_currency *curr){
+//    // TODO: finish
+//    return parser_ok;
+//}
+
 parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
     CHECK_INPUT();
 
