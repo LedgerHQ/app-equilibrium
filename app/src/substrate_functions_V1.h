@@ -118,6 +118,8 @@ parser_error_t _readWeight_V1(parser_context_t* c, pd_Weight_V1_t* v);
 parser_error_t _readXcm_V1(parser_context_t* c, pd_Xcm_V1_t* v);
 parser_error_t _readu8_array_32_V1(parser_context_t* c, pd_u8_array_32_V1_t* v);
 
+parser_error_t _readSubAccount_V1(parser_context_t* c, eq_Subaccount_t* v);
+
 // toString functions
 parser_error_t _toStringAccountId_V1(
     const pd_AccountId_V1_t* v,
@@ -757,16 +759,29 @@ parser_error_t _toStringu8_array_32_V1(
     uint8_t* pageCount);
 
 parser_error_t _toStringCurrency_V1(
-        const eq_currency* v,
+        const eq_Currency_t* v,
         char* outValue,
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t* pageCount);
 
 parser_error_t _toStringCurrency(
-        const eq_currency* v,
+        const eq_Currency_t* v,
         char* outValue,
         uint16_t outValueLen);
+
+parser_error_t _toStringSubaccount_V1(
+        const eq_Subaccount_t* v,
+        char* outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t* pageCount);
+
+parser_error_t _toStringSubaccount(
+        const eq_Subaccount_t* v,
+        char* outValue,
+        uint16_t outValueLen);
+
 #ifdef __cplusplus
 }
 #endif

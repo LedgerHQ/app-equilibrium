@@ -603,6 +603,18 @@ parser_error_t _readOptionTupleBalanceOfBalanceOfBlockNumber_V1(parser_context_t
     return parser_ok;
 }
 
+parser_error_t _readSubAccount_V1(parser_context_t* c, eq_Subaccount_t* v){
+    CHECK_INPUT();
+    //uint8_t *ptr = c->buffer + c->offset;
+    const uint8_t subaccount = *(uint8_t*)(c->buffer + c->offset);
+    if (subaccount >= SUBACCOUNT_MAX) {
+        return parser_subaccount_not_supported;
+    }
+    *v = subaccount;
+    CTX_CHECK_AND_ADVANCE(c, 1);
+    return parser_ok;
+}
+
 ///////////////////////////////////
 ///////////////////////////////////
 ///////////////////////////////////
@@ -2146,8 +2158,57 @@ parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V1(
     return parser_ok;
 }
 
+
+
+parser_error_t _toStringBalanceCurrency_V1(
+        const pd_Balance_t* v,
+        const eq_Currency_t* c,
+        char* outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    char bufferUI[200];
+    MEMSET(outValue, 0, outValueLen);
+    MEMSET(bufferUI, 0, sizeof(bufferUI));
+    *pageCount = 1;
+
+    uint8_t bcdOut[100];
+    const uint16_t bcdOutLen = sizeof(bcdOut);
+
+    bignumLittleEndian_to_bcd(bcdOut, bcdOutLen, v->_ptr, 8);
+    if (!bignumLittleEndian_bcdprint(bufferUI, sizeof(bufferUI), bcdOut, bcdOutLen)) {
+        return parser_unexpected_value;
+    }
+
+    // Format number
+    if (intstr_to_fpstr_inplace(bufferUI, sizeof(bufferUI), COIN_AMOUNT_DECIMAL_PLACES) == 0) {
+        return parser_unexpected_value;
+    }
+
+    number_inplace_trimming(bufferUI, 1);
+    size_t size = strlen(bufferUI) + strlen(COIN_TICKER) + 2;
+    char _tmpBuffer[200];
+    MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
+    parser_error_t err = _toStringCurrency(c, _tmpBuffer, 10);
+    if (err != parser_ok){
+        return err;
+    }
+    //strcat(_tmpBuffer, COIN_TICKER);
+    strcat(_tmpBuffer, " ");
+    strcat(_tmpBuffer, bufferUI);
+    // print length: strlen(value) + strlen(COIN_TICKER) + strlen(" ") + nullChar
+    MEMZERO(bufferUI, sizeof(bufferUI));
+    snprintf(bufferUI, size, "%s", _tmpBuffer);
+
+    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
+    return parser_ok;
+}
+
 parser_error_t _toStringCurrency_V1(
-        const eq_currency* v,
+        const eq_Currency_t* v,
         char* outValue,
         uint16_t outValueLen,
         uint8_t pageIdx,
@@ -2160,7 +2221,7 @@ parser_error_t _toStringCurrency_V1(
 }
 
 parser_error_t _toStringCurrency(
-        const eq_currency* v,
+        const eq_Currency_t* v,
         char* outValue,
         uint16_t outValueLen)
 {
@@ -2168,29 +2229,66 @@ parser_error_t _toStringCurrency(
         return parser_no_data;
     }
     switch (*v) {
-        case 1:
+        case Usd:
             snprintf(outValue, outValueLen, "USD");
             break;
-        case 2:
+        case Eq:
             snprintf(outValue, outValueLen, "EQ");
             break;
-        case 3:
+        case Eth:
             snprintf(outValue, outValueLen, "ETH");
             break;
-        case 4:
+        case Btc:
             snprintf(outValue, outValueLen, "BTC");
             break;
-        case 5:
+        case Eos:
             snprintf(outValue, outValueLen, "EOS");
             break;
-        case 6:
+        case Dot:
             snprintf(outValue, outValueLen, "DOT");
             break;
-        case 7:
+        case Crv:
             snprintf(outValue, outValueLen, "CRV");
             break;
         default:
             return parser_currency_not_supported;
+    }
+    return parser_ok;
+}
+
+parser_error_t _toStringSubaccount_V1(
+        const eq_Subaccount_t* v,
+        char* outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+
+    return _toStringSubaccount(v, outValue, outValueLen);
+}
+
+parser_error_t _toStringSubaccount(
+        const eq_Subaccount_t* v,
+        char* outValue,
+        uint16_t outValueLen)
+{
+    if (v == NULL) {
+        return parser_no_data;
+    }
+    switch (*v) {
+        case Bailsman:
+            snprintf(outValue, outValueLen, "Bailsman");
+            break;
+        case Borrower:
+            snprintf(outValue, outValueLen, "Borrower");
+            break;
+        case Lender:
+            snprintf(outValue, outValueLen, "Lender");
+            break;
+        default:
+            return parser_subaccount_not_supported;
     }
     return parser_ok;
 }

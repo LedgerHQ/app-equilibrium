@@ -445,53 +445,6 @@ parser_error_t _toStringBalance(
     return parser_ok;
 }
 
-parser_error_t _toStringBalanceCurrency(
-        const pd_Balance_t* v,
-        const eq_currency* c,
-        char* outValue,
-        uint16_t outValueLen,
-        uint8_t pageIdx,
-        uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-
-    char bufferUI[200];
-    MEMSET(outValue, 0, outValueLen);
-    MEMSET(bufferUI, 0, sizeof(bufferUI));
-    *pageCount = 1;
-
-    uint8_t bcdOut[100];
-    const uint16_t bcdOutLen = sizeof(bcdOut);
-
-    bignumLittleEndian_to_bcd(bcdOut, bcdOutLen, v->_ptr, 8);
-    if (!bignumLittleEndian_bcdprint(bufferUI, sizeof(bufferUI), bcdOut, bcdOutLen)) {
-        return parser_unexpected_value;
-    }
-
-    // Format number
-    if (intstr_to_fpstr_inplace(bufferUI, sizeof(bufferUI), COIN_AMOUNT_DECIMAL_PLACES) == 0) {
-        return parser_unexpected_value;
-    }
-
-    number_inplace_trimming(bufferUI, 1);
-    size_t size = strlen(bufferUI) + strlen(COIN_TICKER) + 2;
-    char _tmpBuffer[200];
-    MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
-    parser_error_t err = _toStringCurrency(c, _tmpBuffer, 10);
-    if (err != parser_ok){
-        return err;
-    }
-    //strcat(_tmpBuffer, COIN_TICKER);
-    strcat(_tmpBuffer, " ");
-    strcat(_tmpBuffer, bufferUI);
-    // print length: strlen(value) + strlen(COIN_TICKER) + strlen(" ") + nullChar
-    MEMZERO(bufferUI, sizeof(bufferUI));
-    snprintf(bufferUI, size, "%s", _tmpBuffer);
-
-    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
-    return parser_ok;
-}
-
 parser_error_t _toStringData(
     const pd_Data_t* v,
     char* outValue,
