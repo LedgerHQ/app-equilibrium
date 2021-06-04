@@ -55,10 +55,25 @@ enum EqCurrency {
     Eos = 5,
     Dot = 6,
     Crv = 7,
-    CURRENCY_COUNT
+    CURRENCY_MAX
 };
 
-typedef enum EqCurrency eq_currency;
+typedef enum EqCurrency eq_Currency_t;
+
+/// Types of subaccounts. Every master account can have
+/// only one subaccount of each type
+enum Subaccount {
+    /// Subaccount for with balances used to register and operate as a bailsman
+    Bailsman = 0,
+    /// Subaccount for with balances used to generate debt
+    Borrower = 1,
+    /// Subaccount for with balances used to lend assets
+    Lender = 2,
+    SUBACCOUNT_MAX
+};
+
+typedef enum Subaccount eq_Subaccount_t;
+
 
 typedef struct {
     uint8_t moduleIdx;
