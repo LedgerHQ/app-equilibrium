@@ -238,6 +238,7 @@ parser_error_t _toStringVecu32(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+
 #ifdef __cplusplus
 }
 #endif

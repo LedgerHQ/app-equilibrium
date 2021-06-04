@@ -130,6 +130,7 @@ parser_error_t _readCurrency(parser_context_t *c, eq_currency *v){
         return parser_currency_not_supported;
     }
     *v = currency;
+    CTX_CHECK_AND_ADVANCE(c, 1);
     return parser_ok;
 }
 

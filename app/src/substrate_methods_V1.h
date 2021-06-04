@@ -154,9 +154,8 @@ typedef struct {
 /// Pallet EqBalances
 #define PD_CALL_EQBALANCES_TRANSFER_V1 0
 typedef struct {
-    // TODO: add currency
     eq_currency currency;
-    pd_Address_t to;
+    pd_AccountId_V1_t to;
     pd_Balance_t amount;
 } pd_eqbalances_transfer_V1_t;
 

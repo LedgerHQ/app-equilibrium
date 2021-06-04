@@ -182,7 +182,7 @@ __Z_INLINE parser_error_t _readMethod_eqbalances_transfer_V1(
     parser_context_t* c, pd_eqbalances_transfer_V1_t* m)
 {
     CHECK_ERROR(_readCurrency(c, &m->currency));
-    CHECK_ERROR(_readAddress(c, &m->to));
+    CHECK_ERROR(_readAccountId_V1(c, &m->to));
     CHECK_ERROR(_readBalance(c, &m->amount))
     return parser_ok;
 }
@@ -6685,13 +6685,14 @@ parser_error_t _getMethod_ItemValue_V1(
                         outValue, outValueLen,
                         pageIdx, pageCount);
             case 1:
-                return _toStringAddress(
+                return _toStringAccountId_V1(
                         &m->basic.eqbalances_transfer_V1.to,
                         outValue, outValueLen,
                         pageIdx, pageCount);
             case 2:
-                return _toStringBalance(
+                return _toStringBalanceCurrency(
                         &m->basic.eqbalances_transfer_V1.amount,
+                        &m->basic.eqbalances_transfer_V1.currency,
                         outValue, outValueLen,
                         pageIdx, pageCount);
             default:

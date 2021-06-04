@@ -2155,6 +2155,18 @@ parser_error_t _toStringCurrency_V1(
 {
     CLEAN_AND_CHECK()
     *pageCount = 1;
+
+    return _toStringCurrency(v, outValue, outValueLen);
+}
+
+parser_error_t _toStringCurrency(
+        const eq_currency* v,
+        char* outValue,
+        uint16_t outValueLen)
+{
+    if (v == NULL) {
+        return parser_no_data;
+    }
     switch (*v) {
         case 1:
             snprintf(outValue, outValueLen, "USD");
