@@ -90,6 +90,8 @@ const char *parser_getErrorDescription(parser_error_t err) {
             return "Call vector exceeds limit";
         case parser_currency_not_supported:
             return "Currency not supported";
+        case parser_subaccount_not_supported:
+            return "Subaccount not supported";
         default:
             return "Unrecognized error code";
     }
@@ -122,11 +124,11 @@ parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
     return parser_ok;
 }
 
-parser_error_t _readCurrency(parser_context_t *c, eq_currency *v){
+parser_error_t _readCurrency(parser_context_t *c, eq_Currency_t *v){
     CHECK_INPUT();
     //uint8_t *ptr = c->buffer + c->offset;
     const uint8_t currency = *(uint8_t*)(c->buffer + c->offset);
-    if (currency == 0 || currency >= CURRENCY_COUNT) {
+    if (currency == 0 || currency >= CURRENCY_MAX) {
         return parser_currency_not_supported;
     }
     *v = currency;

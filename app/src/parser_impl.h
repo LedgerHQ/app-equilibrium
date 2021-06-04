@@ -159,7 +159,7 @@ GEN_DEC_READFIX_UNSIGNED(64);
 
 parser_error_t parser_init(parser_context_t *ctx, const uint8_t *buffer, uint16_t bufferSize);
 
-parser_error_t _readCurrency(parser_context_t *c, eq_currency *curr);
+parser_error_t _readCurrency(parser_context_t *c, eq_Currency_t *curr);
 
 parser_error_t _readBool(parser_context_t *c, pd_bool_t *value);
 
