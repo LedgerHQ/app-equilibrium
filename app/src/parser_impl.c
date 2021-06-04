@@ -86,8 +86,10 @@ const char *parser_getErrorDescription(parser_error_t err) {
             return "Value cannot be printed";
         case parser_tx_nesting_limit_reached:
             return "Max nested calls reached";
-    case parser_tx_call_vec_too_large:
+        case parser_tx_call_vec_too_large:
             return "Call vector exceeds limit";
+        case parser_currency_not_supported:
+            return "Currency not supported";
         default:
             return "Unrecognized error code";
     }
@@ -120,10 +122,17 @@ parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
     return parser_ok;
 }
 
-//parser_error_t _readCurrency(parser_context_t *c, eq_currency *curr){
-//    // TODO: finish
-//    return parser_ok;
-//}
+parser_error_t _readCurrency(parser_context_t *c, eq_currency *v){
+    CHECK_INPUT();
+    //uint8_t *ptr = c->buffer + c->offset;
+    const uint8_t currency = *(uint8_t*)(c->buffer + c->offset);
+    if (currency == 0 || currency >= CURRENCY_COUNT) {
+        return parser_currency_not_supported;
+    }
+    *v = currency;
+    CTX_CHECK_AND_ADVANCE(c, 1);
+    return parser_ok;
+}
 
 parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
     CHECK_INPUT();

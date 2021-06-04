@@ -2145,3 +2145,52 @@ parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V1(
     }
     return parser_ok;
 }
+
+parser_error_t _toStringCurrency_V1(
+        const eq_currency* v,
+        char* outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+
+    return _toStringCurrency(v, outValue, outValueLen);
+}
+
+parser_error_t _toStringCurrency(
+        const eq_currency* v,
+        char* outValue,
+        uint16_t outValueLen)
+{
+    if (v == NULL) {
+        return parser_no_data;
+    }
+    switch (*v) {
+        case 1:
+            snprintf(outValue, outValueLen, "USD");
+            break;
+        case 2:
+            snprintf(outValue, outValueLen, "EQ");
+            break;
+        case 3:
+            snprintf(outValue, outValueLen, "ETH");
+            break;
+        case 4:
+            snprintf(outValue, outValueLen, "BTC");
+            break;
+        case 5:
+            snprintf(outValue, outValueLen, "EOS");
+            break;
+        case 6:
+            snprintf(outValue, outValueLen, "DOT");
+            break;
+        case 7:
+            snprintf(outValue, outValueLen, "CRV");
+            break;
+        default:
+            return parser_currency_not_supported;
+    }
+    return parser_ok;
+}

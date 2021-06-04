@@ -145,35 +145,45 @@ __Z_INLINE parser_error_t _readMethod_eqlockdrop_lock_V1(
 }
 
 __Z_INLINE parser_error_t _readMethod_eqlockdrop_unlock_external_V1(
-        parser_context_t* c, pd_eqlockdrop_unlock_external_V1_t* m)
+    parser_context_t* c, pd_eqlockdrop_unlock_external_V1_t* m)
 {
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_eqlockdrop_set_lock_start_V1(
-        parser_context_t* c, pd_eqlockdrop_set_lock_start_V1_t* m)
+    parser_context_t* c, pd_eqlockdrop_set_lock_start_V1_t* m)
 {
-    //CHECK_ERROR(_readBalance(c, &m->amount)) // TODO: finish
+    //CHECK_ERROR(_readBalance(c, &m->amount)) // TODO: finish or remove
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_eqlockdrop_clear_lock_start_V1(
-        parser_context_t* c, pd_eqlockdrop_clear_lock_start_V1_t* m)
+    parser_context_t* c, pd_eqlockdrop_clear_lock_start_V1_t* m)
 {
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_eqlockdrop_set_auto_unlock_V1(
-        parser_context_t* c, pd_eqlockdrop_set_auto_unlock_V1_t* m)
+    parser_context_t* c, pd_eqlockdrop_set_auto_unlock_V1_t* m)
 {
-    //CHECK_ERROR(_readBalance(c, &m->amount))// TODO: finish
+    //CHECK_ERROR(_readBalance(c, &m->amount))// TODO: finish or remove
     return parser_ok;
 }
 
 /// Pallet Vesting
 __Z_INLINE parser_error_t _readMethod_eqvesting_vest_V1(
-        parser_context_t* c, pd_eqvesting_vest_V1_t* m)
+    parser_context_t* c, pd_eqvesting_vest_V1_t* m)
 {
+    return parser_ok;
+}
+
+/// Pallet EqBalances
+__Z_INLINE parser_error_t _readMethod_eqbalances_transfer_V1(
+    parser_context_t* c, pd_eqbalances_transfer_V1_t* m)
+{
+    CHECK_ERROR(_readCurrency(c, &m->currency));
+    CHECK_ERROR(_readAccountId_V1(c, &m->to));
+    CHECK_ERROR(_readBalance(c, &m->amount))
     return parser_ok;
 }
 
@@ -2178,6 +2188,12 @@ parser_error_t _readMethod_V1(
     case 2049: /* module 8 call 1 */
         CHECK_ERROR(_readMethod_session_purge_keys_V1(c, &method->basic.session_purge_keys_V1))
         break;
+
+    /// Pallet EqBalances
+    case 2304: /* module 9 call 0 */
+        CHECK_ERROR(_readMethod_eqbalances_transfer_V1(c, &method->basic.eqbalances_transfer_V1))
+        break;
+
     case 6144: /* module 24 call 0 */
         CHECK_ERROR(_readMethod_utility_batch_V1(c, &method->basic.utility_batch_V1))
         break;
@@ -2188,7 +2204,7 @@ parser_error_t _readMethod_V1(
     /// Equilibrium part
     /// Pallet Vesting
     case 5632: /* module 22 call 0 */
-        CHECK_ERROR(_readMethod_vesting_vest_V1(c, &method->basic.vesting_vest_V1))
+        CHECK_ERROR(_readMethod_eqvesting_vest_V1(c, &method->basic.eqvesting_vest_V1))
         break;
 
     /// Pallet EqLockdrop
@@ -2997,6 +3013,8 @@ const char* _getMethod_ModuleName_V1(uint8_t moduleIdx)
         return STR_MO_STAKING;
     case 8:
         return STR_MO_SESSION;
+    case 9:
+        return STR_MO_EQBALANCES;
     case 22:
         return STR_MO_EQVESTING;
     case 24:
@@ -3132,7 +3150,9 @@ const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 2049: /* module 8 call 1 */
         return STR_ME_PURGE_KEYS;
 
-    case 5632: /* module 22 call 0 */
+    case 2304: /* module 9 call 0 */ // EqBalances:transfer(currency, to, amount)
+        return STR_ME_EQTRANSFER;
+    case 5632: /* module 22 call 0 */ // EqVesting:vest()
         return STR_ME_EQVEST;
 
     case 6144: /* module 24 call 0 */
@@ -3140,7 +3160,7 @@ const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 6146: /* module 24 call 2 */
         return STR_ME_BATCH_ALL;
 
-    case 8448: /* module 33 call 0 */
+    case 8448: /* module 33 call 0 */ // EqLockdrop:lock(amount)
         return STR_ME_EQLOCK;
     case 8449: /* module 33 call 1 */
         return STR_ME_EQUNLOCK_EXTERNAL;
@@ -3695,6 +3715,8 @@ uint8_t _getMethod_NumItems_V1(uint8_t moduleIdx, uint8_t callIdx)
         return 2;
     case 2049: /* module 8 call 1 */
         return 0;
+    case 2304: /* module 9 call 0 */ // EqBalances:transfer
+        return 3;
     case 6144: /* module 24 call 0 */
         return 1;
     case 6146: /* module 24 call 2 */
@@ -4329,6 +4351,17 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         switch (itemIdx) {
         default:
             return NULL;
+        }
+    case 2304:
+        switch (itemIdx) {
+            case 0:
+                return STR_IT_currency;
+            case 1:
+                return STR_IT_to;
+            case 2:
+                return STR_IT_value;
+            default:
+                return NULL;
         }
     case 6144: /* module 24 call 0 */
         switch (itemIdx) {
@@ -6643,6 +6676,27 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         default:
             return parser_no_data;
+        }
+    case 2304: /* module 9 call 0 */ // EqBalances:transfer(currency, to, amount)
+        switch (itemIdx) {
+            case 0: /* utility_batch_V1 - calls */;
+                return _toStringCurrency_V1(
+                        &m->basic.eqbalances_transfer_V1.currency,
+                        outValue, outValueLen,
+                        pageIdx, pageCount);
+            case 1:
+                return _toStringAccountId_V1(
+                        &m->basic.eqbalances_transfer_V1.to,
+                        outValue, outValueLen,
+                        pageIdx, pageCount);
+            case 2:
+                return _toStringBalanceCurrency(
+                        &m->basic.eqbalances_transfer_V1.amount,
+                        &m->basic.eqbalances_transfer_V1.currency,
+                        outValue, outValueLen,
+                        pageIdx, pageCount);
+            default:
+                return parser_no_data;
         }
     case 6144: /* module 24 call 0 */
         switch (itemIdx) {
