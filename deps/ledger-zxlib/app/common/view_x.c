@@ -56,9 +56,9 @@ UX_STEP_CB_INIT(ux_idle_flow_2_step, bn,  h_expert_update(), h_expert_toggle(), 
 UX_STEP_NOCB(ux_idle_flow_3_step, bn, { APPVERSION_LINE1, APPVERSION_LINE2, });
 
 #ifdef APP_SECRET_MODE_ENABLED
-UX_STEP_CB(ux_idle_flow_4_step, bn, h_secret_click(), { "Developed by:", "Zondax.ch", });
+UX_STEP_CB(ux_idle_flow_4_step, bn, h_secret_click(), { "Developed by:", "Equilibrium.io", });
 #else
-UX_STEP_NOCB(ux_idle_flow_4_step, bn, { "Developed by:", "Zondax.ch", });
+UX_STEP_NOCB(ux_idle_flow_4_step, bn, { "Developed by:", "Equilibrium.io", });
 #endif
 
 UX_STEP_NOCB(ux_idle_flow_5_step, bn, { "License:", "Apache 2.0", });
