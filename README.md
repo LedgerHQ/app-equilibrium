@@ -3,8 +3,6 @@
 
 -------------------
 
-![zondax](docs/zondax.jpg)
-
 _Based on Zondax/ledger-kusama(https://github.com/Zondax/ledger-kusama) by [zondax.ch](zondax.ch)_
 
 ------------------
