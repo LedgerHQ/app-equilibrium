@@ -42,6 +42,11 @@ include $(BOLOS_SDK)/Makefile.defines
 
 #DEFINES += APP_SECRET_MODE_ENABLED
 
+APP_TYPE = EQUILIBRIUM_APP
+#APP_TYPE = GENSHIRO_APP
+
+DEFINES += $(APP_TYPE)
+
 $(info ************ TARGET_NAME  = [$(TARGET_NAME)])
 
 ifeq ($(APP_TESTING),1)
@@ -62,28 +67,25 @@ $(info ************ FULL PARSER ENABLED ************)
 endif
 
 ifndef COIN
+ifeq ($(APP_TYPE),EQUILIBRIUM_APP)
 COIN=EQ
+else
+COIN=GENS
+endif
 endif
 
 include $(CURDIR)/Makefile.version
 
 $(info COIN  = [$(COIN)])
 
-ifeq ($(COIN),EQ)
 # Main app configuration
 DEFINES += APP_STANDARD
-ifeq ($(TARGET_NAME),TARGET_NANOX)
-DEFINES += SUBSTRATE_PARSER_FULL
-endif
+ifeq ($(COIN),EQ)
 APPNAME = "Equilibrium"
 APPPATH = "44'/99999997'" --path "44'/354'"
-
-else ifeq ($(COIN),EQ_XL)
-# XL app configuration
-DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
-APPNAME = "Equilibrium XL"
-APPPATH = "44'/99999997'"  --path "44'/354'"
-
+else ifeq ($(COIN),GENS)
+APPNAME = "Genshiro"
+APPPATH = "44'/99999996'" --path "44'/434'"
 else
 define error_message
 
@@ -99,13 +101,21 @@ APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPA
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
 APP_STACK_SIZE:=3472
-ICONNAME:=$(CURDIR)/nanos_icon.gif
+ifeq ($(APP_TYPE),EQUILIBRIUM_APP)
+ICONNAME:=$(CURDIR)/nanos_eq_icon.gif
+else
+ICONNAME:=$(CURDIR)/nanos_gens_icon.gif
+endif
 OUTPUT_ELF ?= $(CURDIR)/output/app_s.elf
 OUTPUT_INSTALLER := $(CURDIR)/pkg/installer_s.sh
 endif
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
-ICONNAME:=$(CURDIR)/nanox_icon.gif
+ifeq ($(APP_TYPE),EQUILIBRIUM_APP)
+ICONNAME:=$(CURDIR)/nanox_eq_icon.gif
+else
+ICONNAME:=$(CURDIR)/nanox_gens_icon.gif
+endif
 OUTPUT_ELF ?= $(CURDIR)/output/app_x.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_x.sh
 endif

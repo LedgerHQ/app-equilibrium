@@ -28,10 +28,14 @@ extern "C" {
 #define HDPATH_3_DEFAULT     (0u)
 #define HDPATH_4_DEFAULT     (0u)
 
+#ifdef EQUILIBRIUM_APP
 #define MENU_MAIN_APP_LINE1                 "Equilibrium"
+#else
+#define MENU_MAIN_APP_LINE1                 "Genshiro"
+#endif
 #define MENU_MAIN_APP_LINE2                 "Ready"
 #define MENU_MAIN_APP_LINE2_SECRET          "EQ RECOVERY"
-#define APPVERSION_LINE1                    "Equilibrium"
+#define APPVERSION_LINE1                    MENU_MAIN_APP_LINE1
 #define APPVERSION_LINE2                    "v" APPVERSION
 
 #ifdef __cplusplus
