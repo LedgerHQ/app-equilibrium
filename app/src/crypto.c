@@ -21,6 +21,8 @@
 #include "rslib.h"
 #include "zxmacros.h"
 #include "ristretto.h"
+#include "app_mode.h"
+#include "network.h"
 
 uint16_t sr25519_signdataLen;
 uint32_t hdPath[HDPATH_LEN_DEFAULT];
@@ -237,7 +239,7 @@ zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t buf
 
     size_t outLen = crypto_SS58EncodePubkey(buffer + PK_LEN_25519,
                                             bufferLen - PK_LEN_25519,
-                                            PK_ADDRESS_TYPE, buffer);
+                                            get_network_address_type(app_mode_network()), buffer);
     if (outLen == 0) {
         MEMZERO(buffer, bufferLen);
         return zxerr_unknown;

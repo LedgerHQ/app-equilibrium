@@ -23,8 +23,8 @@ extern "C" {
 
 #define HDPATH_LEN_DEFAULT   5
 #define HDPATH_0_DEFAULT     (0x80000000 | 0x2c)
-// #define HDPATH_1_DEFAULT     (0x80000000 | 0x162)       // 354 - Polkadot
-// #define HDPATH_1_RECOVERY    (0x80000000 | 0x1b2)       // 434 - Kusama
+// #define HDPATH_1_DEFAULT  (0x80000000 | 0x162)       // 354 - Polkadot
+// #define HDPATH_1_RECOVERY (0x80000000 | 0x1b2)       // 434 - Kusama
 #define HDPATH_1_DEFAULT     (0x80000000 | 0x5f5e0fd)   // 99999997 - Equilibrium (https://github.com/satoshilabs/slips/blob/master/slip-0044.md)
 #define HDPATH_1_RECOVERY    (0x80000000 | 0x162)       // 354 - Polkadot
 
@@ -54,7 +54,8 @@ typedef enum {
 
 #define COIN_AMOUNT_DECIMAL_PLACES          9
 
-#define COIN_GENESIS_HASH                   "6f1a800de3daff7f5e037ddf66ab22ce03ab91874debeddb1086f5f7dbd48925"
+//#define COIN_GENESIS_HASH                   "6f1a800de3daff7f5e037ddf66ab22ce03ab91874debeddb1086f5f7dbd48925" // EQ
+
 #define COIN_NAME                           "Equilibrium"
 #define COIN_TICKER                         "EQ"
 

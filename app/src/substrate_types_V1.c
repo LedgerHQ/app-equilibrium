@@ -23,6 +23,28 @@
 #include <stdint.h>
 #include <zxmacros.h>
 
+static const char* CURRENCY_USD = "USD";
+static const char* CURRENCY_EQ  = "EQ" ;
+static const char* CURRENCY_ETH = "ETH";
+static const char* CURRENCY_BTC = "BTC";
+static const char* CURRENCY_EOS = "EOS";
+static const char* CURRENCY_DOT = "DOT";
+static const char* CURRENCY_CRV = "CRV";
+static const char* CURRENCY_ERR = "ERROR";
+
+const char* to_string_currency(eq_Currency_t c){
+    switch (c){
+        case Usd: return CURRENCY_USD;
+        case Eq: return CURRENCY_EQ;
+        case Eth: return CURRENCY_ETH;
+        case Btc: return CURRENCY_BTC;
+        case Eos: return CURRENCY_EOS;
+        case Dot: return CURRENCY_DOT;
+        case Crv: return CURRENCY_CRV;
+        default: return CURRENCY_ERR;
+    }
+}
+
 parser_error_t _readCompactActiveIndex_V1(parser_context_t* c, pd_CompactActiveIndex_V1_t* v)
 {
     return _readCompactInt(c, v);
@@ -2160,6 +2182,7 @@ parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V1(
 
 
 
+
 parser_error_t _toStringBalanceCurrency_V1(
         const pd_Balance_t* v,
         const eq_Currency_t* c,
@@ -2189,7 +2212,8 @@ parser_error_t _toStringBalanceCurrency_V1(
     }
 
     number_inplace_trimming(bufferUI, 1);
-    size_t size = strlen(bufferUI) + strlen(COIN_TICKER) + 2;
+    size_t token_name_size = strlen(to_string_currency(*c));
+    size_t size = strlen(bufferUI) + token_name_size + 2;
     char _tmpBuffer[200];
     MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
     parser_error_t err = _toStringCurrency(c, _tmpBuffer, 10);

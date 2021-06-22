@@ -25,6 +25,7 @@
 #include "zxmacros.h"
 #include "view_templates.h"
 #include "tx.h"
+#include "../../app/src/network.h"
 
 #ifdef APP_SECRET_MODE_ENABLED
 #include "secret.h"
@@ -35,6 +36,8 @@
 
 #if defined(TARGET_NANOX)
 
+void h_network_toggle();
+void h_network_update();
 void h_expert_toggle();
 void h_expert_update();
 void h_review_loop_start();
@@ -52,17 +55,18 @@ uint8_t flow_inside_loop;
 
 
 UX_STEP_NOCB(ux_idle_flow_1_step, pbb, { &C_icon_app, MENU_MAIN_APP_LINE1, viewdata.key,});
-UX_STEP_CB_INIT(ux_idle_flow_2_step, bn,  h_expert_update(), h_expert_toggle(), { "Expert mode:", viewdata.value, });
-UX_STEP_NOCB(ux_idle_flow_3_step, bn, { APPVERSION_LINE1, APPVERSION_LINE2, });
+UX_STEP_CB_INIT(ux_idle_flow_2_step, bn,  h_network_update(), h_network_toggle(), { "Network:", viewdata.value, });
+UX_STEP_CB_INIT(ux_idle_flow_3_step, bn,  h_expert_update(), h_expert_toggle(), { "Expert mode:", viewdata.value, });
+UX_STEP_NOCB(ux_idle_flow_4_step, bn, { APPVERSION_LINE1, APPVERSION_LINE2, });
 
 #ifdef APP_SECRET_MODE_ENABLED
-UX_STEP_CB(ux_idle_flow_4_step, bn, h_secret_click(), { "Developed by:", "Equilibrium.io", });
+UX_STEP_CB(ux_idle_flow_5_step, bn, h_secret_click(), { "Developed by:", "Equilibrium.io", });
 #else
-UX_STEP_NOCB(ux_idle_flow_4_step, bn, { "Developed by:", "Equilibrium.io", });
+UX_STEP_NOCB(ux_idle_flow_5_step, bn, { "Developed by:", "Equilibrium.io", });
 #endif
 
-UX_STEP_NOCB(ux_idle_flow_5_step, bn, { "License:", "Apache 2.0", });
-UX_STEP_CB(ux_idle_flow_6_step, pb, os_sched_exit(-1), { &C_icon_dashboard, "Quit",});
+UX_STEP_NOCB(ux_idle_flow_6_step, bn, { "License:", "Apache 2.0", });
+UX_STEP_CB(ux_idle_flow_7_step, pb, os_sched_exit(-1), { &C_icon_dashboard, "Quit",});
 
 const ux_flow_step_t *const ux_idle_flow [] = {
   &ux_idle_flow_1_step,
@@ -71,6 +75,7 @@ const ux_flow_step_t *const ux_idle_flow [] = {
   &ux_idle_flow_4_step,
   &ux_idle_flow_5_step,
   &ux_idle_flow_6_step,
+  &ux_idle_flow_7_step,
   FLOW_END_STEP,
 };
 
@@ -186,9 +191,26 @@ void splitValueField() {
     }
 }
 
+void h_network_toggle() {
+    app_mode_set_network((app_mode_network() + 1) % Network_MAX);
+    ux_flow_init(0, ux_idle_flow, &ux_idle_flow_2_step);
+//    app_mode_set_expert(!app_mode_expert());
+//    ux_flow_init(0, ux_idle_flow, &ux_idle_flow_3_step);
+}
+
+void h_network_update() {
+    uint8_t network_id = app_mode_network();
+    const char* network_name = get_network_name(network_id);
+    snprintf(viewdata.value, MAX_CHARS_PER_VALUE1_LINE, "%s", network_name);
+//    snprintf(viewdata.value, MAX_CHARS_PER_VALUE1_LINE, "disabled");
+//    if (app_mode_expert()) {
+//        snprintf(viewdata.value, MAX_CHARS_PER_VALUE1_LINE, "enabled");
+//    }
+}
+
 void h_expert_toggle() {
     app_mode_set_expert(!app_mode_expert());
-    ux_flow_init(0, ux_idle_flow, &ux_idle_flow_2_step);
+    ux_flow_init(0, ux_idle_flow, &ux_idle_flow_3_step);
 }
 
 void h_expert_update() {
@@ -217,7 +239,7 @@ void h_secret_click() {
         return;
     }
 
-    ux_flow_init(0, ux_idle_flow, &ux_idle_flow_4_step);
+    ux_flow_init(0, ux_idle_flow, &ux_idle_flow_6_step);
 }
 #endif
 
