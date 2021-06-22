@@ -28,6 +28,10 @@ bool app_mode_expert();
 
 void app_mode_set_expert(uint8_t val);
 
+uint8_t app_mode_network();
+
+void app_mode_set_network(uint8_t val);
+
 bool app_mode_secret();
 
 void app_mode_set_secret(uint8_t val);

@@ -22,6 +22,7 @@
 #include "coin.h"
 #include "coin_ss58.h"
 #include "substrate_dispatch.h"
+#include "network.h"
 
 #if defined(TARGET_NANOX)
 // For some reason NanoX requires this function
@@ -176,10 +177,10 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
         // CONTINUE WITH FIXED ARGUMENTS
         displayIdx -= methodArgCount;
         if( displayIdx == FIELD_NETWORK ){
-            if (_getAddressType() == PK_ADDRESS_TYPE) {
+            if (_getAddressType() == get_network_address_type(app_mode_network())) {
                 if(parser_show_expert_fields()){
                     snprintf(outKey, outKeyLen, "Chain");
-                    snprintf(outVal, outValLen, COIN_NAME);
+                    snprintf(outVal, outValLen, "%s", get_network_name(app_mode_network()));
                     return err;
                 }
             }else {

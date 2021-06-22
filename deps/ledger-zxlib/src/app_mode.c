@@ -17,6 +17,7 @@
 #include "app_mode.h"
 
 typedef struct {
+    uint8_t network;
     uint8_t expert;
 } app_mode_persistent_t;
 
@@ -35,8 +36,22 @@ app_mode_persistent_t NV_CONST N_appmode_impl __attribute__ ((aligned(64)));
 #define N_appmode (*(NV_VOLATILE app_mode_persistent_t *)PIC(&N_appmode_impl))
 
 void app_mode_reset(){
+//    N_appmode.network = 0;
+    MEMCPY_NV( (void*) &N_appmode, (void*) PIC(&N_appmode_impl), sizeof(app_mode_persistent_t));
     app_mode_temporary.secret = 0;
 }
+
+uint8_t app_mode_network() {
+    return N_appmode.network;
+}
+
+void app_mode_set_network(uint8_t val) {
+    app_mode_persistent_t mode;
+    mode.expert = N_appmode.expert;
+    mode.network = val;
+    MEMCPY_NV( (void*) PIC(&N_appmode_impl), (void*) &mode, sizeof(app_mode_persistent_t));
+}
+
 
 bool app_mode_expert() {
     return N_appmode.expert;
@@ -45,6 +60,7 @@ bool app_mode_expert() {
 void app_mode_set_expert(uint8_t val) {
     app_mode_persistent_t mode;
     mode.expert = val;
+    mode.network = N_appmode.network;
     MEMCPY_NV( (void*) PIC(&N_appmode_impl), (void*) &mode, sizeof(app_mode_persistent_t));
 }
 
@@ -58,8 +74,17 @@ app_mode_persistent_t app_mode;
 
 void app_mode_reset() {
     app_mode.expert = 0;
+    app_mode.network = 0;
     app_mode_temporary.secret = 0;
 }
+//
+//uint8_t app_mode_network() {
+//    return app_mode.network;
+//}
+//
+//void app_mode_set_network(uint8_t val) {
+//    app_mode.network = val;
+//}
 
 bool app_mode_expert() {
     return app_mode.expert;

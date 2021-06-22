@@ -23,6 +23,8 @@
 #include "coin_ss58.h"
 #include "substrate_types.h"
 #include "substrate_dispatch.h"
+#include "network.h"
+#include "app_mode.h"
 
 parser_error_t parser_init_context(parser_context_t *ctx,
                                    const uint8_t *buffer,
@@ -326,7 +328,7 @@ parser_error_t _toStringCompactIndex(const pd_CompactIndex_t *v,
 parser_error_t _toStringCompactBalance(const pd_CompactBalance_t *v,
                                        char *outValue, uint16_t outValueLen,
                                        uint8_t pageIdx, uint8_t *pageCount) {
-    CHECK_ERROR(_toStringCompactInt(&v->value, COIN_AMOUNT_DECIMAL_PLACES, 0, COIN_TICKER, outValue, outValueLen, pageIdx, pageCount))
+    CHECK_ERROR(_toStringCompactInt(&v->value, COIN_AMOUNT_DECIMAL_PLACES, 0, (char*)get_network_name(app_mode_network()), outValue, outValueLen, pageIdx, pageCount))
     number_inplace_trimming(outValue, 1);
     return parser_ok;
 }
@@ -394,8 +396,8 @@ uint8_t _detectAddressType(const parser_context_t *c) {
         _toStringHash(&c->tx_obj->genesisHash, hashstr, 65, 0, &pc);
 
         // Compare with known genesis hashes
-        if (strcmp(hashstr, COIN_GENESIS_HASH) == 0) {
-            return PK_ADDRESS_TYPE;
+        if (strcmp(hashstr, get_network_genesis_hash(app_mode_network())) == 0) {
+            return get_network_address_type(app_mode_network());
         }
     }
 

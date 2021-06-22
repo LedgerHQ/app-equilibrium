@@ -37,7 +37,7 @@ file(GLOB_RECURSE TESTS_SRC
 ###############
 set(BUILD_TESTS OFF CACHE BOOL "Enables tests")
 
-add_library(zxlib STATIC ${ZXLIB_SRC})
+add_library(zxlib STATIC ${ZXLIB_SRC}, ${CMAKE_CURRENT_SOURCE_DIR}/../../app/src/network.c)
 target_include_directories(zxlib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 enable_testing()
