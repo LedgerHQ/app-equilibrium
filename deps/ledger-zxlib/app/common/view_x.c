@@ -55,7 +55,7 @@ uint8_t flow_inside_loop;
 
 
 UX_STEP_NOCB(ux_idle_flow_1_step, pbb, { &C_icon_app, MENU_MAIN_APP_LINE1, viewdata.key,});
-UX_STEP_CB_INIT(ux_idle_flow_2_step, bn,  h_network_update(), h_network_toggle(), { "Network:", viewdata.value, });
+UX_STEP_CB_INIT(ux_idle_flow_2_step, bn,  h_network_update(), h_network_toggle(), { "Derivation path:", viewdata.value, });
 UX_STEP_CB_INIT(ux_idle_flow_3_step, bn,  h_expert_update(), h_expert_toggle(), { "Expert mode:", viewdata.value, });
 UX_STEP_NOCB(ux_idle_flow_4_step, bn, { APPVERSION_LINE1, APPVERSION_LINE2, });
 
