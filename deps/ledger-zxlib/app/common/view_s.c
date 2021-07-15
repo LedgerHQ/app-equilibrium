@@ -23,12 +23,15 @@
 #include "bagl.h"
 #include "zxmacros.h"
 #include "view_templates.h"
+#include "../../app/src/network.h"
 
 #include <string.h>
 #include <stdio.h>
 
 #if defined(TARGET_NANOS)
 
+void h_network_toggle();
+void h_network_update();
 void h_expert_toggle();
 void h_expert_update();
 void h_review_button_left();
@@ -48,6 +51,7 @@ void os_exit(uint32_t id) {
 
 const ux_menu_entry_t menu_main[] = {
     {NULL, NULL, 0, &C_icon_app, MENU_MAIN_APP_LINE1, viewdata.key, 33, 12},
+    {NULL, h_network_toggle, 0, &C_icon_app, "Deriv. path:", viewdata.value2, 33, 12},
     {NULL, h_expert_toggle, 0, &C_icon_app, "Expert mode:", viewdata.value, 33, 12},
     {NULL, NULL, 0, &C_icon_app, APPVERSION_LINE1, APPVERSION_LINE2, 33, 12},
 
@@ -161,6 +165,7 @@ const bagl_element_t *view_prepro_idle(const bagl_element_t *element) {
 }
 
 void h_review_update() {
+
     zxerr_t err = h_review_update_data();
     switch(err) {
         case zxerr_ok:
@@ -205,6 +210,7 @@ void splitValueField() {
 //////////////////////////
 //////////////////////////
 
+// не вызывается при переключении экранов!
 void view_idle_show_impl(uint8_t item_idx, char *statusString) {
     if (statusString == NULL ) {
         snprintf(viewdata.key, MAX_CHARS_PER_VALUE_LINE, "%s", MENU_MAIN_APP_LINE2);
@@ -216,7 +222,17 @@ void view_idle_show_impl(uint8_t item_idx, char *statusString) {
     } else {
         snprintf(viewdata.key, MAX_CHARS_PER_VALUE_LINE, "%s", statusString);
     }
+//    h_expert_update();
+//    h_network_update();
+//    int v = item_idx;
+//    snprintf(viewdata.key, MAX_CHARS_PER_VALUE_LINE, "%d", v);
+//    snprintf(viewdata.value, MAX_CHARS_PER_VALUE_LINE, "%d", v);
+
+
+    h_network_update();
     h_expert_update();
+
+
     UX_MENU_DISPLAY(item_idx, menu_main, NULL);
 }
 
@@ -232,7 +248,7 @@ void view_error_show_impl() {
 
 void h_expert_toggle() {
     app_mode_set_expert(!app_mode_expert());
-    view_idle_show(1, NULL);
+    view_idle_show(2, NULL);
 }
 
 #ifdef APP_SECRET_MODE_ENABLED
@@ -262,6 +278,17 @@ void h_expert_update() {
     }
 }
 
+void h_network_toggle() {
+    app_mode_set_network((app_mode_network() + 1) % Network_MAX);
+    view_idle_show(1, NULL);
+}
+
+void h_network_update() {
+    uint8_t network_id = app_mode_network();
+    const char* network_name = get_network_name(network_id);
+    snprintf(viewdata.value2, MAX_CHARS_PER_VALUE_LINE, "%s", network_name);
+}
+
 void view_review_show_impl() {
     zemu_log_stack("view_review_show_impl");
 
@@ -271,6 +298,7 @@ void view_review_show_impl() {
     switch(err) {
         case zxerr_ok:
             UX_DISPLAY(view_review, view_prepro);
+
             break;
         default:
             view_error_show();
