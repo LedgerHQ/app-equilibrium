@@ -10,13 +10,8 @@ extern "C" {
 #endif
 
 typedef enum {
-#ifdef EQUILIBRIUM_APP
     Network_EQ = 0,
     Network_DOT = 1,
-#else
-    Network_GENS = 0,
-    Network_KSM = 1,
-#endif
     Network_MAX
 } NetworkID;
 

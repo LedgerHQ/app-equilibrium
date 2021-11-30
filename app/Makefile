@@ -40,10 +40,7 @@ all: bin/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
-#DEFINES += APP_SECRET_MODE_ENABLED
-
 APP_TYPE = EQUILIBRIUM_APP
-#APP_TYPE = GENSHIRO_APP
 
 DEFINES += $(APP_TYPE)
 
@@ -67,11 +64,7 @@ $(info ************ FULL PARSER ENABLED ************)
 endif
 
 ifndef COIN
-ifeq ($(APP_TYPE),EQUILIBRIUM_APP)
-COIN=EQ
-else
-COIN=GENS
-endif
+COIN=Equilibrium
 endif
 
 include $(CURDIR)/Makefile.version
@@ -80,12 +73,9 @@ $(info COIN  = [$(COIN)])
 
 # Main app configuration
 DEFINES += APP_STANDARD
-ifeq ($(COIN),EQ)
+ifeq ($(COIN),Equilibrium)
 APPNAME = "Equilibrium"
 APPPATH = "44'/99999997'" --path "44'/354'"
-else ifeq ($(COIN),GENS)
-APPNAME = "Genshiro"
-APPPATH = "44'/99999996'" --path "44'/434'"
 else
 define error_message
 
@@ -101,21 +91,13 @@ APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPA
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
 APP_STACK_SIZE:=3472
-ifeq ($(APP_TYPE),EQUILIBRIUM_APP)
 ICONNAME:=$(CURDIR)/nanos_eq_icon.gif
-else
-ICONNAME:=$(CURDIR)/nanos_gens_icon.gif
-endif
 OUTPUT_ELF ?= $(CURDIR)/output/app_s.elf
 OUTPUT_INSTALLER := $(CURDIR)/pkg/installer_s.sh
 endif
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
-ifeq ($(APP_TYPE),EQUILIBRIUM_APP)
 ICONNAME:=$(CURDIR)/nanox_eq_icon.gif
-else
-ICONNAME:=$(CURDIR)/nanox_gens_icon.gif
-endif
 OUTPUT_ELF ?= $(CURDIR)/output/app_x.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_x.sh
 endif
@@ -168,6 +150,10 @@ DEFINES       += IO_SEPROXYHAL_BUFFER_SIZE_B=128
 endif
 
 # X specific
+
+# Ledger: add the "Pending security review" disclaimer
+APP_LOAD_PARAMS += --tlvraw 9F:01
+DEFINES += HAVE_PENDING_REVIEW_SCREEN
 
 #Feature temporarily disabled
 DEFINES   += LEDGER_SPECIFIC
@@ -250,7 +236,7 @@ dep/%.d: %.c Makefile
 .PHONY: listvariants
 listvariants:
 ifeq ($(TARGET_NAME),TARGET_NANOS)
-	@echo VARIANTS COIN EQ
+	@echo VARIANTS COIN Equilibrium
 else ifeq ($(TARGET_NAME),TARGET_NANOX)
-	@echo VARIANTS COIN EQ
+	@echo VARIANTS COIN Equilibrium
 endif

@@ -23,7 +23,7 @@
 #include <stdint.h>
 #include <zxmacros.h>
 
-static const char* CURRENCY_USD = "USD";
+static const char* CURRENCY_EQD = "EQD";
 static const char* CURRENCY_EQ  = "EQ" ;
 static const char* CURRENCY_ETH = "ETH";
 static const char* CURRENCY_BTC = "BTC";
@@ -34,7 +34,7 @@ static const char* CURRENCY_ERR = "ERROR";
 
 const char* to_string_currency(eq_Currency_t c){
     switch (c){
-        case Usd: return CURRENCY_USD;
+        case Eqd: return CURRENCY_EQD;
         case Eq: return CURRENCY_EQ;
         case Eth: return CURRENCY_ETH;
         case Btc: return CURRENCY_BTC;
@@ -2253,8 +2253,8 @@ parser_error_t _toStringCurrency(
         return parser_no_data;
     }
     switch (*v) {
-        case Usd:
-            snprintf(outValue, outValueLen, "USD");
+        case Eqd:
+            snprintf(outValue, outValueLen, "EQD");
             break;
         case Eq:
             snprintf(outValue, outValueLen, "EQ");

@@ -50,13 +50,7 @@ typedef enum {
 #define SUPPORTED_MINIMUM_SPEC_VERSION      262
 
 #define COIN_AMOUNT_DECIMAL_PLACES          9
-
-#ifdef EQUILIBRIUM_APP
 #define COIN_TICKER                         "EQ"
-#else
-#define COIN_TICKER                         "GENS"
-#endif
-#define COIN_SECRET_REQUIRED_CLICKS         10
 
 #include "coin_standard.h"
 

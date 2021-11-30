@@ -48,7 +48,7 @@ typedef uint64_t pd_BlockNumber_t;
 // TODO: change this after release with assets
 enum EqCurrency {
     Unknown = 0,
-    Usd = 1,
+    Eqd = 1,
     Eq = 2,
     Eth = 3,
     Btc = 4,
